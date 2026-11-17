@@ -4,6 +4,8 @@ A game-hacking and reverse-engineering curriculum, rebuilt as two things:
 
 - **`site/`**: a Hebrew lesson site. Open `site/index.html`. Lessons are written in `site/_source/<track>/*.md` and built with `python site/_source/build.py`.
 - **`videos/`**: short English explainer videos, one folder per lesson. Finished files are in `videos/<name>/renders/*.mp4`.
+- **`videos/ep*/`**: *Game Hacking from Scratch*, the long YouTube series (8-10 minutes an episode). Each episode merges two lessons and is built around real captures: an open-source game running offline, Cheat Engine attached to it, and the output of small C++ programs. Renders go to the channel, not the repo.
+- **`lab/`**: the capture workflow for those episodes (see `lab/README.md`).
 
 `CURRICULUM.md` maps the 477 source videos into 17 tracks and 306 remake units (`python build_catalog.py` regenerates it from `data/`).
 
@@ -21,6 +23,15 @@ The Hebrew site is published at https://strimpel1.github.io/gh-remake/ and each 
 | 6. Edit a Save File, Byte by Byte | [mp4](https://strimpel1.github.io/gh-remake/videos/06-hex-editing.mp4) |
 | 7. Where Do the Arguments Go? | [mp4](https://strimpel1.github.io/gh-remake/videos/07-calling-conventions.mp4) |
 | 8. What's Inside an EXE | [mp4](https://strimpel1.github.io/gh-remake/videos/08-inside-an-exe.mp4) |
+
+## Game Hacking from Scratch (long episodes)
+
+| Episode | Lessons | Folder |
+|---|---|---|
+| 1. The Bytes Behind the Health Bar | 1.1 number bases, 1.2 data types | `videos/ep01-bytes-behind-the-health-bar` |
+| 2. Why the Address Changes | 1.3 virtual memory, 1.4 pointer chains | `videos/ep02-why-the-address-changes` |
+
+Each episode folder has `build.py` (the scenes), `YOUTUBE.md` (title, description, chapters), `thumbnail.png` and `lab/` (the practice program shown in the episode).
 
 ## Making a video
 

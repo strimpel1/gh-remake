@@ -8,3 +8,13 @@ videos/*/boards/review/
 videos/*/boards/.film.html
 videos/*/boards/.posed.html
 site/videos/
+# long YouTube episodes: renders go to the channel, not the repo
+videos/ep*/renders/
+videos/*/assets/clips/*_fit*.mp4
+videos/*/render.log
+videos/*/lab/*.exe
+# capture lab: the game's home dir, raw captures, Cheat Engine command channel
+lab/ac-home/
+lab/shots/
+lab/*.log
+lab/ce/cmd.*

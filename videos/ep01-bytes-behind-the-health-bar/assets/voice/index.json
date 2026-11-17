@@ -1,0 +1,196 @@
+{
+ "voice": "en-US-AvaMultilingualNeural",
+ "rate": "-4%",
+ "lines": [
+  {
+   "id": "01",
+   "duration": 8.466,
+   "text": "This is AssaultCube, an open-source shooter, running offline on my own machine. Health: one hundred. Ammo: twenty."
+  },
+  {
+   "id": "02",
+   "duration": 6.172,
+   "text": "Those numbers live somewhere in the game's memory. And this is what that memory really looks like."
+  },
+  {
+   "id": "03",
+   "duration": 12.675,
+   "text": "No one hundred anywhere. Just six four, zero zero, zero zero, zero zero. By the end of this video, you will read a line like that as easily as the health bar itself."
+  },
+  {
+   "id": "04",
+   "duration": 6.083,
+   "text": "This is Game Hacking from Scratch. Episode one: the bytes behind the health bar."
+  },
+  {
+   "id": "05",
+   "duration": 13.694,
+   "text": "One rule for the whole series. We only practice on things we are allowed to touch: open-source games, offline, against bots, and programs we wrote ourselves. Never online games. Never other players."
+  },
+  {
+   "id": "06",
+   "duration": 9.637,
+   "text": "Start with the smallest piece. Memory is a very long row of boxes. Each box is one byte, and every byte has its own address."
+  },
+  {
+   "id": "07",
+   "duration": 6.138,
+   "text": "A byte is eight switches, called bits. Each bit is off or on. Zero or one."
+  },
+  {
+   "id": "08",
+   "duration": 9.735,
+   "text": "Each bit has a place value, and every place is worth double the one to its right. One, two, four, eight, all the way up to one hundred twenty-eight."
+  },
+  {
+   "id": "09",
+   "duration": 13.081,
+   "text": "To store one hundred, switch on sixty-four, thirty-two, and four. Add them up: one hundred. So in binary, our health is zero one one zero, zero one zero zero."
+  },
+  {
+   "id": "10",
+   "duration": 7.682,
+   "text": "With all eight bits on, a byte holds two hundred fifty-five. That is the largest number one byte can store."
+  },
+  {
+   "id": "11",
+   "duration": 8.803,
+   "text": "Binary is exact, but nobody wants to read eight digits for every byte. So tools use hexadecimal: base sixteen."
+  },
+  {
+   "id": "12",
+   "duration": 8.217,
+   "text": "Hex has sixteen digits. Zero to nine, then A for ten, B for eleven, up to F for fifteen."
+  },
+  {
+   "id": "13",
+   "duration": 14.476,
+   "text": "And here is the trick. One hex digit is exactly four bits. So split the byte in half. Zero one one zero is six. Zero one zero zero is four. One hundred is hex six four."
+  },
+  {
+   "id": "14",
+   "duration": 16.877,
+   "text": "You don't have to trust me. Windows Calculator has a programmer mode. Type one hundred, and it shows the same number three ways. Decimal: one hundred. Hex: six four. Binary: zero one one zero, zero one zero zero."
+  },
+  {
+   "id": "15",
+   "duration": 14.886,
+   "text": "To avoid confusion, hex numbers are written with a zero x in front. Zero x one zero is not ten. It is sixteen. And zero x F F is two hundred fifty-five: a full byte in two digits."
+  },
+  {
+   "id": "16",
+   "duration": 15.098,
+   "text": "Bigger hex numbers work the same way as decimal, only the places are powers of sixteen. Zero x one F four: one times two hundred fifty-six, plus fifteen times sixteen, plus four. Five hundred."
+  },
+  {
+   "id": "17",
+   "duration": 16.115,
+   "text": "This is why every tool in this series shows memory in hex. Two digits, one byte, and the columns line up. On the left, the address of each row. In the middle, the bytes. On the right, the same bytes shown as text."
+  },
+  {
+   "id": "18",
+   "duration": 10.632,
+   "text": "So one byte tops out at two fifty-five. But ammo, money and score get much bigger than that. A program solves it by using several bytes side by side."
+  },
+  {
+   "id": "19",
+   "duration": 13.495,
+   "text": "In C and C plus plus, the type decides how many. A char is one byte. A short is two. An int is four, good for about four billion values. A long long is eight."
+  },
+  {
+   "id": "20",
+   "duration": 7.775,
+   "text": "The game stores health as a four byte integer. That is why we saw four bytes: six four, then three zeros."
+  },
+  {
+   "id": "21",
+   "duration": 8.719,
+   "text": "But look at the order. The six four comes first, and the zeros come after. If you wrote this number on paper, it would be the other way round."
+  },
+  {
+   "id": "22",
+   "duration": 15.309,
+   "text": "This is called little endian: the smallest part of the number is stored first. Take one thousand. In hex, that is three E eight. In memory, it becomes E eight, zero three, zero zero, zero zero."
+  },
+  {
+   "id": "23",
+   "duration": 17.164,
+   "text": "Here is a tiny C plus plus program that prints the bytes of any value. Int one hundred: six four, zero zero, zero zero, zero zero. Int one thousand: E eight, zero three. Exactly as predicted."
+  },
+  {
+   "id": "24",
+   "duration": 12.649,
+   "text": "And minus one? Four bytes of F F. A signed integer uses the top half of its range for negative numbers. Read those same bytes as unsigned, and you get more than four billion."
+  },
+  {
+   "id": "25",
+   "duration": 11.628,
+   "text": "Not everything is a whole number. Positions, speeds and angles need a decimal point. For those, programs use a float: four bytes with a completely different layout."
+  },
+  {
+   "id": "26",
+   "duration": 11.773,
+   "text": "A float splits its thirty-two bits into three parts. One bit for the sign, eight for the exponent, and twenty-three for the fraction. It is scientific notation, in binary."
+  },
+  {
+   "id": "27",
+   "duration": 14.201,
+   "text": "Here is my real position in the game, in Cheat Engine. X is forty-three point zero. And its bytes: zero zero, zero zero, two C, four two. Nothing in there looks like forty-three."
+  },
+  {
+   "id": "28",
+   "duration": 10.453,
+   "text": "Now the important part. Read those same four bytes as an integer, and you get one billion, one hundred ten million. Same bytes. Different number."
+  },
+  {
+   "id": "29",
+   "duration": 11.171,
+   "text": "It works the other way too. Health is one hundred. Read its bytes as a float, and you get one point four, times ten to the minus forty-three. Practically zero."
+  },
+  {
+   "id": "30",
+   "duration": 7.099,
+   "text": "Memory does not store types. It only stores bytes. The type is a decision made by whoever is reading."
+  },
+  {
+   "id": "31",
+   "duration": 12.311,
+   "text": "Even text works this way. My player name is pixel. In memory, it is five bytes: seven zero, six nine, seven eight, six five, six C. One number per letter."
+  },
+  {
+   "id": "32",
+   "duration": 14.394,
+   "text": "Let's watch it live. On top, the game. I have already fired a few rounds, so the magazine is at twelve. Below it, Cheat Engine, an open-source memory scanner, showing the magazine's address and its raw bytes."
+  },
+  {
+   "id": "33",
+   "duration": 15.359,
+   "text": "I fire a few rounds. The counter on screen drops, and the bytes in memory drop with it. Cheat Engine re-reads the value a few times a second, so it follows a moment behind. The number on your screen is just a picture of those bytes."
+  },
+  {
+   "id": "34",
+   "duration": 11.245,
+   "text": "This is why every memory scanner asks you for a value type before it searches. Pick four bytes when the game uses a float, and you will find nothing, even though the value is right there."
+  },
+  {
+   "id": "35",
+   "duration": 13.867,
+   "text": "So here is your cheat sheet. Whole numbers like health and ammo: usually four bytes. Anything with a decimal point: float. Not sure? Try four bytes first, then float, then the rest."
+  },
+  {
+   "id": "36",
+   "duration": 18.052,
+   "text": "Let's recap. A byte is eight bits, and holds zero to two fifty-five. Hex writes one byte as two digits. Bigger numbers use more bytes, stored smallest part first. And the same bytes mean different things, depending on the type you read them as."
+  },
+  {
+   "id": "37",
+   "duration": 11.108,
+   "text": "Your practice for this episode. Compile the little program from the description, and before you run it, predict the bytes of the integer three hundred. Then check yourself."
+  },
+  {
+   "id": "38",
+   "duration": 10.224,
+   "text": "Next time: you find the health address, restart the game, and it is gone. Why the address changes, and how pointers lead you back to it. See you there."
+  }
+ ]
+}

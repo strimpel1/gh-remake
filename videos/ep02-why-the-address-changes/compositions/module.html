@@ -1,0 +1,73 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background-color: #E4F2EC;
+      background-image:
+        linear-gradient(#9CCFC0 3px, transparent 3px), linear-gradient(90deg, #9CCFC0 3px, transparent 3px),
+        linear-gradient(#C4E3D9 1px, transparent 1px), linear-gradient(90deg, #C4E3D9 1px, transparent 1px);
+      background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px; }
+
+    .s9-stage { position: absolute; inset: 0; }
+    .s9-h { position: absolute; font-family: 'Archivo Black', sans-serif; font-size: 96px; line-height: 1.05; letter-spacing: -0.01em; color: #0B2A30; }
+    .s9-m { position: absolute; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 54px; line-height: 1.15; color: #2E6B63; }
+    .s9-acc { color: #E8490F; }
+    .s9-dim { color: #6A9188; }
+    .s9-cell { position: absolute; background: #fff; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; color: #0B2A30; }
+    .s9-cell.on { background: #FF5A1F; color: #fff; }
+    .s9-tile { position: absolute; background: #FF5A1F; color: #fff; border: 12px solid #0B2A30; box-shadow: 16px 16px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s9-card { position: absolute; background: #fff; color: #0B2A30; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s9-card.on { background: #FF5A1F; color: #fff; }
+    .s9-card.soft { background: #CFE9DF; }
+    .s9-bar { position: absolute; background: #0B2A30; }
+    .s9-shot { position: absolute; overflow: hidden; background: #fff; border: 8px solid #0B2A30; box-shadow: 12px 12px 0 #0B2A30; }
+    .s9-shot img, .s9-shot video { position: absolute; display: block; max-width: none; }
+    .s9-mark { position: absolute; border: 8px solid #FF5A1F; border-radius: 12px; box-shadow: 0 0 0 6px rgba(255, 90, 31, 0.28); }
+    .s9-tag { position: absolute; background: #FF5A1F; color: #fff; border: 6px solid #0B2A30; box-shadow: 8px 8px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; padding: 6px 22px; white-space: nowrap; }
+    .s9-term { position: absolute; background: #0B2A30; border: 8px solid #0B2A30; box-shadow: 12px 12px 0 #2E6B63; padding: 26px 34px;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 500; color: #E4F2EC; white-space: pre; }
+    .s9-term .hi { color: #FF9A6B; font-weight: 700; }
+    .s9-term .dimc { color: #7FB5A8; }
+    .s9-media { position: absolute; inset: 0; }
+  </style>
+  <div id="root" data-composition-id="module" data-width="1920" data-height="1080">
+    <div id="s9-stage" class="clip s9-stage" data-start="0" data-duration="18.1">
+      <div id="s9-t" class="s9-h" style="left: 120px; top: 96px; font-size: 76px">the module: ac_client.exe at 00400000</div>
+      <div id="s9-rg" class="s9-shot" style="left: 120px; top: 230px; width: 1680px; height: 521px"><img src="assets/shots/ep02_regions_mod.png" style="left: 0.0px; top: -51.8px; width: 1664.0px; height: 1026.4px"></div>
+      <div id="s9-m0" class="s9-mark" style="left: 128px; top: 360px; width: 1630px; height: 41px"></div>
+      <div id="s9-m1" class="s9-mark" style="left: 128px; top: 391px; width: 1630px; height: 41px"></div>
+      <div id="s9-m2" class="s9-mark" style="left: 128px; top: 422px; width: 1630px; height: 41px"></div>
+      <div id="s9-m3" class="s9-mark" style="left: 128px; top: 453px; width: 1630px; height: 41px"></div>
+      <div id="s9-g1" class="s9-tag" style="left: 120px; top: 780px; font-size: 40px">code: Execute + Read</div>
+      <div id="s9-g2" class="s9-tag" style="left: 760px; top: 780px; font-size: 40px">constants: Read</div>
+      <div id="s9-g3" class="s9-tag" style="left: 1260px; top: 780px; font-size: 40px">globals: Read + Write</div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const blurIn = (sel, t, d = 0.2) =>
+      tl.fromTo(sel, { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "power2.out" }, t);
+    const blurOut = (sel, t, d = 0.2) => tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d, ease: "power2.in" }, t);
+    const land = (sel, t, from = 1.3, d = 0.35) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
+    const each = (sel, t, gap = 0.12, from = 1.3) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out", stagger: gap }, t);
+    const wipe = (sel, t, d = 0.3) =>
+      tl.fromTo(sel, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: d, ease: "power2.out" }, t);
+    const dim = (sel, t, to = 0.3) => tl.to(sel, { opacity: to, duration: 0.3, ease: "power2.inOut" }, t);
+    blurIn("#s9-stage", 0, 0.25);
+
+    wipe("#s9-t", 7.09, 0.6);
+    land("#s9-rg", 0.2, 1.03, 0.5);
+    land("#s9-m0", 1.36, 1.05);
+    tl.to("#s9-m0", { opacity: 0, duration: 0.3 }, 8.27);
+    land("#s9-m1", 8.76, 1.05); land("#s9-g1", 9.68);
+    land("#s9-m2", 11.7, 1.05); land("#s9-g2", 12.99);
+    land("#s9-m3", 14.37, 1.05); land("#s9-g3", 16.0);
+
+    blurOut("#s9-stage", 17.8, 0.25);
+    window.__timelines["module"] = tl;
+  </script>
+</template>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+<CheatEntries>
+<CheatEntry><ID>0</ID><Description>"health: address from run 1"</Description><ShowAsSigned>0</ShowAsSigned><VariableType>4 Bytes</VariableType><Address>0089786C</Address></CheatEntry>
+<CheatEntry><ID>1</ID><Description>"health: address from run 2"</Description><ShowAsSigned>0</ShowAsSigned><VariableType>4 Bytes</VariableType><Address>00965E7C</Address></CheatEntry>
+<CheatEntry><ID>2</ID><Description>"static pointer: game+17E0A8"</Description><ShowAsHex>1</ShowAsHex><ShowAsSigned>0</ShowAsSigned><VariableType>4 Bytes</VariableType><Address>"ac_client.exe"+17E0A8</Address></CheatEntry>
+<CheatEntry><ID>3</ID><Description>"health, through the pointer"</Description><ShowAsSigned>0</ShowAsSigned><VariableType>4 Bytes</VariableType><Address>"ac_client.exe"+17E0A8</Address><Offsets><Offset>EC</Offset></Offsets></CheatEntry>
+<CheatEntry><ID>4</ID><Description>"ammo, through the pointer"</Description><ShowAsSigned>0</ShowAsSigned><VariableType>4 Bytes</VariableType><Address>"ac_client.exe"+17E0A8</Address><Offsets><Offset>140</Offset></Offsets></CheatEntry>
+</CheatEntries>
+<LuaScript>openProcess("ac_client.exe")
+local path = [[D:\AI\gh-remake\lab\ce\cmd.lua]]
+local t = createTimer(nil, false)
+t.Interval = 250
+t.OnTimer = function()
+  local f = io.open(path, "r")
+  if f then
+    local s = f:read("*a"); f:close(); os.remove(path)
+    local fn, err = load(s); local ok, res
+    if fn then ok, res = pcall(fn) else res = err end
+    local o = io.open(path .. ".out", "w"); o:write(tostring(ok) .. " " .. tostring(res)); o:close()
+  end
+end
+t.Enabled = true</LuaScript>
+</CheatTable>

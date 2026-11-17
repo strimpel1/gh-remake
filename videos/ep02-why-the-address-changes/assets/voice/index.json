@@ -1,0 +1,156 @@
+{
+ "voice": "en-US-AvaMultilingualNeural",
+ "rate": "-4%",
+ "lines": [
+  {
+   "id": "01",
+   "duration": 9.338,
+   "text": "Last episode, we found our player's health at this address. Zero zero eight nine, seven eight six C. One hundred, right there."
+  },
+  {
+   "id": "02",
+   "duration": 10.573,
+   "text": "So I close the game, start it again, and look at the same address. Eight thousand, two hundred ninety-two. That is not my health. That is garbage."
+  },
+  {
+   "id": "03",
+   "duration": 14.077,
+   "text": "Nothing broke. My player simply moved. And yet the game itself never loses it. By the end of this episode, you will know how the game finds its player, and how to find it the same way, on every single run."
+  },
+  {
+   "id": "04",
+   "duration": 5.815,
+   "text": "This is Game Hacking from Scratch. Episode two: why the address changes."
+  },
+  {
+   "id": "05",
+   "duration": 9.156,
+   "text": "First, the evidence. I started the game three times, and wrote down where the health was. Three runs. Three different addresses."
+  },
+  {
+   "id": "06",
+   "duration": 15.399,
+   "text": "To see why, we need the map. Every process gets its own address space. For a thirty-two bit game like this one, that is four gigabytes of addresses, from zero, all the way up to F F F F, F F F F."
+  },
+  {
+   "id": "07",
+   "duration": 9.051,
+   "text": "And it is private. The same address in two programs is two completely different places. That is why it is called virtual memory."
+  },
+  {
+   "id": "08",
+   "duration": 10.86,
+   "text": "This is the real map of our game, in Cheat Engine's memory regions view. Every row is one region: where it starts, what you are allowed to do there, and how big it is."
+  },
+  {
+   "id": "09",
+   "duration": 17.027,
+   "text": "Find address four hundred thousand, in hex. This is the game's own file, loaded into memory: its module. First the code: execute and read. Then constants: read only. Then global variables: read and write."
+  },
+  {
+   "id": "10",
+   "duration": 10.548,
+   "text": "Those permissions are enforced by the processor. Write to a read only page, or try to run data as code, and the program crashes with an access violation."
+  },
+  {
+   "id": "11",
+   "duration": 10.174,
+   "text": "Further down is the heap: private, read and write. This is where a program creates things while it runs. Bullets, enemies, and your player."
+  },
+  {
+   "id": "12",
+   "duration": 11.877,
+   "text": "And that is the answer. The player object is created on the heap while the game runs. Wherever there is free space at that moment, that is where it goes. Different run, different spot."
+  },
+  {
+   "id": "13",
+   "duration": 19.276,
+   "text": "You can watch this with a few lines of C plus plus. This program creates a player on the heap, and prints where things live. I ran it three times. The heap address is different every time. But look at the global variable: base plus two two B seven zero, on every run."
+  },
+  {
+   "id": "14",
+   "duration": 19.431,
+   "text": "A module has a base address, and everything inside it sits at a fixed offset from that base. Windows is free to move the base, usually when the machine restarts. That is A S L R: address space layout randomization. But base plus offset always lands on the same variable."
+  },
+  {
+   "id": "15",
+   "duration": 8.034,
+   "text": "So here is the first rule of this series. Never save a raw address. Save the module name, and the offset."
+  },
+  {
+   "id": "16",
+   "duration": 13.325,
+   "text": "Now, how does the game find a player that keeps moving? It keeps a note. Somewhere in its global data, at a fixed offset, it stores the player's current address. That note is called a pointer."
+  },
+  {
+   "id": "17",
+   "duration": 11.149,
+   "text": "A pointer is not magic. It is just a number. Four bytes in a thirty-two bit game, eight in a sixty-four bit one. And that number happens to be an address."
+  },
+  {
+   "id": "18",
+   "duration": 21.008,
+   "text": "Here it is, for real. At the game's base plus one seven E zero A eight, there are four bytes. F zero, six zero, nine seven, zero zero. Little endian, remember? Flip them: zero zero nine seven, six zero F zero. That is where my player is, right now."
+  },
+  {
+   "id": "19",
+   "duration": 15.908,
+   "text": "The player is a structure: a block of fields in a fixed order. Health is always the same distance from the start: E C. Ammo: one four zero. Those offsets were decided when the game was compiled. They never change between runs."
+  },
+  {
+   "id": "20",
+   "duration": 17.068,
+   "text": "So the recipe has two steps. Read the pointer. Then add the offset. Zero zero nine seven, six zero F zero, plus E C, is zero zero nine seven, six one D C. And at that address: one hundred."
+  },
+  {
+   "id": "21",
+   "duration": 15.173,
+   "text": "Cheat Engine can do that for us. This row uses the pointer instead of a raw address, and it shows one hundred. The top two rows are the addresses from the earlier runs. Wrong values. The pointer row survives every restart."
+  },
+  {
+   "id": "22",
+   "duration": 11.438,
+   "text": "One warning. Order matters. Read first, then add. If you add the offset to the pointer's own address and then read, you land somewhere else in the module, and get nonsense."
+  },
+  {
+   "id": "23",
+   "duration": 12.621,
+   "text": "Real games chain several of these. In AssaultCube, the player holds a pointer to its current weapon. The weapon holds a pointer to its ammo. Read, add, read, add."
+  },
+  {
+   "id": "24",
+   "duration": 16.273,
+   "text": "With real numbers from this run. Base plus one seven E zero A eight gives the player. Player plus three six four gives the weapon. Weapon plus one four gives the address of the ammo. One last read, at that address: twenty."
+  },
+  {
+   "id": "25",
+   "duration": 9.469,
+   "text": "You will see this written with square brackets. A pair of brackets means: read what is stored at this address. So the whole chain fits on one line."
+  },
+  {
+   "id": "26",
+   "duration": 19.803,
+   "text": "One more thing. A pointer can also hold zero. In many games, before a match starts, there is no player yet. Follow a zero pointer and you read address zero, which is never mapped. So every tool, and every program you write, should check for zero, and stop."
+  },
+  {
+   "id": "27",
+   "duration": 11.48,
+   "text": "How do you discover a pointer like this, in a game you have never seen? That is a skill of its own, and we will get there in the Cheat Engine episodes. Today was about knowing what you are looking for."
+  },
+  {
+   "id": "28",
+   "duration": 18.912,
+   "text": "Let's recap. Every process has its own virtual address space, split into regions with permissions. The module sits at a base. The heap moves on every run. A pointer is a number that holds an address. And a pointer chain is the path the game itself walks to its own data."
+  },
+  {
+   "id": "29",
+   "duration": 12.267,
+   "text": "Your practice. Compile where dot C P P from the description, run it three times, and write down what moves and what stays. Then restart your computer, and run it once more."
+  },
+  {
+   "id": "30",
+   "duration": 8.477,
+   "text": "Next time, we open the code itself: what one line of assembly says, and where a function keeps its arguments. See you there."
+  }
+ ]
+}

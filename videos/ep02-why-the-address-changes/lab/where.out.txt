@@ -1,0 +1,18 @@
+--- run 1
+module base       7FF7D6F10000
+&g_player         7FF7D6F32B70   = base + 22B70
+player (heap)     01C5484C7E40
+local (stack)     00C1818FF730
+health through the pointer: 100
+--- run 2
+module base       7FF7D6F10000
+&g_player         7FF7D6F32B70   = base + 22B70
+player (heap)     01FE8CB00680
+local (stack)     0061D30FF780
+health through the pointer: 100
+--- run 3
+module base       7FF7D6F10000
+&g_player         7FF7D6F32B70   = base + 22B70
+player (heap)     01A630C60680
+local (stack)     0001000FFCB0
+health through the pointer: 100

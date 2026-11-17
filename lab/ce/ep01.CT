@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+<CheatEntries>
+<CheatEntry><ID>0</ID><Description>"health"</Description><ShowAsSigned>0</ShowAsSigned><VariableType>4 Bytes</VariableType><Address>"ac_client.exe"+17E0A8</Address><Offsets><Offset>EC</Offset></Offsets></CheatEntry>
+<CheatEntry><ID>1</ID><Description>"health, raw bytes"</Description><ShowAsHex>1</ShowAsHex><ShowAsSigned>0</ShowAsSigned><VariableType>Array of byte</VariableType><ByteLength>4</ByteLength><Address>"ac_client.exe"+17E0A8</Address><Offsets><Offset>EC</Offset></Offsets></CheatEntry>
+<CheatEntry><ID>2</ID><Description>"health, read as 1 byte"</Description><ShowAsSigned>0</ShowAsSigned><VariableType>Byte</VariableType><Address>"ac_client.exe"+17E0A8</Address><Offsets><Offset>EC</Offset></Offsets></CheatEntry>
+<CheatEntry><ID>3</ID><Description>"health, read as a float"</Description><ShowAsSigned>0</ShowAsSigned><VariableType>Float</VariableType><Address>"ac_client.exe"+17E0A8</Address><Offsets><Offset>EC</Offset></Offsets></CheatEntry>
+<CheatEntry><ID>4</ID><Description>"ammo in the magazine"</Description><ShowAsSigned>0</ShowAsSigned><VariableType>4 Bytes</VariableType><Address>"ac_client.exe"+17E0A8</Address><Offsets><Offset>140</Offset></Offsets></CheatEntry>
+<CheatEntry><ID>5</ID><Description>"ammo, raw bytes"</Description><ShowAsHex>1</ShowAsHex><ShowAsSigned>0</ShowAsSigned><VariableType>Array of byte</VariableType><ByteLength>4</ByteLength><Address>"ac_client.exe"+17E0A8</Address><Offsets><Offset>140</Offset></Offsets></CheatEntry>
+<CheatEntry><ID>6</ID><Description>"ammo in reserve"</Description><ShowAsSigned>0</ShowAsSigned><VariableType>4 Bytes</VariableType><Address>"ac_client.exe"+17E0A8</Address><Offsets><Offset>11C</Offset></Offsets></CheatEntry>
+<CheatEntry><ID>7</ID><Description>"position x"</Description><ShowAsSigned>0</ShowAsSigned><VariableType>Float</VariableType><Address>"ac_client.exe"+17E0A8</Address><Offsets><Offset>28</Offset></Offsets></CheatEntry>
+<CheatEntry><ID>8</ID><Description>"position x, raw bytes"</Description><ShowAsHex>1</ShowAsHex><ShowAsSigned>0</ShowAsSigned><VariableType>Array of byte</VariableType><ByteLength>4</ByteLength><Address>"ac_client.exe"+17E0A8</Address><Offsets><Offset>28</Offset></Offsets></CheatEntry>
+<CheatEntry><ID>9</ID><Description>"position x, read as an integer"</Description><ShowAsSigned>0</ShowAsSigned><VariableType>4 Bytes</VariableType><Address>"ac_client.exe"+17E0A8</Address><Offsets><Offset>28</Offset></Offsets></CheatEntry>
+<CheatEntry><ID>10</ID><Description>"player name"</Description><ShowAsSigned>0</ShowAsSigned><VariableType>String</VariableType><Length>5</Length><Unicode>0</Unicode><CodePage>0</CodePage><ZeroTerminate>1</ZeroTerminate><Address>"ac_client.exe"+17E0A8</Address><Offsets><Offset>205</Offset></Offsets></CheatEntry>
+<CheatEntry><ID>11</ID><Description>"player name, raw bytes"</Description><ShowAsHex>1</ShowAsHex><ShowAsSigned>0</ShowAsSigned><VariableType>Array of byte</VariableType><ByteLength>5</ByteLength><Address>"ac_client.exe"+17E0A8</Address><Offsets><Offset>205</Offset></Offsets></CheatEntry>
+</CheatEntries>
+<LuaScript>openProcess("ac_client.exe")
+local path = [[D:\AI\gh-remake\lab\ce\cmd.lua]]
+local t = createTimer(nil, false)
+t.Interval = 250
+t.OnTimer = function()
+  local f = io.open(path, "r")
+  if f then
+    local s = f:read("*a"); f:close(); os.remove(path)
+    local fn, err = load(s); local ok, res
+    if fn then ok, res = pcall(fn) else res = err end
+    local o = io.open(path .. ".out", "w"); o:write(tostring(ok) .. " " .. tostring(res)); o:close()
+  end
+end
+t.Enabled = true</LuaScript>
+</CheatTable>

@@ -1,0 +1,11 @@
+char 100        64 
+short 100       64 00 
+int 100         64 00 00 00 
+int 1000        E8 03 00 00 
+int 300         2C 01 00 00 
+int -1          FF FF FF FF 
+float 100.0     00 00 C8 42 
+float 43.0      00 00 2C 42 
+double 43.0     00 00 00 00 00 80 45 40 
+int 100 read as a float: 1.4013e-43
+float 43.0 read as an int: 1110179840
