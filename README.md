@@ -7,6 +7,18 @@ A game-hacking and reverse-engineering curriculum, rebuilt as two things:
 
 `CURRICULUM.md` maps the 477 source videos into 17 tracks and 306 remake units (`python build_catalog.py` regenerates it from `data/`).
 
+## Watch
+
+The Hebrew site is published at https://strimpel1.github.io/gh-remake/ and each lesson page plays its video.
+
+| Video | File |
+|---|---|
+| 1. Hex, Decimal & Binary | [mp4](https://strimpel1.github.io/gh-remake/videos/01-number-bases.mp4) |
+| 2. Same Bytes, Different Number | [mp4](https://strimpel1.github.io/gh-remake/videos/02-data-types.mp4) |
+| 3. Why the Address Changes | [mp4](https://strimpel1.github.io/gh-remake/videos/03-virtual-memory.mp4) |
+| 4. Follow the Pointers | [mp4](https://strimpel1.github.io/gh-remake/videos/04-pointer-chains.mp4) |
+| 5. Read One Line of Assembly | [mp4](https://strimpel1.github.io/gh-remake/videos/05-reading-assembly.mp4) |
+
 ## Making a video
 
 Each video folder has a `build.py` that lists its scenes: narration text, layout and animation. Running it voices the

@@ -7,3 +7,4 @@ __pycache__/
 videos/*/boards/review/
 videos/*/boards/.film.html
 videos/*/boards/.posed.html
+site/videos/

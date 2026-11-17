@@ -29,6 +29,7 @@ p.style.width=(m>0?(h.scrollTop/m*100):0)+'%';},{passive:true});})();
 <div class="layout">
 <main>
 <section class="hero"><div class="kicker">שיעור 1.3</div><h1>Virtual Memory: מפת הזיכרון של תהליך</h1><div class="chips"><span class="chip">מודול: <b dir="auto">יסודות</b></span><span class="chip">יחידות מקור: <b dir="auto">CS420 6 - What is Virtual Memory, Windows Virtual Memory Explained</b></span></div></section>
+<section class="card"><h2>סרטון השיעור (באנגלית)</h2><video controls preload="metadata" src="../videos/03-virtual-memory.mp4" style="display:block;width:100%;border-radius:10px;background:#000"></video></section>
 <section class="card tldr" id="s0"><h2>הרעיון בקצרה</h2>
 <p>כל תהליך ב-Windows חי בתוך <strong>מרחב כתובות וירטואלי</strong> משלו. הכתובת <code>0x00400000</code> בתהליך אחד והכתובת <code>0x00400000</code> בתהליך אחר הן שני מקומות שונים לגמרי בזיכרון הפיזי. מערכת ההפעלה והמעבד מתרגמים בשקט כל כתובת וירטואלית לכתובת פיזית. מבחינתנו המשמעות היא שלוש שאלות שחוזרות בכל פרויקט: איפה הנתון נמצא במפה, מה מותר לעשות באזור הזה, ולמה הכתובת משתנה בכל הפעלה.</p></section>
 <section class="card " id="s1"><h2>למה בכלל וירטואלי</h2>

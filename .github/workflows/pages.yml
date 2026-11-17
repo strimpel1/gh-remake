@@ -3,7 +3,7 @@ name: Publish the Hebrew site
 on:
   push:
     branches: [main]
-    paths: ["site/**", ".github/workflows/pages.yml"]
+    paths: ["site/**", "videos/*/renders/**", ".github/workflows/pages.yml"]
   workflow_dispatch:
 
 permissions:
@@ -23,6 +23,14 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      - name: Add the newest render of each video
+        run: |
+          mkdir -p site/videos
+          for d in videos/*/renders; do
+            f=$(ls "$d"/*.mp4 2>/dev/null | sort | tail -1)
+            [ -n "$f" ] && cp "$f" "site/videos/$(basename "$(dirname "$d")").mp4"
+          done
+          ls -la site/videos
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site

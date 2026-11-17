@@ -6,6 +6,7 @@ Standard library only.  Run:  python site/_source/build.py
 import html
 import json
 import re
+import shutil
 import sys
 from pathlib import Path
 
@@ -31,6 +32,28 @@ MODULES = [
     ("pentest", "15-pentest-ctf", "Pentest ו-CTF"),
 ]
 SITE = "Game Hacking בעברית"
+
+# lesson (track folder/file stem) -> video project under ../videos
+VIDEOS = {
+    "01-foundations/01-number-bases": "01-number-bases",
+    "01-foundations/02-data-types-in-memory": "02-data-types",
+    "01-foundations/03-virtual-memory": "03-virtual-memory",
+    "01-foundations/04-pointers-and-pointer-chains": "04-pointer-chains",
+    "01-foundations/05-reading-assembly": "05-reading-assembly",
+}
+
+
+def lesson_video(md_path):
+    """Copy the lesson's newest render to site/videos/ and return its player card, or ''."""
+    name = VIDEOS.get(f"{md_path.parent.name}/{md_path.stem}")
+    renders = sorted((OUT.parent / "videos" / name / "renders").glob("*.mp4")) if name else []
+    if not renders:
+        return ""
+    (OUT / "videos").mkdir(exist_ok=True)
+    shutil.copyfile(renders[-1], OUT / "videos" / f"{name}.mp4")
+    return (f'<section class="card"><h2>סרטון השיעור (באנגלית)</h2>'
+            f'<video controls preload="metadata" src="../videos/{name}.mp4" '
+            f'style="display:block;width:100%;border-radius:10px;background:#000"></video></section>')
 
 
 def planned_units():
@@ -207,6 +230,9 @@ def build_lesson(md_path, mod_title, prev, nxt):
                         for k, v in chips)
     parts = [f'<section class="hero"><div class="kicker">{html.escape(kicker)}</div>'
              f'<h1>{inline(h1)}</h1><div class="chips">{chip_html}</div></section>']
+    video = lesson_video(md_path)
+    if video:
+        parts.append(video)
     toc_links = []
     for n, (head, content) in enumerate(sections):
         if head is None:
