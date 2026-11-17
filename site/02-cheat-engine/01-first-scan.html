@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שיעור 2.1 — Cheat Engine: התקנה וסריקה ראשונה</title>
+<link rel="stylesheet" href="../assets/style.css">
+<script>
+(function(){var r=document.documentElement,k='gh-he-theme';
+try{var s=localStorage.getItem(k);if(s)r.setAttribute('data-theme',s);}catch(e){}
+window.toggleTheme=function(){var d=r.getAttribute('data-theme');
+if(!d){d=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+var n=d==='dark'?'light':'dark';r.setAttribute('data-theme',n);
+try{localStorage.setItem(k,n);}catch(e){}};
+addEventListener('scroll',function(){var p=document.querySelector('.progress');if(!p)return;
+var h=document.documentElement;var m=h.scrollHeight-h.clientHeight;
+p.style.width=(m>0?(h.scrollTop/m*100):0)+'%';},{passive:true});})();
+</script>
+</head>
+<body>
+<div class="progress"></div>
+<header class="topbar">
+  <a class="home" href="../index.html">🎮 Game Hacking בעברית</a>
+  <span class="crumb"><span dir="auto">סריקת זיכרון עם Cheat Engine</span></span>
+  <span class="spacer"></span>
+  <span class="badge">לתרגול על משחקי offline בלבד</span>
+  <button class="theme-btn" onclick="toggleTheme()" title="מצב בהיר / כהה" aria-label="מצב בהיר או כהה">◐</button>
+</header>
+<div class="layout">
+<main>
+<section class="hero"><div class="kicker">שיעור 2.1</div><h1>Cheat Engine: התקנה וסריקה ראשונה</h1><div class="chips"><span class="chip">מודול: <b dir="auto">סריקת זיכרון עם Cheat Engine</b></span><span class="chip">יחידות מקור: <b dir="auto">Install Cheat Engine (GH101), Ultimate Cheat Engine Beginner Tutorial Part 1 (GH102)</b></span></div></section>
+<section class="card tldr" id="s0"><h2>הרעיון בקצרה</h2>
+<p>Cheat Engine (בקיצור CE) הוא סורק זיכרון: הוא עובר על כל הזיכרון של תהליך ומחפש ערך שאתם מבקשים. הטריק שעליו הכול נשען הוא <strong>סינון חוזר</strong>: מחפשים ערך, משנים אותו במשחק, ומחפשים שוב רק בין התוצאות הקודמות. אחרי שלושה או ארבעה סיבובים נשארת כתובת אחת. זה מה שעשינו "על נייר" במסלול היסודות, ועכשיו עושים את זה באמת.</p></section>
+<section class="card " id="s1"><h2>התקנה בלי הפתעות</h2>
+<ul><li>מורידים רק מהאתר הרשמי, <code>cheatengine.org</code>, או מדף ה-GitHub של הפרויקט.</li><li>המתקין הרשמי מציע תוכנות נלוות. בכל מסך שמציע משהו שאינו Cheat Engine לוחצים Decline או Skip, ולא Next באופן אוטומטי.</li><li>Antivirus יתריע על CE. זה צפוי: כלי שקורא וכותב לזיכרון של תהליכים אחרים נראה חשוד מעצם טבעו. עדיף לעבוד בתוך VM, כמו שהמלצנו בשיעור 0.1.</li><li>CE כולל תרגיל מובנה: בתפריט Help בוחרים Cheat Engine Tutorial. זו מטרת התרגול המושלמת לשיעור הזה, והיא בטוחה לחלוטין.</li></ul></section>
+<section class="card " id="s2"><h2>החלון הראשי</h2>
+<div class="table-wrap"><table><thead><tr><th>אזור</th><th>מה עושים בו</th></tr></thead><tbody><tr><td>כפתור התהליך (אייקון מחשב, משמאל למעלה)</td><td>בוחרים לאיזה תהליך להתחבר</td></tr><tr><td><strong>Value</strong></td><td>הערך שמחפשים</td></tr><tr><td><strong>Scan Type</strong></td><td>סוג ההשוואה: ערך מדויק, גדל, קטן ועוד</td></tr><tr><td><strong>Value Type</strong></td><td>טיפוס הנתון: 4 Bytes, Float וכן הלאה</td></tr><tr><td><strong>First Scan / Next Scan</strong></td><td>סריקה חדשה, או סינון של התוצאות הקיימות</td></tr><tr><td>רשימת התוצאות (משמאל)</td><td>כתובות שעברו את הסינון. המספר מעליה, Found, הוא הכמות</td></tr><tr><td><strong>Address list</strong> (למטה)</td><td>הכתובות ששמרתם לעבודה</td></tr></tbody></table></div></section>
+<section class="card " id="s3"><h2>הסריקה הראשונה, צעד אחר צעד</h2>
+<p>נניח שבתרגיל המובנה יש לכם 100 נקודות חיים.</p>
+<ol><li><strong>מתחברים לתהליך.</strong> לוחצים על אייקון המחשב ובוחרים את התהליך מהרשימה.</li><li><strong>סריקה ראשונה.</strong> ב-Value כותבים <code>100</code>, Scan Type נשאר Exact Value, Value Type נשאר 4 Bytes. לוחצים First Scan. יתקבלו אלפי תוצאות: בזיכרון של כל תהליך יש המון מקומות שמכילים במקרה 100.</li><li><strong>משנים את הערך במשחק.</strong> בתרגיל לוחצים Hit me, והחיים יורדים ל-97, למשל.</li><li><strong>סינון.</strong> כותבים <code>97</code> ולוחצים <strong>Next Scan</strong> (לא First Scan, שמוחק את התוצאות ומתחיל מחדש). נשארות רק כתובות שהיו 100 ועכשיו הן 97.</li><li><strong>חוזרים על 3 ו-4</strong> עד שנשארת כתובת אחת, או קומץ.</li><li><strong>מוסיפים לרשימה.</strong> לחיצה כפולה על הכתובת מורידה אותה ל-Address list.</li><li><strong>משנים.</strong> לחיצה כפולה על העמודה Value ברשימה התחתונה, כותבים <code>1000</code>, והערך במשחק משתנה.</li></ol></section>
+<section class="card " id="s4"><h2>להקפיא ערך</h2>
+<p>תיבת הסימון בעמודה <strong>Active</strong> מקפיאה כתובת: CE כותב אליה את הערך שוב ושוב, כמה פעמים בשנייה. המשחק מוריד את החיים, ו-CE מחזיר אותם מיד.</p>
+<p>חשוב להבין מה זה <strong>לא</strong>: הקוד של המשחק עדיין רץ ועדיין מחסיר. אם מכה אחת מורידה יותר מכל החיים שלכם, תמותו בין כתיבה לכתיבה. הקפאה היא פתרון זריז ולא יציב. הפתרון האמיתי, שינוי הקוד שמחסיר, מגיע בשיעור 2.5.</p></section>
+<section class="card " id="s5"><h2>כשזה לא עובד</h2>
+<div class="table-wrap"><table><thead><tr><th>מה קורה</th><th>סיבה סבירה</th><th>מה מנסים</th></tr></thead><tbody><tr><td>אפס תוצאות כבר בסריקה הראשונה</td><td>הטיפוס שגוי</td><td>Float, אחר כך 2 Bytes, Byte, Double</td></tr><tr><td>התוצאות נעלמות אחרי סינון אחד</td><td>הערך שמוצג אינו הערך שנשמר</td><td>סריקת "ערך לא ידוע", בשיעור הבא</td></tr><tr><td>נשארות שתיים או שלוש כתובות</td><td>אחת אמיתית, והשאר עותקים לתצוגה</td><td>משנים כל אחת בנפרד ורואים מי משפיעה באמת</td></tr><tr><td>שיניתם את הערך והוא חוזר מיד לקדמותו</td><td>שיניתם עותק תצוגה</td><td>הכתובת האמיתית היא אחרת מהרשימה</td></tr><tr><td>הכתובת מפסיקה לעבוד אחרי הפעלה מחדש</td><td>הנתון דינמי</td><td>צריך pointer, בשיעור 2.3</td></tr></tbody></table></div>
+<p>השורה האחרונה היא הסיבה שהשיעור הזה הוא רק ההתחלה. כתובת שמצאתם תקפה עד שסוגרים את המשחק, בדיוק כמו שהסברנו בשיעור 1.3.</p></section>
+<section class="card glossary" id="s6"><h2>מילון מונחים</h2>
+<div class="table-wrap"><table><thead><tr><th>מונח</th><th>משמעות</th></tr></thead><tbody><tr><td><strong>Attach</strong></td><td>חיבור של CE לתהליך רץ</td></tr><tr><td><strong>First Scan</strong></td><td>סריקה חדשה של כל הזיכרון</td></tr><tr><td><strong>Next Scan</strong></td><td>סינון של התוצאות מהסריקה הקודמת</td></tr><tr><td><strong>Exact Value</strong></td><td>חיפוש של ערך מדויק</td></tr><tr><td><strong>Address list</strong></td><td>רשימת הכתובות ששמרתם, בתחתית החלון</td></tr><tr><td><strong>Freeze</strong></td><td>כתיבה חוזרת של ערך קבוע לכתובת</td></tr></tbody></table></div></section>
+<section class="card quiz" id="s7"><h2>בדיקה עצמית</h2>
+<ol><li>למה הסריקה הראשונה מחזירה אלפי תוצאות?</li><li>מה ההבדל בין First Scan ל-Next Scan?</li><li>הקפאתם את החיים על 100 ועדיין מתם ממכה אחת. למה?</li><li>חיפשתם 100 כ-4 Bytes וקיבלתם אפס תוצאות. מה הצעד הבא?</li><li>למה הכתובת שמצאתם לא תעבוד מחר?</li></ol>
+<p>תשובות: (1) כי הערך 100 מופיע במקרה במקומות רבים בזיכרון. (2) הראשונה סורקת הכול מחדש. השנייה מסננת את התוצאות הקיימות. (3) ההקפאה רק כותבת שוב ושוב. הקוד עדיין מחסיר, ומכה גדולה מספיק הורגת בין כתיבה לכתיבה. (4) לנסות Float, ואז טיפוסים אחרים. (5) הנתון מוקצה מחדש בכל הפעלה, בכתובת אחרת.</p></section>
+<nav class="pager"><span></span><a class="next" href="02-scan-types-and-unknown-values.html"><small>השיעור הבא ←</small>שיעור 2.2 — סוגי סריקה וערכים לא ידועים</a></nav>
+<footer class="foot">Game Hacking בעברית · שיעורים מקוריים · לתרגול על משחקי offline בלבד</footer>
+</main>
+<aside class="toc"><div class="toc-title">בעמוד זה</div><a href="#s0">הרעיון בקצרה</a><a href="#s1">התקנה בלי הפתעות</a><a href="#s2">החלון הראשי</a><a href="#s3">הסריקה הראשונה, צעד אחר צעד</a><a href="#s4">להקפיא ערך</a><a href="#s5">כשזה לא עובד</a><a href="#s6">מילון מונחים</a><a href="#s7">בדיקה עצמית</a></aside>
+</div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+{
+ "voice": "en-US-AvaMultilingualNeural",
+ "rate": "-4%",
+ "lines": [
+  {
+   "id": "01",
+   "duration": 9.378,
+   "text": "A save file is just bytes on disk. No debugger, no running game. Open it in a hex editor, and your gold is sitting right there."
+  },
+  {
+   "id": "02",
+   "duration": 7.634,
+   "text": "Three columns. The offset: how far from the start. The bytes. And the same bytes as text."
+  },
+  {
+   "id": "03",
+   "duration": 10.263,
+   "text": "Read it like memory. The letters S A V E. Then one hundred, as a whole number. Then E eight, zero three: one thousand gold."
+  },
+  {
+   "id": "04",
+   "duration": 8.992,
+   "text": "To find a value, save with one thousand gold, then with twelve fifty, and compare the two files. The bytes that changed are yours."
+  },
+  {
+   "id": "05",
+   "duration": 7.15,
+   "text": "Overwrite those four bytes with the biggest number they can hold. Save the file, load the game, and you are rich."
+  },
+  {
+   "id": "06",
+   "duration": 11.368,
+   "text": "Two traps. Never insert bytes, only overwrite, or everything after them shifts. And some games store a checksum, so an edited save looks corrupt."
+  },
+  {
+   "id": "07",
+   "duration": 6.123,
+   "text": "So back up the file first. And remember: a file is just memory that sits still."
+  }
+ ]
+}

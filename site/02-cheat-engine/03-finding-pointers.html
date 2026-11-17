@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שיעור 2.3 — למצוא Pointers: כתובת ששורדת הפעלה מחדש</title>
+<link rel="stylesheet" href="../assets/style.css">
+<script>
+(function(){var r=document.documentElement,k='gh-he-theme';
+try{var s=localStorage.getItem(k);if(s)r.setAttribute('data-theme',s);}catch(e){}
+window.toggleTheme=function(){var d=r.getAttribute('data-theme');
+if(!d){d=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+var n=d==='dark'?'light':'dark';r.setAttribute('data-theme',n);
+try{localStorage.setItem(k,n);}catch(e){}};
+addEventListener('scroll',function(){var p=document.querySelector('.progress');if(!p)return;
+var h=document.documentElement;var m=h.scrollHeight-h.clientHeight;
+p.style.width=(m>0?(h.scrollTop/m*100):0)+'%';},{passive:true});})();
+</script>
+</head>
+<body>
+<div class="progress"></div>
+<header class="topbar">
+  <a class="home" href="../index.html">🎮 Game Hacking בעברית</a>
+  <span class="crumb"><span dir="auto">סריקת זיכרון עם Cheat Engine</span></span>
+  <span class="spacer"></span>
+  <span class="badge">לתרגול על משחקי offline בלבד</span>
+  <button class="theme-btn" onclick="toggleTheme()" title="מצב בהיר / כהה" aria-label="מצב בהיר או כהה">◐</button>
+</header>
+<div class="layout">
+<main>
+<section class="hero"><div class="kicker">שיעור 2.3</div><h1>למצוא Pointers: כתובת ששורדת הפעלה מחדש</h1><div class="chips"><span class="chip">מודול: <b dir="auto">סריקת זיכרון עם Cheat Engine</b></span><span class="chip">יחידות מקור: <b dir="auto">Cheat Engine Pointer Scanning (GH105), Pointer Scan with Pointermaps, How To Hack Any Game - Pointers &amp; EntityBase</b></span></div></section>
+<section class="card tldr" id="s0"><h2>הרעיון בקצרה</h2>
+<p>הכתובת שמצאתם בסריקה מתה כשסוגרים את המשחק. כדי להגיע לאותו נתון בכל הפעלה צריך <strong>pointer chain</strong>: כתובת סטטית ועוד רצף של offsets, בדיוק כמו בשיעור 1.4. ל-Cheat Engine יש שתי דרכים למצוא אותה. הדרך הידנית מלמדת אתכם איך המשחק בנוי. הדרך האוטומטית מהירה, אבל מחזירה אלפי תשובות שרובן שגויות. כדאי לדעת את שתיהן, ולהתחיל מהידנית.</p></section>
+<section class="card " id="s1"><h2>הדרך הידנית: לעקוב אחרי הקוד</h2>
+<p>הרעיון: הקוד של המשחק יודע להגיע לנתון. אם נראה את ההוראה שנוגעת בו, נראה גם מאיפה היא לקחה את הכתובת.</p>
+<ol><li>מוצאים את הכתובת של החיים בסריקה רגילה ומוסיפים אותה לרשימה.</li><li>לחיצה ימנית על הכתובת, ובוחרים <strong>Find out what writes to this address</strong> (או F6). CE מצרף debugger לתהליך ופותח חלון ריק.</li><li>חוטפים מכה במשחק. בחלון מופיעה הוראה, למשל:</li></ol>
+<pre dir="ltr"><code>mov [ebx+000000EC], eax</code></pre>
+<ol><li>לוחצים על ההוראה ואז על <strong>More information</strong>. בחלון שנפתח מופיעים ערכי ה-registers ברגע שההוראה רצה, למשל <code>EBX=0A3F2000</code>.</li></ol>
+<p>קראנו את השורה הזו כבר בשיעור 1.5: <code>ebx</code> הוא בסיס המבנה, ו-<code>0xEC</code> הוא ה-offset של החיים. עכשיו צריך לגלות מי מחזיק את <code>0A3F2000</code>.</p>
+<ol><li>סריקה חדשה: מסמנים את התיבה <strong>Hex</strong>, Value Type 4 Bytes (או 8 Bytes במשחק 64 ביט), ומחפשים את <code>0A3F2000</code>. כל תוצאה היא מקום בזיכרון שמכיל את הכתובת הזו, כלומר pointer אל המבנה.</li><li>מחפשים בתוצאות כתובת <strong>ירוקה</strong>. ב-CE ירוק פירושו כתובת סטטית, בתוך module. אם יש אחת, סיימתם: זו תחילת השרשרת.</li><li>אין ירוקה? בוחרים אחת מהתוצאות וחוזרים לצעד 2 איתה, הפעם עם <strong>Find out what accesses this address</strong> (F5). כל סיבוב מוסיף רמה אחת לשרשרת.</li></ol></section>
+<section class="card " id="s2"><h2>להוסיף את ה-pointer לרשימה</h2>
+<ol><li>לוחצים <strong>Add Address Manually</strong>.</li><li>מסמנים <strong>Pointer</strong>.</li><li>בשדה התחתון כותבים את הכתובת הסטטית בצורה <code>&quot;game.exe&quot;+18AC00</code>.</li><li>בשדה ה-offset שמעליו כותבים <code>EC</code>.</li><li>לשרשרת ארוכה יותר לוחצים <strong>Add Offset</strong>. ה-offsets נכתבים מלמטה למעלה: הקרוב לבסיס למטה, האחרון למעלה.</li></ol>
+<p>CE מציג בזמן אמת לאן השרשרת מובילה, כך שרואים מיד אם היא מגיעה לערך הנכון. אחר כך סוגרים את המשחק, פותחים מחדש, ובודקים שהיא עדיין מראה את החיים.</p></section>
+<section class="card " id="s3"><h2>הדרך האוטומטית: Pointer scan</h2>
+<p>כשהמעקב הידני מסתבך אחרי שלוש או ארבע רמות, נותנים ל-CE לחפש את כל המסלולים האפשריים.</p>
+<ol><li>לחיצה ימנית על הכתובת, <strong>Pointer scan for this address</strong>.</li><li>ההגדרות החשובות: <strong>Max level</strong> (כמה רמות, מתחילים ב-5) ו-<strong>Maximum offset value</strong> (המרחק המרבי בכל רמה, ברירת המחדל 2047 בדרך כלל מספיקה).</li><li>שומרים את קובץ התוצאות. יתקבלו מאות אלפי מסלולים, ורובם יעבדו רק עכשיו ובמקרה.</li><li><strong>סוגרים את המשחק, פותחים מחדש, ומוצאים שוב את הכתובת של החיים</strong> בסריקה רגילה.</li><li>בחלון ה-Pointer scan בוחרים <strong>Pointer scanner</strong> ואז <strong>Rescan memory</strong>, ומזינים את הכתובת החדשה. נשארים רק מסלולים שמובילים אליה גם עכשיו.</li><li>חוזרים על 4 ו-5 כמה פעמים, רצוי גם אחרי החלפת שלב ואחרי מוות של הדמות.</li></ol>
+<p>כשנשארים כמה עשרות מסלולים, בוחרים לפי שלושת הסימנים משיעור 1.4: קצר, מתחיל ב-module של המשחק עצמו, ועם offsets קטנים והגיוניים.</p></section>
+<section class="card " id="s4"><h2>Pointermaps: אותו דבר, מדויק יותר</h2>
+<p>במקום לסנן אחרי הסריקה, אפשר לתת ל-CE שתי תמונות מצב מראש:</p>
+<ol><li>מוצאים את הכתובת, לחיצה ימנית, <strong>Generate pointermap</strong>, ושומרים קובץ.</li><li>מפעילים את המשחק מחדש, מוצאים שוב את הכתובת, ויוצרים pointermap שני.</li><li>מפעילים Pointer scan, מסמנים <strong>Use saved pointermap</strong> ו-<strong>Compare results with other saved pointermap(s)</strong>, ומזינים לכל קובץ את הכתובת שהייתה נכונה באותה ריצה.</li></ol>
+<p>התוצאה היא רשימה קצרה בהרבה כבר מההתחלה, כי כל מסלול חייב להיות תקף בשתי הריצות.</p></section>
+<section class="card " id="s5"><h2>איזו דרך לבחור</h2>
+<div class="table-wrap"><table><thead><tr><th></th><th>ידנית</th><th>Pointer scan</th></tr></thead><tbody><tr><td>זמן</td><td>ארוך יותר</td><td>קצר</td></tr><tr><td>מה לומדים</td><td>את מבנה המשחק: איזה אובייקט מחזיק מה</td><td>כמעט כלום</td></tr><tr><td>אמינות</td><td>גבוהה: זה המסלול שהמשחק עצמו משתמש בו</td><td>תלויה בכמות הסינון</td></tr><tr><td>מתי נתקעים</td><td>כשאין כתובת ירוקה אחרי רמות רבות</td><td>כשהמסלולים לא שורדים הפעלה מחדש</td></tr></tbody></table></div>
+<p>בפועל משלבים: מתחילים ידנית כדי להבין מה ה-offset של השדה ומי בסיס המבנה, ועוברים לסריקה אוטומטית רק על החלק שבין המבנה לכתובת הסטטית.</p></section>
+<section class="card glossary" id="s6"><h2>מילון מונחים</h2>
+<div class="table-wrap"><table><thead><tr><th>מונח</th><th>משמעות</th></tr></thead><tbody><tr><td><strong>Find out what writes / accesses</strong></td><td>הפעלת debugger שמציג את ההוראות שכותבות לכתובת או קוראות ממנה</td></tr><tr><td><strong>More information</strong></td><td>ערכי ה-registers ברגע שההוראה רצה</td></tr><tr><td><strong>כתובת ירוקה</strong></td><td>כתובת סטטית, בתוך module</td></tr><tr><td><strong>Pointer scan</strong></td><td>חיפוש אוטומטי של כל השרשראות שמובילות לכתובת</td></tr><tr><td><strong>Rescan memory</strong></td><td>סינון של תוצאות pointer scan לפי כתובת חדשה</td></tr><tr><td><strong>Pointermap</strong></td><td>תמונת מצב של כל ה-pointers בתהליך, לשימוש בסריקה</td></tr></tbody></table></div></section>
+<section class="card quiz" id="s7"><h2>בדיקה עצמית</h2>
+<ol><li>ראיתם <code>mov [esi+14], ecx</code> וב-More information כתוב <code>ESI=0B200400</code>. מה ה-offset, ומה מחפשים עכשיו?</li><li>מה המשמעות של כתובת ירוקה ב-CE?</li><li>למה חייבים להפעיל את המשחק מחדש באמצע pointer scan?</li><li>נשארו לכם 40 מסלולים. לפי מה בוחרים?</li><li>למה כדאי להתחיל בדרך הידנית גם כשהאוטומטית מהירה יותר?</li></ol>
+<p>תשובות: (1) ה-offset הוא <code>0x14</code>. מחפשים את הערך <code>0B200400</code> ב-hex כדי למצוא מי מצביע על המבנה. (2) כתובת סטטית בתוך module, שנשארת במקומה ביחס ל-base. (3) כדי לסנן מסלולים שתקפים רק בריצה הנוכחית. (4) קצר, מתחיל ב-module של המשחק, offsets קטנים. (5) היא מלמדת את מבנה המשחק, והמסלול שמתקבל הוא זה שהמשחק עצמו משתמש בו.</p></section>
+<nav class="pager"><a class="prev" href="02-scan-types-and-unknown-values.html"><small>→ השיעור הקודם</small>שיעור 2.2 — סוגי סריקה וערכים לא ידועים</a><a class="next" href="04-cheat-tables-and-hotkeys.html"><small>השיעור הבא ←</small>שיעור 2.4 — Cheat Tables, מקשי קיצור וארגון העבודה</a></nav>
+<footer class="foot">Game Hacking בעברית · שיעורים מקוריים · לתרגול על משחקי offline בלבד</footer>
+</main>
+<aside class="toc"><div class="toc-title">בעמוד זה</div><a href="#s0">הרעיון בקצרה</a><a href="#s1">הדרך הידנית: לעקוב אחרי הקוד</a><a href="#s2">להוסיף את ה-pointer לרשימה</a><a href="#s3">הדרך האוטומטית: Pointer scan</a><a href="#s4">Pointermaps: אותו דבר, מדויק יותר</a><a href="#s5">איזו דרך לבחור</a><a href="#s6">מילון מונחים</a><a href="#s7">בדיקה עצמית</a></aside>
+</div>
+</body>
+</html>

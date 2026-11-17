@@ -1,0 +1,41 @@
+{
+ "voice": "en-US-AvaMultilingualNeural",
+ "rate": "-4%",
+ "lines": [
+  {
+   "id": "01",
+   "duration": 9.713,
+   "text": "Double-click a game, and Windows has to answer two questions. Where does this file go in memory? And what does it need? Both answers are inside the file."
+  },
+  {
+   "id": "02",
+   "duration": 10.693,
+   "text": "Every Windows program starts with two letters, M Z. A little further in come the headers: a table of contents for the whole file. After them, the sections."
+  },
+  {
+   "id": "03",
+   "duration": 9.704,
+   "text": "The sections are the body of the file. Dot text holds the code. Dot data holds the variables. Each one gets its own permissions when it is loaded."
+  },
+  {
+   "id": "04",
+   "duration": 9.22,
+   "text": "The headers name a preferred address: the image base. Add an offset from it, called an R V A, and you have a real address in memory."
+  },
+  {
+   "id": "05",
+   "duration": 9.677,
+   "text": "A game does not contain Windows. It only lists the functions it needs, in the import table. Windows fills in the real addresses at load time."
+  },
+  {
+   "id": "06",
+   "duration": 10.958,
+   "text": "So read the imports, and the file tells on itself. Open process, read process memory, write process memory: this program reaches into other programs."
+  },
+  {
+   "id": "07",
+   "duration": 5.51,
+   "text": "An executable is a map of itself. Learn to read the map before you read the code."
+  }
+ ]
+}

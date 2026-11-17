@@ -1,0 +1,65 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background-color: #E4F2EC;
+      background-image:
+        linear-gradient(#9CCFC0 3px, transparent 3px), linear-gradient(90deg, #9CCFC0 3px, transparent 3px),
+        linear-gradient(#C4E3D9 1px, transparent 1px), linear-gradient(90deg, #C4E3D9 1px, transparent 1px);
+      background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px; }
+
+    .s2-stage { position: absolute; inset: 0; }
+    .s2-h { position: absolute; font-family: 'Archivo Black', sans-serif; font-size: 96px; line-height: 1.05; letter-spacing: -0.01em; color: #0B2A30; }
+    .s2-m { position: absolute; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 54px; line-height: 1.15; color: #2E6B63; }
+    .s2-acc { color: #E8490F; }
+    .s2-dim { color: #6A9188; }
+    .s2-cell { position: absolute; background: #fff; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; color: #0B2A30; }
+    .s2-cell.on { background: #FF5A1F; color: #fff; }
+    .s2-tile { position: absolute; background: #FF5A1F; color: #fff; border: 12px solid #0B2A30; box-shadow: 16px 16px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s2-card { position: absolute; background: #fff; color: #0B2A30; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s2-card.on { background: #FF5A1F; color: #fff; }
+    .s2-card.soft { background: #CFE9DF; }
+    .s2-bar { position: absolute; background: #0B2A30; }
+  </style>
+  <div id="root" data-composition-id="headers" data-width="1920" data-height="1080">
+    <div id="s2-stage" class="clip s2-stage" data-start="0" data-duration="11.8">
+      <div id="s2-r0" class="s2-card on" style="left: 260px; top: 130px; width: 620px; height: 110px; line-height: 94px; font-size: 60px">MZ</div>
+      <div id="s2-d0" class="s2-m" style="left: 960px; top: 155px">the first two bytes</div>
+      <div id="s2-r1" class="s2-card " style="left: 260px; top: 270px; width: 620px; height: 150px; line-height: 134px; font-size: 56px">PE headers</div>
+      <div id="s2-d1" class="s2-m" style="left: 960px; top: 315px">the table of contents</div>
+      <div id="s2-r2" class="s2-card " style="left: 260px; top: 450px; width: 620px; height: 110px; line-height: 94px; font-size: 52px">section table</div>
+      <div id="s2-d2" class="s2-m" style="left: 960px; top: 475px">one row per section</div>
+      <div id="s2-r3" class="s2-card soft" style="left: 260px; top: 590px; width: 620px; height: 100px; line-height: 84px; font-size: 50px">.text</div>
+      <div id="s2-r4" class="s2-card soft" style="left: 260px; top: 710px; width: 620px; height: 100px; line-height: 84px; font-size: 50px">.rdata</div>
+      <div id="s2-r5" class="s2-card soft" style="left: 260px; top: 830px; width: 620px; height: 100px; line-height: 84px; font-size: 50px">.data</div>
+      <div id="s2-d3" class="s2-m" style="left: 960px; top: 730px">the sections</div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const blurIn = (sel, t, d = 0.2) =>
+      tl.fromTo(sel, { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "power2.out" }, t);
+    const blurOut = (sel, t, d = 0.2) => tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d, ease: "power2.in" }, t);
+    const land = (sel, t, from = 1.3, d = 0.35) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
+    const each = (sel, t, gap = 0.12, from = 1.3) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out", stagger: gap }, t);
+    const wipe = (sel, t, d = 0.3) =>
+      tl.fromTo(sel, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: d, ease: "power2.out" }, t);
+    const dim = (sel, t, to = 0.3) => tl.to(sel, { opacity: to, duration: 0.3, ease: "power2.inOut" }, t);
+    blurIn("#s2-stage", 0, 0.25);
+
+    land("#s2-r0", 2.73);
+    blurIn("#s2-d0", 3.13);
+    land("#s2-r1", 5.73);
+    blurIn("#s2-d1", 6.77);
+    land("#s2-r2", 7.22);
+    blurIn("#s2-d2", 7.52);
+    each(["#s2-r3", "#s2-r4", "#s2-r5"], 9.73, 0.15);
+    blurIn("#s2-d3", 10.04);
+
+    blurOut("#s2-stage", 11.5, 0.25);
+    window.__timelines["headers"] = tl;
+  </script>
+</template>

@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #E4F2EC; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="78.5" data-width="1920" data-height="1080">
+      <div id="hook" data-composition-id="hook" data-composition-src="compositions/hook.html" data-start="0.0" data-duration="8.9" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+      <div id="stack" data-composition-id="stack" data-composition-src="compositions/stack.html" data-start="8.9" data-duration="7.9" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+      <div id="frame" data-composition-id="frame" data-composition-src="compositions/frame.html" data-start="16.8" data-duration="11.7" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+      <div id="cleanup" data-composition-id="cleanup" data-composition-src="compositions/cleanup.html" data-start="28.5" data-duration="15.1" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+      <div id="thiscall" data-composition-id="thiscall" data-composition-src="compositions/thiscall.html" data-start="43.6" data-duration="11.1" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+      <div id="x64" data-composition-id="x64" data-composition-src="compositions/x64.html" data-start="54.7" data-duration="14.9" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+      <div id="claim" data-composition-id="claim" data-composition-src="compositions/claim.html" data-start="69.6" data-duration="8.9" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+      <audio id="vo01" class="clip" src="assets/voice/01.wav" data-start="0.4" data-duration="7.844" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo02" class="clip" src="assets/voice/02.wav" data-start="9.3" data-duration="6.785" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo03" class="clip" src="assets/voice/03.wav" data-start="17.2" data-duration="10.575" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo04" class="clip" src="assets/voice/04.wav" data-start="28.9" data-duration="13.967" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo05" class="clip" src="assets/voice/05.wav" data-start="44.0" data-duration="10.013" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo06" class="clip" src="assets/voice/06.wav" data-start="55.1" data-duration="13.778" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo07" class="clip" src="assets/voice/07.wav" data-start="70.0" data-duration="5.888" data-track-index="3" data-volume="1"></audio>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>

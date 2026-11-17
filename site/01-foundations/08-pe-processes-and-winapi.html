@@ -29,6 +29,7 @@ p.style.width=(m>0?(h.scrollTop/m*100):0)+'%';},{passive:true});})();
 <div class="layout">
 <main>
 <section class="hero"><div class="kicker">שיעור 1.8</div><h1>קובץ PE, תהליכים ו-Windows API</h1><div class="chips"><span class="chip">מודול: <b dir="auto">יסודות</b></span><span class="chip">יחידות מקור: <b dir="auto">Windows PE File Format, Windows Internals - Processes and Threads, What is the Windows API</b></span></div></section>
+<section class="card"><h2>סרטון השיעור (באנגלית)</h2><video controls preload="metadata" src="../videos/08-inside-an-exe.mp4" style="display:block;width:100%;border-radius:10px;background:#000"></video></section>
 <section class="card tldr" id="s0"><h2>הרעיון בקצרה</h2>
 <p>שלושה מושגים סוגרים את מסלול היסודות. <strong>קובץ PE</strong> הוא הפורמט של כל EXE ו-DLL ב-Windows: הוא מתאר ל-Windows איך לפרוש את הקובץ בזיכרון. <strong>תהליך</strong> הוא מה שנוצר כשהקובץ הזה נטען ומתחיל לרוץ. ו-<strong>Windows API</strong> הוא אוסף הפונקציות שדרכן כל תוכנה, כולל הכלים שנכתוב, מבקשת דברים ממערכת ההפעלה. כל טכניקה במסלולים הבאים נשענת על שלושתם.</p></section>
 <section class="card " id="s1"><h2>מבנה של קובץ PE</h2>

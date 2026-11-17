@@ -18,6 +18,9 @@ The Hebrew site is published at https://strimpel1.github.io/gh-remake/ and each 
 | 3. Why the Address Changes | [mp4](https://strimpel1.github.io/gh-remake/videos/03-virtual-memory.mp4) |
 | 4. Follow the Pointers | [mp4](https://strimpel1.github.io/gh-remake/videos/04-pointer-chains.mp4) |
 | 5. Read One Line of Assembly | [mp4](https://strimpel1.github.io/gh-remake/videos/05-reading-assembly.mp4) |
+| 6. Edit a Save File, Byte by Byte | [mp4](https://strimpel1.github.io/gh-remake/videos/06-hex-editing.mp4) |
+| 7. Where Do the Arguments Go? | [mp4](https://strimpel1.github.io/gh-remake/videos/07-calling-conventions.mp4) |
+| 8. What's Inside an EXE | [mp4](https://strimpel1.github.io/gh-remake/videos/08-inside-an-exe.mp4) |
 
 ## Making a video
 

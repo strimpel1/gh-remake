@@ -1,0 +1,64 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background-color: #E4F2EC;
+      background-image:
+        linear-gradient(#9CCFC0 3px, transparent 3px), linear-gradient(90deg, #9CCFC0 3px, transparent 3px),
+        linear-gradient(#C4E3D9 1px, transparent 1px), linear-gradient(90deg, #C4E3D9 1px, transparent 1px);
+      background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px; }
+
+    .s5-stage { position: absolute; inset: 0; }
+    .s5-h { position: absolute; font-family: 'Archivo Black', sans-serif; font-size: 96px; line-height: 1.05; letter-spacing: -0.01em; color: #0B2A30; }
+    .s5-m { position: absolute; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 54px; line-height: 1.15; color: #2E6B63; }
+    .s5-acc { color: #E8490F; }
+    .s5-dim { color: #6A9188; }
+    .s5-cell { position: absolute; background: #fff; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; color: #0B2A30; }
+    .s5-cell.on { background: #FF5A1F; color: #fff; }
+    .s5-tile { position: absolute; background: #FF5A1F; color: #fff; border: 12px solid #0B2A30; box-shadow: 16px 16px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s5-card { position: absolute; background: #fff; color: #0B2A30; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s5-card.on { background: #FF5A1F; color: #fff; }
+    .s5-card.soft { background: #CFE9DF; }
+    .s5-bar { position: absolute; background: #0B2A30; }
+  </style>
+  <div id="root" data-composition-id="edit" data-width="1920" data-height="1080">
+    <div id="s5-stage" class="clip s5-stage" data-start="0" data-duration="8.2">
+      <div id="s5-l1" class="s5-m" style="left: 190px; top: 215px">before</div>
+      <div id="s5-a0" class="s5-cell c-s5-a" style="left: 720px; top: 170px; width: 170px; height: 170px; line-height: 154px; font-size: 85px">E8</div>
+      <div id="s5-a1" class="s5-cell c-s5-a" style="left: 914px; top: 170px; width: 170px; height: 170px; line-height: 154px; font-size: 85px">03</div>
+      <div id="s5-a2" class="s5-cell c-s5-a" style="left: 1108px; top: 170px; width: 170px; height: 170px; line-height: 154px; font-size: 85px">00</div>
+      <div id="s5-a3" class="s5-cell c-s5-a" style="left: 1302px; top: 170px; width: 170px; height: 170px; line-height: 154px; font-size: 85px">00</div>
+      <div id="s5-l2" class="s5-m" style="left: 190px; top: 445px">after</div>
+      <div id="s5-b0" class="s5-cell c-s5-b on" style="left: 720px; top: 400px; width: 170px; height: 170px; line-height: 154px; font-size: 85px">FF</div>
+      <div id="s5-b1" class="s5-cell c-s5-b on" style="left: 914px; top: 400px; width: 170px; height: 170px; line-height: 154px; font-size: 85px">FF</div>
+      <div id="s5-b2" class="s5-cell c-s5-b on" style="left: 1108px; top: 400px; width: 170px; height: 170px; line-height: 154px; font-size: 85px">FF</div>
+      <div id="s5-b3" class="s5-cell c-s5-b on" style="left: 1302px; top: 400px; width: 170px; height: 170px; line-height: 154px; font-size: 85px">7F</div>
+      <div id="s5-n" class="s5-h" style="left: 0px; top: 650px; font-size: 180px; width: 1920px; text-align: center"><span class="s5-acc">2,147,483,647</span></div>
+      <div id="s5-c" class="s5-m" style="left: 0px; top: 870px; width: 1920px; text-align: center">gold</div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const blurIn = (sel, t, d = 0.2) =>
+      tl.fromTo(sel, { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "power2.out" }, t);
+    const blurOut = (sel, t, d = 0.2) => tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d, ease: "power2.in" }, t);
+    const land = (sel, t, from = 1.3, d = 0.35) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
+    const each = (sel, t, gap = 0.12, from = 1.3) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out", stagger: gap }, t);
+    const wipe = (sel, t, d = 0.3) =>
+      tl.fromTo(sel, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: d, ease: "power2.out" }, t);
+    const dim = (sel, t, to = 0.3) => tl.to(sel, { opacity: to, duration: 0.3, ease: "power2.inOut" }, t);
+    blurIn("#s5-stage", 0, 0.25);
+
+    blurIn("#s5-l2", 0.5);
+    each(".c-s5-b", 0.8, 0.3);
+    dim(".c-s5-a", 2.38, 0.35);
+    land("#s5-n", 5.45, 1.2);
+    blurIn("#s5-c", 6.77);
+
+    blurOut("#s5-stage", 7.9, 0.25);
+    window.__timelines["edit"] = tl;
+  </script>
+</template>

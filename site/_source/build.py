@@ -40,6 +40,9 @@ VIDEOS = {
     "01-foundations/03-virtual-memory": "03-virtual-memory",
     "01-foundations/04-pointers-and-pointer-chains": "04-pointer-chains",
     "01-foundations/05-reading-assembly": "05-reading-assembly",
+    "01-foundations/06-hex-editing-files": "06-hex-editing",
+    "01-foundations/07-stack-and-calling-conventions": "07-calling-conventions",
+    "01-foundations/08-pe-processes-and-winapi": "08-inside-an-exe",
 }
 
 

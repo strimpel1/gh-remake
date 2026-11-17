@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שיעור 2.4 — Cheat Tables, מקשי קיצור וארגון העבודה</title>
+<link rel="stylesheet" href="../assets/style.css">
+<script>
+(function(){var r=document.documentElement,k='gh-he-theme';
+try{var s=localStorage.getItem(k);if(s)r.setAttribute('data-theme',s);}catch(e){}
+window.toggleTheme=function(){var d=r.getAttribute('data-theme');
+if(!d){d=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+var n=d==='dark'?'light':'dark';r.setAttribute('data-theme',n);
+try{localStorage.setItem(k,n);}catch(e){}};
+addEventListener('scroll',function(){var p=document.querySelector('.progress');if(!p)return;
+var h=document.documentElement;var m=h.scrollHeight-h.clientHeight;
+p.style.width=(m>0?(h.scrollTop/m*100):0)+'%';},{passive:true});})();
+</script>
+</head>
+<body>
+<div class="progress"></div>
+<header class="topbar">
+  <a class="home" href="../index.html">🎮 Game Hacking בעברית</a>
+  <span class="crumb"><span dir="auto">סריקת זיכרון עם Cheat Engine</span></span>
+  <span class="spacer"></span>
+  <span class="badge">לתרגול על משחקי offline בלבד</span>
+  <button class="theme-btn" onclick="toggleTheme()" title="מצב בהיר / כהה" aria-label="מצב בהיר או כהה">◐</button>
+</header>
+<div class="layout">
+<main>
+<section class="hero"><div class="kicker">שיעור 2.4</div><h1>Cheat Tables, מקשי קיצור וארגון העבודה</h1><div class="chips"><span class="chip">מודול: <b dir="auto">סריקת זיכרון עם Cheat Engine</b></span><span class="chip">יחידות מקור: <b dir="auto">How to Create Hotkeys &amp; Cheat Tables (GH106), How To Find Coordinates (GHS107), How to Find Velocity Address (GHS108)</b></span></div></section>
+<section class="card tldr" id="s0"><h2>הרעיון בקצרה</h2>
+<p>מצאתם pointer לחיים, לתחמושת ולמיקום. בלי לשמור אותם תצטרכו למצוא הכול מחדש בפעם הבאה. <strong>Cheat Table</strong> הוא קובץ ששומר את רשימת הכתובות, ה-pointers, התיאורים ומקשי הקיצור שלכם. זה נשמע כמו עניין של סדר בלבד, אבל טבלה מסודרת היא גם מפת המבנים של המשחק, והיא מה שהופך בהמשך לקוד של trainer.</p></section>
+<section class="card " id="s1"><h2>לשמור ולטעון</h2>
+<ul><li><strong>Ctrl+S</strong> שומר את הרשימה לקובץ עם הסיומת <code>.CT</code>.</li><li>CE מציע לטעון טבלה באופן אוטומטי כשמתחברים לתהליך בשם שתואם לשם הקובץ.</li><li>קובץ <code>.CT</code> הוא XML רגיל. אפשר לפתוח אותו בעורך טקסט, וכדאי לעשות את זה פעם אחת כדי לראות שאין שם קסם.</li></ul>
+<p>טבלה ששומרת <strong>כתובות ישירות</strong> חסרת ערך אחרי הפעלה מחדש. רק רשומות מסוג pointer, שמתחילות ב-<code>&quot;game.exe&quot;+offset</code>, שורדות. לפני ששומרים, מוודאים שכל רשומה היא pointer.</p></section>
+<section class="card " id="s2"><h2>לארגן את הרשימה</h2>
+<div class="table-wrap"><table><thead><tr><th>פעולה</th><th>איך</th></tr></thead><tbody><tr><td>לתת שם</td><td>לחיצה כפולה על העמודה Description</td></tr><tr><td>לשנות טיפוס</td><td>לחיצה כפולה על העמודה Type</td></tr><tr><td>לקבץ</td><td>בוחרים כמה רשומות, לחיצה ימנית, <strong>Create Header</strong>. אפשר לגרור רשומות לתוך כותרת</td></tr><tr><td>להציג ב-hex</td><td>לחיצה ימנית, <strong>Show as hexadecimal</strong></td></tr><tr><td>לשכפל עם offset אחר</td><td>Ctrl+C ו-Ctrl+V. בחלון ההדבקה אפשר להזיז את כל הכתובות במרחק קבוע</td></tr></tbody></table></div>
+<p>הטיפ האחרון חוסך הרבה זמן: מצאתם pointer לחיים ב-offset <code>0xEC</code>, ואתם יודעים שהשריון ב-<code>0xF0</code>? משכפלים את הרשומה ומשנים רק את ה-offset האחרון. השרשרת עד בסיס המבנה זהה לכל השדות של אותו אובייקט.</p></section>
+<section class="card " id="s3"><h2>Hotkeys</h2>
+<p>לחיצה ימנית על רשומה ואז <strong>Set/Change hotkeys</strong> (או Ctrl+H) פותחת את חלון מקשי הקיצור. לכל מקש בוחרים פעולה:</p>
+<div class="table-wrap"><table><thead><tr><th>פעולה</th><th>מה היא עושה</th></tr></thead><tbody><tr><td><strong>Toggle freeze</strong></td><td>מדליק ומכבה הקפאה</td></tr><tr><td><strong>Set value to</strong></td><td>כותב ערך קבוע, למשל 100 לחיים</td></tr><tr><td><strong>Increase / Decrease value with</strong></td><td>מוסיף או מחסיר כמות</td></tr><tr><td><strong>Freeze</strong>, <strong>Unfreeze</strong></td><td>הקפאה או שחרור, בלי מיתוג</td></tr></tbody></table></div>
+<p>בוחרים מקשים שהמשחק לא משתמש בהם. מקשי המספרים במקלדת הנומרית הם הבחירה המקובלת.</p></section>
+<section class="card " id="s4"><h2>דוגמה: למצוא קואורדינטות ולבנות טלפורט</h2>
+<p>מיקום הדמות הוא שלושה floats צמודים, ולכן הוא תרגיל מצוין לסריקת ערך לא ידוע:</p>
+<ol><li>Value Type: Float. Scan Type: Unknown initial value. First Scan.</li><li>עולים למקום גבוה יותר (מדרגות, קפיצה לגג). <strong>Increased value</strong>.</li><li>יורדים. <strong>Decreased value</strong>.</li><li>עומדים במקום. <strong>Unchanged value</strong>.</li><li>חוזרים על הצעדים עד שנשארות מעט תוצאות.</li></ol>
+<p>מתחילים דווקא בציר הגובה, כי קל לשלוט בו: למעלה הוא תמיד "גדל" או תמיד "קטן". בצירים האופקיים הכיוון תלוי בכיוון המפה, וקל להתבלבל.</p>
+<p>כשמוצאים את ציר הגובה, שני הצירים האחרים נמצאים 4 בתים לפניו ואחריו. שימו לב שהסדר משתנה בין מנועים: יש מנועים שבהם הגובה הוא Y ויש שבהם הוא Z. פותחים את הכתובת ב-Memory View (Ctrl+B), לחיצה ימנית, <strong>Display Type</strong> ואז <strong>Float</strong>, ורואים את שלושת הערכים זה לצד זה.</p>
+<p>עכשיו הטלפורט:</p>
+<ol><li>מוסיפים את שלוש הקואורדינטות לטבלה כ-pointers, תחת כותרת אחת.</li><li>עומדים במקום שרוצים לחזור אליו ורושמים את שלושת הערכים.</li><li>מגדירים לכל רשומה hotkey מסוג <strong>Set value to</strong> עם הערך שרשמתם, ונותנים לשלושתן את אותו מקש.</li></ol>
+<p>לחיצה אחת, והדמות קופצת לשם. אם היא נופלת דרך הרצפה, הוסיפו מעט לציר הגובה.</p></section>
+<section class="card " id="s5"><h2>Speedhack</h2>
+<p>תיבת הסימון <strong>Enable Speedhack</strong> בחלון הראשי משנה את קצב הזמן שהתהליך רואה: CE מיירט את פונקציות השעון של Windows ומחזיר להן זמן מואץ או מואט. ערך 2.0 מריץ את המשחק פי שניים, ו-0.5 בחצי מהירות.</p>
+<p>זה כלי עבודה שימושי, לא רק צעצוע: האטה ל-0.2 מאפשרת לבצע סריקות באמצע קרב בלי למות, והאצה מקצרת המתנות. זה עובד רק על משחקים שהזמן שלהם מחושב אצלכם במחשב.</p></section>
+<section class="card glossary" id="s6"><h2>מילון מונחים</h2>
+<div class="table-wrap"><table><thead><tr><th>מונח</th><th>משמעות</th></tr></thead><tbody><tr><td><strong>Cheat Table</strong></td><td>קובץ <code>.CT</code> ששומר כתובות, pointers, סקריפטים ומקשי קיצור</td></tr><tr><td><strong>Header</strong></td><td>רשומת כותרת שמקבצת רשומות אחרות</td></tr><tr><td><strong>Hotkey</strong></td><td>מקש שמבצע פעולה על רשומה</td></tr><tr><td><strong>Memory View</strong></td><td>חלון שמציג זיכרון גולמי וקוד, נפתח ב-Ctrl+B</td></tr><tr><td><strong>Speedhack</strong></td><td>שינוי קצב הזמן שהתהליך רואה</td></tr></tbody></table></div></section>
+<section class="card quiz" id="s7"><h2>בדיקה עצמית</h2>
+<ol><li>שמרתם טבלה, הפעלתם את המשחק מחדש, וכל הערכים מציגים <code>??</code>. מה שכחתם?</li><li>יש לכם pointer לחיים ב-offset <code>0xEC</code>. איך מוסיפים את השריון שב-<code>0xF0</code> בלי למצוא pointer חדש?</li><li>למה מתחילים חיפוש קואורדינטות בציר הגובה?</li><li>מצאתם את ציר הגובה. איפה שני הצירים האחרים?</li><li>בשביל מה שימושי Speedhack בזמן עבודה?</li></ol>
+<p>תשובות: (1) הרשומות הן כתובות ישירות ולא pointers. (2) משכפלים את הרשומה ומשנים את ה-offset האחרון. (3) קל לשלוט בכיוון: למעלה ולמטה ברורים, בלי תלות בכיוון המפה. (4) 4 בתים לפניו ואחריו, כשלושה floats צמודים. (5) האטה מאפשרת לסרוק באמצע פעולה, והאצה מקצרת המתנות.</p></section>
+<nav class="pager"><a class="prev" href="03-finding-pointers.html"><small>→ השיעור הקודם</small>שיעור 2.3 — למצוא Pointers: כתובת ששורדת הפעלה מחדש</a><span></span></nav>
+<footer class="foot">Game Hacking בעברית · שיעורים מקוריים · לתרגול על משחקי offline בלבד</footer>
+</main>
+<aside class="toc"><div class="toc-title">בעמוד זה</div><a href="#s0">הרעיון בקצרה</a><a href="#s1">לשמור ולטעון</a><a href="#s2">לארגן את הרשימה</a><a href="#s3">Hotkeys</a><a href="#s4">דוגמה: למצוא קואורדינטות ולבנות טלפורט</a><a href="#s5">Speedhack</a><a href="#s6">מילון מונחים</a><a href="#s7">בדיקה עצמית</a></aside>
+</div>
+</body>
+</html>

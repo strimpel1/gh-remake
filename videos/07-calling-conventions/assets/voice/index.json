@@ -1,0 +1,41 @@
+{
+ "voice": "en-US-AvaMultilingualNeural",
+ "rate": "-4%",
+ "lines": [
+  {
+   "id": "01",
+   "duration": 7.844,
+   "text": "You found a function in the game. To understand it, or to call it yourself, you need to know one thing: where do its arguments go?"
+  },
+  {
+   "id": "02",
+   "duration": 6.785,
+   "text": "In thirty-two bit code, they go on the stack. Pushed right to left, so the first argument ends up on top."
+  },
+  {
+   "id": "03",
+   "duration": 10.575,
+   "text": "Inside the function, E B P plus eight is the first argument. Plus twelve is the second. And E B P minus four is a local variable."
+  },
+  {
+   "id": "04",
+   "duration": 13.967,
+   "text": "Who cleans the stack afterwards? In the C convention, the caller does: you see an add to E S P right after the call. In the Windows convention, the function does: it ends with a return that pops its own arguments."
+  },
+  {
+   "id": "05",
+   "duration": 10.013,
+   "text": "C plus plus methods add one more thing: the object itself travels in E C X. Find what loads E C X before a call, and you have found the player."
+  },
+  {
+   "id": "06",
+   "duration": 13.778,
+   "text": "Sixty-four bit Windows has one rule for everyone. The first four arguments ride in registers: R C X, R D X, R eight and R nine. The result comes back in R A X."
+  },
+  {
+   "id": "07",
+   "duration": 5.888,
+   "text": "Stack or registers. Once you know where the arguments go, you can read any call."
+  }
+ ]
+}

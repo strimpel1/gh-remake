@@ -1,0 +1,65 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background-color: #E4F2EC;
+      background-image:
+        linear-gradient(#9CCFC0 3px, transparent 3px), linear-gradient(90deg, #9CCFC0 3px, transparent 3px),
+        linear-gradient(#C4E3D9 1px, transparent 1px), linear-gradient(90deg, #C4E3D9 1px, transparent 1px);
+      background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px; }
+
+    .s4-stage { position: absolute; inset: 0; }
+    .s4-h { position: absolute; font-family: 'Archivo Black', sans-serif; font-size: 96px; line-height: 1.05; letter-spacing: -0.01em; color: #0B2A30; }
+    .s4-m { position: absolute; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 54px; line-height: 1.15; color: #2E6B63; }
+    .s4-acc { color: #E8490F; }
+    .s4-dim { color: #6A9188; }
+    .s4-cell { position: absolute; background: #fff; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; color: #0B2A30; }
+    .s4-cell.on { background: #FF5A1F; color: #fff; }
+    .s4-tile { position: absolute; background: #FF5A1F; color: #fff; border: 12px solid #0B2A30; box-shadow: 16px 16px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s4-card { position: absolute; background: #fff; color: #0B2A30; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s4-card.on { background: #FF5A1F; color: #fff; }
+    .s4-card.soft { background: #CFE9DF; }
+    .s4-bar { position: absolute; background: #0B2A30; }
+  </style>
+  <div id="root" data-composition-id="cleanup" data-width="1920" data-height="1080">
+    <div id="s4-stage" class="clip s4-stage" data-start="0" data-duration="15.1">
+      <div id="s4-t" class="s4-h" style="left: 190px; top: 90px; font-size: 90px">who cleans up?</div>
+      <div id="s4-lh" class="s4-m" style="left: 190px; top: 260px">cdecl: the caller</div>
+      <div id="s4-l1" class="s4-card " style="left: 190px; top: 350px; width: 640px; height: 120px; line-height: 104px; font-size: 54px">call add</div>
+      <div id="s4-l2" class="s4-card on" style="left: 190px; top: 500px; width: 640px; height: 120px; line-height: 104px; font-size: 54px">add esp, 8</div>
+      <div id="s4-lm" class="s4-m" style="left: 190px; top: 660px; font-size: 44px">plain C functions</div>
+      <div id="s4-rh" class="s4-m" style="left: 1010px; top: 260px">stdcall: the function</div>
+      <div id="s4-r1" class="s4-card " style="left: 1010px; top: 350px; width: 640px; height: 120px; line-height: 104px; font-size: 54px">call Add</div>
+      <div id="s4-r2" class="s4-card on" style="left: 1010px; top: 500px; width: 640px; height: 120px; line-height: 104px; font-size: 54px">ret 8</div>
+      <div id="s4-rm" class="s4-m" style="left: 1010px; top: 660px; font-size: 44px">the whole Windows API</div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const blurIn = (sel, t, d = 0.2) =>
+      tl.fromTo(sel, { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "power2.out" }, t);
+    const blurOut = (sel, t, d = 0.2) => tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d, ease: "power2.in" }, t);
+    const land = (sel, t, from = 1.3, d = 0.35) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
+    const each = (sel, t, gap = 0.12, from = 1.3) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out", stagger: gap }, t);
+    const wipe = (sel, t, d = 0.3) =>
+      tl.fromTo(sel, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: d, ease: "power2.out" }, t);
+    const dim = (sel, t, to = 0.3) => tl.to(sel, { opacity: to, duration: 0.3, ease: "power2.inOut" }, t);
+    blurIn("#s4-stage", 0, 0.25);
+
+    wipe("#s4-t", 0.33, 0.5);
+    blurIn("#s4-lh", 3.82);
+    land("#s4-l1", 4.12);
+    land("#s4-l2", 5.73);
+    blurIn("#s4-lm", 7.05);
+    blurIn("#s4-rh", 8.41);
+    land("#s4-r1", 9.78);
+    land("#s4-r2", 11.81);
+    blurIn("#s4-rm", 12.56);
+
+    blurOut("#s4-stage", 14.8, 0.25);
+    window.__timelines["cleanup"] = tl;
+  </script>
+</template>

@@ -1,0 +1,65 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background-color: #E4F2EC;
+      background-image:
+        linear-gradient(#9CCFC0 3px, transparent 3px), linear-gradient(90deg, #9CCFC0 3px, transparent 3px),
+        linear-gradient(#C4E3D9 1px, transparent 1px), linear-gradient(90deg, #C4E3D9 1px, transparent 1px);
+      background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px; }
+
+    .s3-stage { position: absolute; inset: 0; }
+    .s3-h { position: absolute; font-family: 'Archivo Black', sans-serif; font-size: 96px; line-height: 1.05; letter-spacing: -0.01em; color: #0B2A30; }
+    .s3-m { position: absolute; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 54px; line-height: 1.15; color: #2E6B63; }
+    .s3-acc { color: #E8490F; }
+    .s3-dim { color: #6A9188; }
+    .s3-cell { position: absolute; background: #fff; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; color: #0B2A30; }
+    .s3-cell.on { background: #FF5A1F; color: #fff; }
+    .s3-tile { position: absolute; background: #FF5A1F; color: #fff; border: 12px solid #0B2A30; box-shadow: 16px 16px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s3-card { position: absolute; background: #fff; color: #0B2A30; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s3-card.on { background: #FF5A1F; color: #fff; }
+    .s3-card.soft { background: #CFE9DF; }
+    .s3-bar { position: absolute; background: #0B2A30; }
+
+    .s3-m span { display: inline-block; }
+    .s3-of { color: #6A9188; }
+  </style>
+  <div id="root" data-composition-id="read" data-width="1920" data-height="1080">
+    <div id="s3-stage" class="clip s3-stage" data-start="0" data-duration="11.4">
+      <div id="s3-r0" class="s3-m" style="left: 180px; top: 200px; font-size: 56px; color: #0B2A30"><span class="s3-of">00000000</span>&nbsp;&nbsp;<span id="s3-g1">53 41 56 45</span> 01 00 00 00&nbsp;&nbsp;<span class="s3-of">SAVE....</span></div>
+      <div id="s3-r1" class="s3-m" style="left: 180px; top: 296px; font-size: 56px; color: #0B2A30"><span class="s3-of">00000008</span>&nbsp;&nbsp;<span id="s3-g2">64 00 00 00</span> <span id="s3-g3">E8 03 00 00</span>&nbsp;&nbsp;<span class="s3-of">d...&egrave;...</span></div>
+      <div id="s3-r2" class="s3-m" style="left: 180px; top: 392px; font-size: 56px; color: #0B2A30"><span class="s3-of">00000010</span>&nbsp;&nbsp;42 6F 62 00 00 00 00 00&nbsp;&nbsp;<span class="s3-of">Bob.....</span></div>
+      <div id="s3-c1" class="s3-card " style="left: 180px; top: 600px; width: 420px; height: 140px; line-height: 124px; font-size: 64px">SAVE</div>
+      <div id="s3-m1" class="s3-m" style="left: 180px; top: 770px; font-size: 44px">a text marker</div>
+      <div id="s3-c2" class="s3-card " style="left: 690px; top: 600px; width: 420px; height: 140px; line-height: 124px; font-size: 64px">100</div>
+      <div id="s3-m2" class="s3-m" style="left: 690px; top: 770px; font-size: 44px">health, 4 bytes</div>
+      <div id="s3-c3" class="s3-card on" style="left: 1200px; top: 600px; width: 420px; height: 140px; line-height: 124px; font-size: 64px">1000</div>
+      <div id="s3-m3" class="s3-m" style="left: 1200px; top: 770px; font-size: 44px">gold, small end first</div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const blurIn = (sel, t, d = 0.2) =>
+      tl.fromTo(sel, { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "power2.out" }, t);
+    const blurOut = (sel, t, d = 0.2) => tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d, ease: "power2.in" }, t);
+    const land = (sel, t, from = 1.3, d = 0.35) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
+    const each = (sel, t, gap = 0.12, from = 1.3) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out", stagger: gap }, t);
+    const wipe = (sel, t, d = 0.3) =>
+      tl.fromTo(sel, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: d, ease: "power2.out" }, t);
+    const dim = (sel, t, to = 0.3) => tl.to(sel, { opacity: to, duration: 0.3, ease: "power2.inOut" }, t);
+    blurIn("#s3-stage", 0, 0.25);
+
+    tl.to("#s3-g1", { backgroundColor: "#0B2A30", color: "#ffffff", duration: 0.25 }, 2.12);
+    each(["#s3-c1", "#s3-m1"], 2.42, 0.15);
+    tl.to("#s3-g2", { backgroundColor: "#0B2A30", color: "#ffffff", duration: 0.25 }, 4.26);
+    each(["#s3-c2", "#s3-m2"], 4.66, 0.15);
+    tl.to("#s3-g3", { backgroundColor: "#FF5A1F", color: "#ffffff", duration: 0.25, ease: "power2.out" }, 6.99);
+    each(["#s3-c3", "#s3-m3"], 9.5, 0.15);
+
+    blurOut("#s3-stage", 11.1, 0.25);
+    window.__timelines["read"] = tl;
+  </script>
+</template>

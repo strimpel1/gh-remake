@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שיעור 2.2 — סוגי סריקה וערכים לא ידועים</title>
+<link rel="stylesheet" href="../assets/style.css">
+<script>
+(function(){var r=document.documentElement,k='gh-he-theme';
+try{var s=localStorage.getItem(k);if(s)r.setAttribute('data-theme',s);}catch(e){}
+window.toggleTheme=function(){var d=r.getAttribute('data-theme');
+if(!d){d=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+var n=d==='dark'?'light':'dark';r.setAttribute('data-theme',n);
+try{localStorage.setItem(k,n);}catch(e){}};
+addEventListener('scroll',function(){var p=document.querySelector('.progress');if(!p)return;
+var h=document.documentElement;var m=h.scrollHeight-h.clientHeight;
+p.style.width=(m>0?(h.scrollTop/m*100):0)+'%';},{passive:true});})();
+</script>
+</head>
+<body>
+<div class="progress"></div>
+<header class="topbar">
+  <a class="home" href="../index.html">🎮 Game Hacking בעברית</a>
+  <span class="crumb"><span dir="auto">סריקת זיכרון עם Cheat Engine</span></span>
+  <span class="spacer"></span>
+  <span class="badge">לתרגול על משחקי offline בלבד</span>
+  <button class="theme-btn" onclick="toggleTheme()" title="מצב בהיר / כהה" aria-label="מצב בהיר או כהה">◐</button>
+</header>
+<div class="layout">
+<main>
+<section class="hero"><div class="kicker">שיעור 2.2</div><h1>סוגי סריקה וערכים לא ידועים</h1><div class="chips"><span class="chip">מודול: <b dir="auto">סריקת זיכרון עם Cheat Engine</b></span><span class="chip">יחידות מקור: <b dir="auto">Value Types (GH103), Scanning for Elusive Values (GH104), How to Use Cheat Engine Find Unknown Value</b></span></div></section>
+<section class="card tldr" id="s0"><h2>הרעיון בקצרה</h2>
+<p>סריקת ערך מדויק עובדת רק כשיודעים את המספר. אבל פס חיים בלי מספר, מד סיבולת, או ערך שהמשחק שומר בצורה שונה ממה שהוא מציג, לא נותנים לכם מה לכתוב בתיבת החיפוש. הפתרון: לא מחפשים <strong>ערך</strong>, מחפשים <strong>התנהגות</strong>. מתחילים מכל הזיכרון, ומסננים שוב ושוב לפי שאלה אחת: האם הערך עלה, ירד, השתנה או נשאר כמו שהיה.</p></section>
+<section class="card " id="s1"><h2>סוגי הסריקה</h2>
+<div class="table-wrap"><table><thead><tr><th>Scan Type</th><th>מתי משתמשים</th></tr></thead><tbody><tr><td><strong>Exact Value</strong></td><td>יודעים את המספר</td></tr><tr><td><strong>Bigger than / Smaller than</strong></td><td>יודעים גבול, לא ערך</td></tr><tr><td><strong>Value between</strong></td><td>יודעים טווח. הבחירה הרגילה ל-float</td></tr><tr><td><strong>Unknown initial value</strong></td><td>לא יודעים כלום. זמין רק בסריקה ראשונה</td></tr><tr><td><strong>Increased / Decreased value</strong></td><td>הערך עלה או ירד מאז הסריקה הקודמת</td></tr><tr><td><strong>Increased / Decreased value by</strong></td><td>עלה או ירד בכמות ידועה, למשל "ירד ב-5"</td></tr><tr><td><strong>Changed / Unchanged value</strong></td><td>השתנה, או לא השתנה</td></tr></tbody></table></div>
+<p>ארבעת האחרונים זמינים רק ב-Next Scan, כי הם משווים לסריקה הקודמת.</p></section>
+<section class="card " id="s2"><h2>סריקת ערך לא ידוע</h2>
+<p>המטרה: למצוא את פס החיים במשחק שמציג רק פס.</p>
+<ol><li>Scan Type: <strong>Unknown initial value</strong>. Value Type: מתחילים ב-4 Bytes. לוחצים First Scan. CE שומר תמונה של כל הזיכרון, ומספר התוצאות יהיה מיליונים.</li><li>חוטפים מכה. Scan Type: <strong>Decreased value</strong>, ואז Next Scan.</li><li><strong>לא עושים כלום</strong> כמה שניות. Scan Type: <strong>Unchanged value</strong>, ואז Next Scan. זה הצעד שרוב המתחילים מדלגים עליו, והוא החזק ביותר: הוא מעיף את כל הערכים שמשתנים מעצמם, כמו שעונים, מונים ואנימציות.</li><li>מתרפאים. <strong>Increased value</strong>, ואז Next Scan.</li><li>חוזרים על 2 עד 4, בסדר משתנה, עד שנשארות עשרות תוצאות ולא אלפים.</li><li>מוסיפים את המועמדים לרשימה ובודקים אותם אחד אחד: משנים ורואים אם הפס זז.</li></ol>
+<p>שני כללים שמקצרים את התהליך:</p>
+<ul><li><strong>Unchanged אחרי כל שינוי.</strong> אחרי כל צעד של "ירד" או "עלה", סיבוב אחד של Unchanged בלי לגעת בכלום.</li><li><strong>לא מניחים כיוון.</strong> יש משחקים שסופרים <strong>נזק שנצבר</strong> במקום חיים שנותרו. חטפתם מכה, והערך עלה. אם Decreased מרוקן את הרשימה, מתחילים מחדש עם <strong>Changed value</strong> במקום.</li></ul></section>
+<section class="card " id="s3"><h2>לבחור טיפוס</h2>
+<p>כמו שראינו בשיעור 1.2, הטיפוס קובע אם תמצאו בכלל. סדר הניסיונות המקובל:</p>
+<div class="table-wrap"><table><thead><tr><th>מה מחפשים</th><th>מנסים קודם</th><th>ואז</th></tr></thead><tbody><tr><td>כסף, תחמושת, ניקוד, פריטים</td><td>4 Bytes</td><td>8 Bytes, 2 Bytes</td></tr><tr><td>חיים</td><td>4 Bytes</td><td>Float</td></tr><tr><td>מיקום, מהירות, זווית, טיימר</td><td>Float</td><td>Double</td></tr><tr><td>פס בלי מספר</td><td>Float בסריקת ערך לא ידוע</td><td>4 Bytes</td></tr><tr><td>דגל של כן או לא</td><td>Byte</td><td>4 Bytes</td></tr></tbody></table></div>
+<p>האפשרות <strong>All</strong> ב-Value Type סורקת כמה טיפוסים בבת אחת. היא נוחה כשאין לכם מושג, אבל איטית ומחזירה הרבה יותר רעש.</p></section>
+<section class="card " id="s4"><h2>Float: טווח ולא מספר</h2>
+<p>המסך מראה 87, ובזיכרון שמור 87.3406. חיפוש Exact Value של 87 כ-Float ייכשל. שתי דרכים:</p>
+<ul><li><strong>Value between</strong>, עם 87 ו-88.</li><li>האפשרות <strong>Rounded (default)</strong> שמופיעה ליד תיבת הערך כשבוחרים Float. במצב הזה חיפוש של 87 מוצא גם 87.3. המצב <strong>Truncated</strong> מוצא כל ערך שמתחיל ב-87, והמצב <strong>Rounded (extreme)</strong> סלחני עוד יותר.</li></ul></section>
+<section class="card " id="s5"><h2>כשהערך בזיכרון שונה מהמסך</h2>
+<div class="table-wrap"><table><thead><tr><th>מה המשחק עושה</th><th>איך זה נראה</th><th>מה עושים</th></tr></thead><tbody><tr><td>מכפיל בקבוע</td><td>87 על המסך, 870 או 8700 בזיכרון</td><td>סריקת ערך לא ידוע. אחרי שמוצאים, היחס ברור</td></tr><tr><td>שומר אחוז</td><td>פס מלא הוא 1.0, חצי הוא 0.5</td><td>Float, ערך לא ידוע</td></tr><tr><td>שומר את ההפך</td><td>נזק שנצבר, או זמן שנותר</td><td>Changed value במקום Decreased</td></tr><tr><td>מצפין</td><td>הערך משתנה לגמרי בכל שינוי קטן</td><td>רק Changed ו-Unchanged עובדים</td></tr><tr><td>מחזיק כמה עותקים</td><td>מוצאים שלוש כתובות, רק אחת משפיעה</td><td>בודקים כל אחת בנפרד</td></tr></tbody></table></div>
+<p>במקרה של הצפנה, הסריקה מביאה אתכם לכתובת אבל לא למספר שאפשר לכתוב. משם ממשיכים דרך הקוד שקורא את הערך, ב-debugger. זה הנושא של שיעור 2.3 ושל מסלול 3.</p></section>
+<section class="card " id="s6"><h2>שתי הגדרות שכדאי להכיר</h2>
+<ul><li><strong>Fast Scan</strong>, מסומן כברירת מחדל עם הערך 4. CE בודק רק כתובות שמתחלקות ב-4, כי שם קומפיילרים מניחים משתנים. זה מהיר פי כמה, ורק לעיתים נדירות מפספס. אם אתם בטוחים בטיפוס ובערך ועדיין אין תוצאות, מבטלים את הסימון ומנסים שוב.</li><li><strong>Writable</strong>. כברירת מחדל נסרק רק זיכרון שאפשר לכתוב אליו. ערכים של משחק נמצאים שם כמעט תמיד, ואין סיבה לשנות.</li></ul></section>
+<section class="card glossary" id="s7"><h2>מילון מונחים</h2>
+<div class="table-wrap"><table><thead><tr><th>מונח</th><th>משמעות</th></tr></thead><tbody><tr><td><strong>Unknown initial value</strong></td><td>סריקה ראשונה ששומרת את כל הזיכרון להשוואה</td></tr><tr><td><strong>Increased / Decreased</strong></td><td>סינון לפי כיוון השינוי מאז הסריקה הקודמת</td></tr><tr><td><strong>Unchanged</strong></td><td>סינון של ערכים שלא השתנו. מנקה רעש</td></tr><tr><td><strong>Value between</strong></td><td>סינון לפי טווח</td></tr><tr><td><strong>Fast Scan</strong></td><td>בדיקה של כתובות מיושרות בלבד</td></tr><tr><td><strong>Rounded / Truncated</strong></td><td>מצבי העיגול בחיפוש Float</td></tr></tbody></table></div></section>
+<section class="card quiz" id="s8"><h2>בדיקה עצמית</h2>
+<ol><li>למה Unchanged value הוא הסינון היעיל ביותר בסריקת ערך לא ידוע?</li><li>חטפתם מכה, סיננתם Decreased, והרשימה התרוקנה. מה קרה כנראה?</li><li>המסך מראה 50 חיים. חיפוש Exact Value של 50 כ-Float לא מוצא כלום. מה מנסים?</li><li>מצאתם שהערך בזיכרון הוא 5000 כשהמסך מראה 50. מה כותבים כדי לקבל 999 חיים?</li><li>מתי מבטלים את Fast Scan?</li></ol>
+<p>תשובות: (1) הוא מסיר את כל הערכים שמשתנים מעצמם, שהם רוב הרעש. (2) המשחק סופר נזק שנצבר, או שהטיפוס שגוי. מתחילים שוב עם Changed value. (3) Value between 50 ו-51, או מצב Rounded. (4) 99900, כי היחס הוא 100. (5) כשבטוחים בטיפוס ובערך ועדיין אין תוצאות.</p></section>
+<nav class="pager"><a class="prev" href="01-first-scan.html"><small>→ השיעור הקודם</small>שיעור 2.1 — Cheat Engine: התקנה וסריקה ראשונה</a><a class="next" href="03-finding-pointers.html"><small>השיעור הבא ←</small>שיעור 2.3 — למצוא Pointers: כתובת ששורדת הפעלה מחדש</a></nav>
+<footer class="foot">Game Hacking בעברית · שיעורים מקוריים · לתרגול על משחקי offline בלבד</footer>
+</main>
+<aside class="toc"><div class="toc-title">בעמוד זה</div><a href="#s0">הרעיון בקצרה</a><a href="#s1">סוגי הסריקה</a><a href="#s2">סריקת ערך לא ידוע</a><a href="#s3">לבחור טיפוס</a><a href="#s4">Float: טווח ולא מספר</a><a href="#s5">כשהערך בזיכרון שונה מהמסך</a><a href="#s6">שתי הגדרות שכדאי להכיר</a><a href="#s7">מילון מונחים</a><a href="#s8">בדיקה עצמית</a></aside>
+</div>
+</body>
+</html>

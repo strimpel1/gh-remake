@@ -29,6 +29,7 @@ p.style.width=(m>0?(h.scrollTop/m*100):0)+'%';},{passive:true});})();
 <div class="layout">
 <main>
 <section class="hero"><div class="kicker">שיעור 1.7</div><h1>ה-Stack ו-Calling Conventions</h1><div class="chips"><span class="chip">מודול: <b dir="auto">יסודות</b></span><span class="chip">יחידות מקור: <b dir="auto">Calling Conventions For Reverse Engineering, Stack Pointers Explained - ESP vs EBP</b></span></div></section>
+<section class="card"><h2>סרטון השיעור (באנגלית)</h2><video controls preload="metadata" src="../videos/07-calling-conventions.mp4" style="display:block;width:100%;border-radius:10px;background:#000"></video></section>
 <section class="card tldr" id="s0"><h2>הרעיון בקצרה</h2>
 <p>כשפונקציה אחת קוראת לאחרת, שתיהן חייבות להסכים על כמה דברים: איפה נמצאים הפרמטרים, איפה חוזר ערך ההחזרה, ומי מנקה אחרי הקריאה. ההסכם הזה נקרא <strong>calling convention</strong>. אין הסכם אחד: יש כמה, והקומפיילר בוחר ביניהם. למה זה חשוב לנו? כי כדי להבין מה פונקציה במשחק מקבלת, וכדי לקרוא לה בעצמנו בהמשך הקורס, צריך לדעת באיזה הסכם היא משתמשת. טעות בהסכם נגמרת כמעט תמיד בקריסה.</p></section>
 <section class="card " id="s1"><h2>Stack frame: המרחב של פונקציה אחת</h2>
