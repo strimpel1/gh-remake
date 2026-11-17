@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #E4F2EC; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="74.4" data-width="1920" data-height="1080">
+      <div id="hook" data-composition-id="hook" data-composition-src="compositions/hook.html" data-start="0.0" data-duration="8.2" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+      <div id="theline" data-composition-id="theline" data-composition-src="compositions/theline.html" data-start="8.2" data-duration="8.8" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+      <div id="order" data-composition-id="order" data-composition-src="compositions/order.html" data-start="17.0" data-duration="8.0" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+      <div id="brackets" data-composition-id="brackets" data-composition-src="compositions/brackets.html" data-start="25.0" data-duration="7.2" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+      <div id="twofacts" data-composition-id="twofacts" data-composition-src="compositions/twofacts.html" data-start="32.2" data-duration="8.0" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+      <div id="three" data-composition-id="three" data-composition-src="compositions/three.html" data-start="40.2" data-duration="7.7" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+      <div id="nop" data-composition-id="nop" data-composition-src="compositions/nop.html" data-start="47.9" data-duration="9.7" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+      <div id="careful" data-composition-id="careful" data-composition-src="compositions/careful.html" data-start="57.6" data-duration="8.0" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+      <div id="claim" data-composition-id="claim" data-composition-src="compositions/claim.html" data-start="65.6" data-duration="8.8" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+      <audio id="vo01" class="clip" src="assets/voice/01.wav" data-start="0.4" data-duration="7.059" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo02" class="clip" src="assets/voice/02.wav" data-start="8.6" data-duration="7.67" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo03" class="clip" src="assets/voice/03.wav" data-start="17.4" data-duration="6.902" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo04" class="clip" src="assets/voice/04.wav" data-start="25.4" data-duration="6.121" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo05" class="clip" src="assets/voice/05.wav" data-start="32.6" data-duration="6.877" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo06" class="clip" src="assets/voice/06.wav" data-start="40.6" data-duration="6.622" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo07" class="clip" src="assets/voice/07.wav" data-start="48.3" data-duration="8.592" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo08" class="clip" src="assets/voice/08.wav" data-start="58.0" data-duration="6.94" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo09" class="clip" src="assets/voice/09.wav" data-start="66.0" data-duration="5.807" data-track-index="3" data-volume="1"></audio>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>

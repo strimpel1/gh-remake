@@ -1,0 +1,51 @@
+{
+ "voice": "en-US-AvaMultilingualNeural",
+ "rate": "-4%",
+ "lines": [
+  {
+   "id": "01",
+   "duration": 7.059,
+   "text": "Somewhere in the game, one instruction takes away your health. Read that one line, and you understand the whole trick."
+  },
+  {
+   "id": "02",
+   "duration": 7.67,
+   "text": "Here it is. Move, into the memory at E B X plus E C, the value of E A X."
+  },
+  {
+   "id": "03",
+   "duration": 6.902,
+   "text": "Destination comes first, source second. So this line copies E A X into something."
+  },
+  {
+   "id": "04",
+   "duration": 6.121,
+   "text": "Square brackets mean memory. Not the register itself, but the address stored inside it."
+  },
+  {
+   "id": "05",
+   "duration": 6.877,
+   "text": "E B X holds the start of the player. E C is the offset of health. One line just told you both."
+  },
+  {
+   "id": "06",
+   "duration": 6.622,
+   "text": "Two lines earlier, a subtract: health minus damage. Then this line stores the result."
+  },
+  {
+   "id": "07",
+   "duration": 8.592,
+   "text": "Replace the store with no-ops, the instruction that does nothing, and health stops dropping. Six bytes out, six no-ops in."
+  },
+  {
+   "id": "08",
+   "duration": 6.94,
+   "text": "But careful. The same code runs for enemies too. E B X is whoever just got hit."
+  },
+  {
+   "id": "09",
+   "duration": 5.807,
+   "text": "Destination, brackets, offset. Read those three, and you can read the line."
+  }
+ ]
+}

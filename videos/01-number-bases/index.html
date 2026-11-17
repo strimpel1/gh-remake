@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #E4F2EC; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="80.4" data-width="1920" data-height="1080">
+      <div id="hud" data-composition-id="hud" data-composition-src="compositions/hud.html" data-start="0" data-duration="8.5" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+      <div id="wall" data-composition-id="wall" data-composition-src="compositions/wall.html" data-start="8.5" data-duration="9.1" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+      <div id="byte" data-composition-id="byte" data-composition-src="compositions/byte.html" data-start="17.6" data-duration="9.6" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+      <div id="bits" data-composition-id="bits" data-composition-src="compositions/bits.html" data-start="27.2" data-duration="8.1" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+      <div id="split" data-composition-id="split" data-composition-src="compositions/split.html" data-start="35.3" data-duration="10.2" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+      <div id="table" data-composition-id="table" data-composition-src="compositions/table.html" data-start="45.5" data-duration="9.9" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+      <div id="full" data-composition-id="full" data-composition-src="compositions/full.html" data-start="55.4" data-duration="9.7" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+      <div id="back" data-composition-id="back" data-composition-src="compositions/back.html" data-start="65.1" data-duration="7.8" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+      <div id="claim" data-composition-id="claim" data-composition-src="compositions/claim.html" data-start="72.9" data-duration="7.5" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+      <audio id="vo01" class="clip" src="assets/voice/01.wav" data-start="0.5" data-duration="7.294" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo02" class="clip" src="assets/voice/02.wav" data-start="8.9" data-duration="7.958" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo03" class="clip" src="assets/voice/03.wav" data-start="18.0" data-duration="8.492" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo04" class="clip" src="assets/voice/04.wav" data-start="27.6" data-duration="7.124" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo05" class="clip" src="assets/voice/05.wav" data-start="35.7" data-duration="7.503" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo06" class="clip" src="assets/voice/06.wav" data-start="45.9" data-duration="8.896" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo07" class="clip" src="assets/voice/07.wav" data-start="55.8" data-duration="8.517" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo08" class="clip" src="assets/voice/08.wav" data-start="65.5" data-duration="6.149" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo09" class="clip" src="assets/voice/09.wav" data-start="73.3" data-duration="4.538" data-track-index="3" data-volume="1"></audio>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>

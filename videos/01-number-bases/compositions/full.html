@@ -1,0 +1,57 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background-color: #E4F2EC;
+      background-image:
+        linear-gradient(#9CCFC0 3px, transparent 3px), linear-gradient(90deg, #9CCFC0 3px, transparent 3px),
+        linear-gradient(#C4E3D9 1px, transparent 1px), linear-gradient(90deg, #C4E3D9 1px, transparent 1px);
+      background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px;
+      font-family: 'IBM Plex Mono', monospace; color: #0B2A30; }
+    .s7-stage { position: absolute; inset: 0; }
+
+    .s7-cell { position: relative; width: 150px; height: 150px; background: #fff; border: 8px solid #0B2A30;
+      box-shadow: 10px 10px 0 #0B2A30; font-size: 110px; font-weight: 700; line-height: 134px; text-align: center; }
+    .s7-cell.on { background: #FF5A1F; color: #fff; }
+    .s7-pv { position: absolute; left: 0; right: 0; top: -66px; font-size: 40px; line-height: 1; color: #2E6B63; font-weight: 700; }
+
+    .s7-grp { position: absolute; top: 150px; display: flex; gap: 22px; }
+    .s7-on { position: absolute; inset: 0; background: #E8490F; color: #fff; }
+    .s7-dig { position: absolute; top: 330px; width: 666px; text-align: center; font-size: 400px; font-weight: 700; line-height: 1; color: #E8490F; }
+    .s7-eq { position: absolute; left: 0; right: 0; top: 740px; text-align: center; font-family: 'Archivo Black', sans-serif; font-size: 150px; line-height: 1; }
+    .s7-cap { position: absolute; left: 0; right: 0; top: 905px; text-align: center; font-size: 54px; font-weight: 700; color: #2E6B63; }
+    .s7-flood { position: absolute; inset: 0; background: #FF5A1F; }
+  </style>
+  <div id="root" data-composition-id="full" data-width="1920" data-height="1080">
+    <div id="s7-stage" class="clip s7-stage" data-start="0" data-duration="9.7">
+      <div id="s7-g1" class="s7-grp" style="left: 192px"><div id="s7-a0" class="s7-cell">0<b class="s7-on">1</b></div><div id="s7-a1" class="s7-cell on">1<b class="s7-on">1</b></div><div id="s7-a2" class="s7-cell on">1<b class="s7-on">1</b></div><div id="s7-a3" class="s7-cell">0<b class="s7-on">1</b></div></div>
+      <div id="s7-g2" class="s7-grp" style="left: 1062px"><div id="s7-b0" class="s7-cell">0<b class="s7-on">1</b></div><div id="s7-b1" class="s7-cell on">1<b class="s7-on">1</b></div><div id="s7-b2" class="s7-cell">0<b class="s7-on">1</b></div><div id="s7-b3" class="s7-cell">0<b class="s7-on">1</b></div></div>
+      <div id="s7-d1" class="s7-dig" style="left: 192px">F</div>
+      <div id="s7-d2" class="s7-dig" style="left: 1062px">F</div>
+      <div id="s7-eq" class="s7-eq">FF = 255</div>
+      <div id="s7-cap" class="s7-cap">the most one byte can hold</div>
+      <div id="s7-flood" class="s7-flood" data-layout-ignore></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const blurIn = (sel, t, d = 0.2) =>
+      tl.fromTo(sel, { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "power2.out" }, t);
+    const blurOut = (sel, t, d = 0.2) => tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d, ease: "power2.in" }, t);
+    const land = (sel, t, from = 1.3, d = 0.35) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
+
+    blurIn(["#s7-g1", "#s7-g2"], 0, 0.25);
+    // every bit flips to 1, left to right
+    const faces = gsap.utils.toArray(".s7-on");
+    faces.forEach((el, i) => {
+      tl.fromTo(el, { opacity: 0, scaleY: 0 }, { opacity: 1, scaleY: 1, duration: 0.18, ease: "power3.out" }, 0.7 + i * 0.2);
+    });
+    land("#s7-d1", 3.5, 1.4);
+    land("#s7-d2", 3.85, 1.4);
+    land("#s7-eq", 5.3, 1.2);
+    blurIn("#s7-cap", 6.95);
+    // the orange of the byte floods the frame; the next shot pulls back out of it
+    tl.fromTo("#s7-flood", { clipPath: "circle(0% at 50% 50%)" }, { clipPath: "circle(75% at 50% 50%)", duration: 0.4, ease: "power3.in" }, 9.28);
+
+    window.__timelines["full"] = tl;
+  </script>
+</template>

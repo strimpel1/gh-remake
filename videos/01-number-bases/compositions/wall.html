@@ -1,0 +1,56 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background-color: #E4F2EC;
+      background-image:
+        linear-gradient(#9CCFC0 3px, transparent 3px), linear-gradient(90deg, #9CCFC0 3px, transparent 3px),
+        linear-gradient(#C4E3D9 1px, transparent 1px), linear-gradient(90deg, #C4E3D9 1px, transparent 1px);
+      background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px;
+      font-family: 'IBM Plex Mono', monospace; color: #0B2A30; }
+    .s2-stage { position: absolute; inset: 0; }
+
+    .s2-wall { position: absolute; left: 96px; top: 150px; right: 96px; }
+    .s2-row { display: flex; align-items: center; height: 112px; font-size: 56px; font-weight: 700; color: #0B2A30; }
+    .s2-row span { width: 96px; height: 96px; line-height: 96px; text-align: center; }
+    .s2-row .s2-addr { width: 330px; text-align: left; color: #2E6B63; margin-right: 30px; }
+    .s2-flash { position: absolute; inset: 0; background: #fff; }
+  </style>
+  <div id="root" data-composition-id="wall" data-width="1920" data-height="1080">
+    <div id="s2-stage" class="clip s2-stage" data-start="0" data-duration="9.1">
+      <div id="s2-wall" class="s2-wall" data-layout-allow-overflow>
+        <div id="s2-row0" class="s2-row"><span class="s2-addr">00F8A480</span><span class="s2-b">3C</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">01</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">9A</span><span class="s2-b">99</span><span class="s2-b">19</span><span class="s2-b">3F</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">80</span><span class="s2-b">3F</span></div>
+        <div id="s2-row1" class="s2-row"><span class="s2-addr">00F8A490</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">C8</span><span class="s2-b">42</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">48</span><span class="s2-b">43</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">20</span><span class="s2-b">41</span><span class="s2-b">14</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">00</span></div>
+        <div id="s2-row2" class="s2-row"><span class="s2-addr">00F8A4A0</span><span class="s2-b">28</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">02</span><span class="s2-b">00</span><span class="s2-b">01</span><span class="s2-b">00</span><span class="s2-b">E8</span><span class="s2-b">03</span><span class="s2-b">00</span><span class="s2-b">00</span><span id="s2-hero" class="s2-hero">64</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">00</span></div>
+        <div id="s2-row3" class="s2-row"><span class="s2-addr">00F8A4B0</span><span class="s2-b">32</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">42</span><span class="s2-b">6F</span><span class="s2-b">62</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">00</span></div>
+        <div id="s2-row4" class="s2-row"><span class="s2-addr">00F8A4C0</span><span class="s2-b">FF</span><span class="s2-b">FF</span><span class="s2-b">FF</span><span class="s2-b">FF</span><span class="s2-b">10</span><span class="s2-b">27</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">A0</span><span class="s2-b">40</span><span class="s2-b">01</span><span class="s2-b">01</span><span class="s2-b">00</span><span class="s2-b">00</span></div>
+        <div id="s2-row5" class="s2-row"><span class="s2-addr">00F8A4D0</span><span class="s2-b">00</span><span class="s2-b">20</span><span class="s2-b">3F</span><span class="s2-b">0A</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">0C</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">7F</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">00</span></div>
+        <div id="s2-row6" class="s2-row"><span class="s2-addr">00F8A4E0</span><span class="s2-b">05</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">7A</span><span class="s2-b">44</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">1E</span><span class="s2-b">00</span><span class="s2-b">00</span><span class="s2-b">00</span></div>
+      </div>
+      <div id="s2-flash" class="s2-flash" data-layout-ignore></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const blurIn = (sel, t, d = 0.2) =>
+      tl.fromTo(sel, { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "power2.out" }, t);
+    const blurOut = (sel, t, d = 0.2) => tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d, ease: "power2.in" }, t);
+    const land = (sel, t, from = 1.3, d = 0.35) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
+
+    // out of the white of the numeral, rows print one at a time
+    tl.fromTo("#s2-flash", { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "power2.out" }, 0);
+    for (let i = 0; i < 7; i++) {
+      tl.fromTo("#s2-row" + i, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.45, ease: "power1.inOut" }, 1.0 + i * 0.38);
+    }
+    // everything dims except the byte we follow
+    tl.to(".s2-b", { color: "#9DC4BA", duration: 0.5, ease: "power2.inOut" }, 5.8);
+    tl.to(".s2-addr", { color: "#9DC4BA", duration: 0.5, ease: "power2.inOut" }, 5.8);
+    tl.to("#s2-row2 .s2-addr", { color: "#2E6B63", duration: 0.3 }, 6.3);
+    tl.fromTo("#s2-hero", { backgroundColor: "rgba(255,90,31,0)", color: "#0B2A30", scale: 1 },
+      { backgroundColor: "rgba(255,90,31,1)", color: "#ffffff", scale: 1.25, duration: 0.3, ease: "back.out(2.5)" }, 6.1);
+    // push in on it; the tile of the next scene takes over at this size and place
+    gsap.set("#s2-wall", { transformOrigin: "1415px 280px" });
+    tl.fromTo("#s2-wall", { scale: 1 }, { scale: 5.6, duration: 0.8, ease: "power3.in" }, 8.3);
+
+    window.__timelines["wall"] = tl;
+  </script>
+</template>

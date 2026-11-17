@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שיעור 1.8 — קובץ PE, תהליכים ו-Windows API</title>
+<link rel="stylesheet" href="../assets/style.css">
+<script>
+(function(){var r=document.documentElement,k='gh-he-theme';
+try{var s=localStorage.getItem(k);if(s)r.setAttribute('data-theme',s);}catch(e){}
+window.toggleTheme=function(){var d=r.getAttribute('data-theme');
+if(!d){d=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+var n=d==='dark'?'light':'dark';r.setAttribute('data-theme',n);
+try{localStorage.setItem(k,n);}catch(e){}};
+addEventListener('scroll',function(){var p=document.querySelector('.progress');if(!p)return;
+var h=document.documentElement;var m=h.scrollHeight-h.clientHeight;
+p.style.width=(m>0?(h.scrollTop/m*100):0)+'%';},{passive:true});})();
+</script>
+</head>
+<body>
+<div class="progress"></div>
+<header class="topbar">
+  <a class="home" href="../index.html">🎮 Game Hacking בעברית</a>
+  <span class="crumb"><span dir="auto">יסודות: מספרים, זיכרון ו-Assembly</span></span>
+  <span class="spacer"></span>
+  <span class="badge">לתרגול על משחקי offline בלבד</span>
+  <button class="theme-btn" onclick="toggleTheme()" title="מצב בהיר / כהה" aria-label="מצב בהיר או כהה">◐</button>
+</header>
+<div class="layout">
+<main>
+<section class="hero"><div class="kicker">שיעור 1.8</div><h1>קובץ PE, תהליכים ו-Windows API</h1><div class="chips"><span class="chip">מודול: <b dir="auto">יסודות</b></span><span class="chip">יחידות מקור: <b dir="auto">Windows PE File Format, Windows Internals - Processes and Threads, What is the Windows API</b></span></div></section>
+<section class="card tldr" id="s0"><h2>הרעיון בקצרה</h2>
+<p>שלושה מושגים סוגרים את מסלול היסודות. <strong>קובץ PE</strong> הוא הפורמט של כל EXE ו-DLL ב-Windows: הוא מתאר ל-Windows איך לפרוש את הקובץ בזיכרון. <strong>תהליך</strong> הוא מה שנוצר כשהקובץ הזה נטען ומתחיל לרוץ. ו-<strong>Windows API</strong> הוא אוסף הפונקציות שדרכן כל תוכנה, כולל הכלים שנכתוב, מבקשת דברים ממערכת ההפעלה. כל טכניקה במסלולים הבאים נשענת על שלושתם.</p></section>
+<section class="card " id="s1"><h2>מבנה של קובץ PE</h2>
+<pre dir="ltr"><code>+---------------------------+
+| DOS header     (&quot;MZ&quot;)     |  e_lfanew -&gt; where the PE header starts
++---------------------------+
+| PE signature   (&quot;PE\0\0&quot;) |
+| File header               |  machine type, number of sections
+| Optional header           |  ImageBase, AddressOfEntryPoint, data directories
++---------------------------+
+| Section table             |  one row per section: name, sizes, addresses, permissions
++---------------------------+
+| .text    code             |
+| .rdata   constants, imports
+| .data    global variables |
+| .rsrc    icons, dialogs   |
+| .reloc   relocations      |
++---------------------------+</code></pre>
+<p>השדות שחוזרים שוב ושוב בעבודה:</p>
+<div class="table-wrap"><table><thead><tr><th>שדה</th><th>מה הוא אומר</th></tr></thead><tbody><tr><td><code>Machine</code></td><td>לאיזה מעבד הקובץ נבנה: <code>0x14C</code> הוא 32 ביט, <code>0x8664</code> הוא 64 ביט</td></tr><tr><td><code>ImageBase</code></td><td>הכתובת שבה הקובץ מעדיף להיטען. עם ASLR הוא ייטען במקום אחר</td></tr><tr><td><code>AddressOfEntryPoint</code></td><td>ה-RVA של ההוראה הראשונה שרצה</td></tr><tr><td><code>SizeOfImage</code></td><td>כמה מקום הקובץ תופס בזיכרון אחרי הטעינה</td></tr><tr><td>Data directories</td><td>מצביעים לטבלאות: imports, exports, relocations ועוד</td></tr></tbody></table></div></section>
+<section class="card " id="s2"><h2>שלוש כתובות שונות לאותו בית</h2>
+<div class="table-wrap"><table><thead><tr><th>מונח</th><th>נמדד מ-</th><th>דוגמה</th></tr></thead><tbody><tr><td><strong>File offset</strong></td><td>תחילת הקובץ על הדיסק</td><td><code>0x0000A400</code></td></tr><tr><td><strong>RVA</strong></td><td>תחילת ה-module בזיכרון</td><td><code>0x0000B000</code></td></tr><tr><td><strong>VA</strong></td><td>אפס של מרחב הכתובות</td><td><code>0x0040B000</code></td></tr></tbody></table></div>
+<p>VA הוא תמיד base ועוד RVA. ה-file offset שונה מה-RVA כי כל section מיושר אחרת בקובץ ובזיכרון. ההמרה נעשית לפי טבלת ה-sections:</p>
+<pre dir="ltr"><code>file offset = RVA - section.VirtualAddress + section.PointerToRawData</code></pre>
+<p>זה החישוב שחסר בשיעור 1.6, כשרצינו לכתוב patch ישירות לקובץ.</p></section>
+<section class="card " id="s3"><h2>Imports ו-Exports</h2>
+<p>תוכנה לא מכילה את הקוד של <code>MessageBoxA</code>. היא רק מצהירה שהיא צריכה אותו.</p>
+<ul><li><strong>Import table</strong> — רשימת הפונקציות שהקובץ צריך מ-DLLs אחרים. בזמן הטעינה Windows ממלא את ה-<strong>IAT</strong> (Import Address Table) בכתובות האמיתיות, והקוד קורא לפונקציות דרך הטבלה הזו.</li><li><strong>Export table</strong> — רשימת הפונקציות ש-DLL מציע לאחרים, לפי שם או מספר.</li></ul>
+<p>שתי תובנות מעשיות:</p>
+<ul><li>רשימת ה-imports היא תקציר מהיר של מה שתוכנה עושה. תוכנה שמייבאת <code>OpenProcess</code>, <code>ReadProcessMemory</code> ו-<code>WriteProcessMemory</code> נוגעת בזיכרון של תהליכים אחרים. זה הצעד הראשון בכל ניתוח, ונחזור אליו במסלול ה-Malware.</li><li>מכיוון שכל קריאה חיצונית עוברת דרך ה-IAT, מי שמחליף כתובת בטבלה מיירט את הקריאה. זו טכניקת hooking שנלמד במסלול 6.</li></ul>
+<p>כלים להצצה בקובץ PE: PE-bear, CFF Explorer, או <code>dumpbin /headers</code> שמגיע עם Visual Studio.</p></section>
+<section class="card " id="s4"><h2>תהליך, Thread ו-Handle</h2>
+<div class="table-wrap"><table><thead><tr><th>מושג</th><th>מה זה</th></tr></thead><tbody><tr><td><strong>Process</strong></td><td>מכל: מרחב כתובות פרטי, modules טעונים, handles והרשאות. הוא עצמו לא מריץ קוד</td></tr><tr><td><strong>Thread</strong></td><td>מה שבאמת רץ. לכל thread יש stack משלו וערכי registers משלו. לכל תהליך יש לפחות אחד</td></tr><tr><td><strong>PID / TID</strong></td><td>המספר המזהה של תהליך ושל thread</td></tr><tr><td><strong>Handle</strong></td><td>מספר שמייצג גישה לאובייקט של המערכת: תהליך, קובץ, thread. מקבלים אותו מה-API ומוסרים אותו חזרה בקריאות הבאות</td></tr><tr><td><strong>Module</strong></td><td>קובץ PE שנטען לתהליך</td></tr></tbody></table></div>
+<p>למשחק יש בדרך כלל עשרות threads: רינדור, סאונד, רשת, לוגיקה. כולם חולקים את אותו זיכרון, ולכן קוד שנכניס לתהליך יכול לרוץ במקביל ללוגיקת המשחק. זה נוח, וזה גם מקור לבאגים של תזמון.</p></section>
+<section class="card " id="s5"><h2>Windows API</h2>
+<p>ה-API מוצהר בקובץ הכותרת <code>windows.h</code> וממומש ב-DLLs של המערכת: <code>kernel32.dll</code> (תהליכים, זיכרון, קבצים), <code>user32.dll</code> (חלונות, קלט), <code>ntdll.dll</code> (השכבה שמתחת, שמדברת עם ה-kernel).</p>
+<p>הפונקציות שנפגוש שוב ושוב:</p>
+<div class="table-wrap"><table><thead><tr><th>פונקציה</th><th>מה היא עושה</th><th>איפה בקורס</th></tr></thead><tbody><tr><td><code>OpenProcess</code></td><td>מחזירה handle לתהליך לפי PID</td><td>מסלול 4</td></tr><tr><td><code>ReadProcessMemory</code> / <code>WriteProcessMemory</code></td><td>קריאה וכתיבה בזיכרון של תהליך אחר</td><td>מסלול 4</td></tr><tr><td><code>VirtualProtect</code> / <code>VirtualAllocEx</code></td><td>שינוי הרשאות עמוד, הקצאת זיכרון</td><td>מסלולים 4–5</td></tr><tr><td><code>CreateToolhelp32Snapshot</code></td><td>מעבר על רשימת התהליכים וה-modules</td><td>מסלול 4</td></tr><tr><td><code>GetModuleHandle</code> / <code>GetProcAddress</code></td><td>מציאת base של module וכתובת של פונקציה מיוצאת</td><td>מסלולים 5–6</td></tr><tr><td><code>CreateRemoteThread</code> / <code>LoadLibrary</code></td><td>יצירת thread בתהליך אחר, טעינת DLL</td><td>מסלול 5</td></tr><tr><td><code>CloseHandle</code></td><td>שחרור handle</td><td>תמיד</td></tr></tbody></table></div>
+<p>כמה מוסכמות שחוסכות בלבול:</p>
+<ul><li><strong>סיומות A ו-W.</strong> <code>MessageBoxA</code> מקבלת מחרוזות ANSI, <code>MessageBoxW</code> מקבלת UTF-16. השם בלי סיומת הוא macro שבוחר ביניהן.</li><li><strong>טיפוסים משלהם.</strong> <code>DWORD</code> הוא 4 בתים בלי סימן, <code>HANDLE</code> הוא handle, <code>LPVOID</code> הוא pointer כללי, <code>BOOL</code> הוא int.</li><li><strong>בודקים הצלחה.</strong> רוב הפונקציות מחזירות 0 או <code>NULL</code> בכישלון, ואת הסיבה מקבלים מ-<code>GetLastError()</code>. הסיבה הנפוצה ביותר בתחילת הדרך היא קוד 5, <code>ERROR_ACCESS_DENIED</code>: התוכנה שלכם לא רצה כמנהל, או שביקשתם הרשאות שהמערכת לא נותנת.</li></ul></section>
+<section class="card " id="s6"><h2>מה הלאה</h2>
+<p>כאן מסתיימים היסודות. יש לכם עכשיו את אוצר המילים המלא: בתים וטיפוסים, מפת הזיכרון של תהליך, pointers, קריאת Assembly, הסכמי קריאה ומבנה הקובץ שממנו הכול נטען. במסלול 2 לוקחים את כל זה ל-Cheat Engine ומתחילים למצוא דברים במשחק אמיתי.</p></section>
+<section class="card glossary" id="s7"><h2>מילון מונחים</h2>
+<div class="table-wrap"><table><thead><tr><th>מונח</th><th>משמעות</th></tr></thead><tbody><tr><td><strong>PE</strong></td><td>Portable Executable, פורמט קובצי EXE ו-DLL ב-Windows</td></tr><tr><td><strong>ImageBase</strong></td><td>כתובת הטעינה המועדפת של הקובץ</td></tr><tr><td><strong>Entry point</strong></td><td>ההוראה הראשונה שרצה בקובץ</td></tr><tr><td><strong>RVA / VA</strong></td><td>כתובת יחסית ל-base, וכתובת מוחלטת בזיכרון</td></tr><tr><td><strong>IAT</strong></td><td>טבלת הכתובות של הפונקציות המיובאות</td></tr><tr><td><strong>Export</strong></td><td>פונקציה ש-DLL מציע לשימוש חיצוני</td></tr><tr><td><strong>Handle</strong></td><td>מזהה שמייצג גישה לאובייקט של מערכת ההפעלה</td></tr><tr><td><strong>Thread</strong></td><td>יחידת ריצה בתוך תהליך</td></tr></tbody></table></div></section>
+<section class="card quiz" id="s8"><h2>בדיקה עצמית</h2>
+<ol><li>קובץ נטען ב-base <code>0x00D20000</code> וה-entry point שלו ב-RVA <code>0x1530</code>. מה ה-VA?</li><li>section מתחיל ב-<code>VirtualAddress = 0x1000</code> וב-<code>PointerToRawData = 0x400</code>. מה ה-file offset של RVA <code>0x1250</code>?</li><li>מה אפשר ללמוד על תוכנה רק מרשימת ה-imports שלה?</li><li>מה ההבדל בין תהליך ל-thread?</li><li><code>OpenProcess</code> החזירה <code>NULL</code> ו-<code>GetLastError</code> החזירה 5. מה הסיבה הסבירה?</li></ol>
+<p>תשובות: (1) <code>0x00D21530</code>. (2) <code>0x650</code>. (3) באילו יכולות של המערכת היא משתמשת: קבצים, רשת, זיכרון של תהליכים אחרים. (4) תהליך הוא המכל של הזיכרון והמשאבים. thread הוא מה שמריץ קוד בתוכו. (5) אין הרשאה: צריך להריץ כמנהל, או לבקש פחות הרשאות.</p></section>
+<nav class="pager"><a class="prev" href="07-stack-and-calling-conventions.html"><small>→ השיעור הקודם</small>שיעור 1.7 — ה-Stack ו-Calling Conventions</a><span></span></nav>
+<footer class="foot">Game Hacking בעברית · שיעורים מקוריים · לתרגול על משחקי offline בלבד</footer>
+</main>
+<aside class="toc"><div class="toc-title">בעמוד זה</div><a href="#s0">הרעיון בקצרה</a><a href="#s1">מבנה של קובץ PE</a><a href="#s2">שלוש כתובות שונות לאותו בית</a><a href="#s3">Imports ו-Exports</a><a href="#s4">תהליך, Thread ו-Handle</a><a href="#s5">Windows API</a><a href="#s6">מה הלאה</a><a href="#s7">מילון מונחים</a><a href="#s8">בדיקה עצמית</a></aside>
+</div>
+</body>
+</html>

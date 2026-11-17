@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שיעור 1.7 — ה-Stack ו-Calling Conventions</title>
+<link rel="stylesheet" href="../assets/style.css">
+<script>
+(function(){var r=document.documentElement,k='gh-he-theme';
+try{var s=localStorage.getItem(k);if(s)r.setAttribute('data-theme',s);}catch(e){}
+window.toggleTheme=function(){var d=r.getAttribute('data-theme');
+if(!d){d=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+var n=d==='dark'?'light':'dark';r.setAttribute('data-theme',n);
+try{localStorage.setItem(k,n);}catch(e){}};
+addEventListener('scroll',function(){var p=document.querySelector('.progress');if(!p)return;
+var h=document.documentElement;var m=h.scrollHeight-h.clientHeight;
+p.style.width=(m>0?(h.scrollTop/m*100):0)+'%';},{passive:true});})();
+</script>
+</head>
+<body>
+<div class="progress"></div>
+<header class="topbar">
+  <a class="home" href="../index.html">🎮 Game Hacking בעברית</a>
+  <span class="crumb"><span dir="auto">יסודות: מספרים, זיכרון ו-Assembly</span></span>
+  <span class="spacer"></span>
+  <span class="badge">לתרגול על משחקי offline בלבד</span>
+  <button class="theme-btn" onclick="toggleTheme()" title="מצב בהיר / כהה" aria-label="מצב בהיר או כהה">◐</button>
+</header>
+<div class="layout">
+<main>
+<section class="hero"><div class="kicker">שיעור 1.7</div><h1>ה-Stack ו-Calling Conventions</h1><div class="chips"><span class="chip">מודול: <b dir="auto">יסודות</b></span><span class="chip">יחידות מקור: <b dir="auto">Calling Conventions For Reverse Engineering, Stack Pointers Explained - ESP vs EBP</b></span></div></section>
+<section class="card tldr" id="s0"><h2>הרעיון בקצרה</h2>
+<p>כשפונקציה אחת קוראת לאחרת, שתיהן חייבות להסכים על כמה דברים: איפה נמצאים הפרמטרים, איפה חוזר ערך ההחזרה, ומי מנקה אחרי הקריאה. ההסכם הזה נקרא <strong>calling convention</strong>. אין הסכם אחד: יש כמה, והקומפיילר בוחר ביניהם. למה זה חשוב לנו? כי כדי להבין מה פונקציה במשחק מקבלת, וכדי לקרוא לה בעצמנו בהמשך הקורס, צריך לדעת באיזה הסכם היא משתמשת. טעות בהסכם נגמרת כמעט תמיד בקריסה.</p></section>
+<section class="card " id="s1"><h2>Stack frame: המרחב של פונקציה אחת</h2>
+<p>כל קריאה לפונקציה מקבלת אזור משלה על ה-stack, שנקרא <strong>stack frame</strong>. בתהליך 32 ביט הוא נראה כך אחרי פתיחת הפונקציה (<code>push ebp</code> ואז <code>mov ebp, esp</code>):</p>
+<pre dir="ltr"><code>higher addresses
+  [ebp+0x10]   third argument
+  [ebp+0x0C]   second argument
+  [ebp+0x08]   first argument
+  [ebp+0x04]   return address     &lt;- pushed by call
+  [ebp]        saved ebp          &lt;- pushed by the function
+  [ebp-0x04]   first local variable
+  [ebp-0x08]   second local variable
+lower addresses                   &lt;- esp points here</code></pre>
+<p>שני כללים שכדאי לזכור בעל פה:</p>
+<ul><li><strong><code>ebp</code> ועוד משהו הוא פרמטר. <code>ebp</code> פחות משהו הוא משתנה מקומי.</strong></li><li><code>esp</code> זז כל הזמן, עם כל <code>push</code> ו-<code>pop</code>. <code>ebp</code> נשאר קבוע לאורך הפונקציה, ולכן נוח להתייחס דרכו.</li></ul>
+<p>קומפיילרים מודרניים, ובעיקר ב-64 ביט, מוותרים הרבה פעמים על <code>ebp</code> ופונים לכול דרך <code>rsp</code>. ההיגיון זהה, רק ה-offsets נראים אחרת.</p></section>
+<section class="card " id="s2"><h2>ההסכמים של 32 ביט</h2>
+<div class="table-wrap"><table><thead><tr><th>הסכם</th><th>פרמטרים</th><th>מי מנקה את ה-stack</th><th>איפה פוגשים אותו</th></tr></thead><tbody><tr><td><code>cdecl</code></td><td>על ה-stack, מימין לשמאל</td><td>הקורא</td><td>ברירת המחדל של C. פונקציות עם מספר פרמטרים משתנה כמו <code>printf</code></td></tr><tr><td><code>stdcall</code></td><td>על ה-stack, מימין לשמאל</td><td>הפונקציה הנקראת</td><td>כל ה-Windows API</td></tr><tr><td><code>thiscall</code></td><td><code>this</code> ב-<code>ecx</code>, השאר על ה-stack</td><td>הפונקציה הנקראת</td><td>מתודות של מחלקות ב-C++</td></tr><tr><td><code>fastcall</code></td><td>שני הראשונים ב-<code>ecx</code> ו-<code>edx</code>, השאר על ה-stack</td><td>הפונקציה הנקראת</td><td>קוד שעבר אופטימיזציה</td></tr></tbody></table></div>
+<p>בכל ההסכמים ערך ההחזרה חוזר ב-<code>eax</code> (ו-float ב-register של נקודה צפה).</p>
+<p>"מימין לשמאל" פירושו שהפרמטר האחרון נדחף ראשון. כך הפרמטר הראשון יוצא הקרוב ביותר לראש ה-stack, ב-<code>[ebp+8]</code>.</p></section>
+<section class="card " id="s3"><h2>איך מזהים את ההסכם בקוד</h2>
+<p>מסתכלים על שני מקומות: מה קורה מיד <strong>אחרי</strong> ה-<code>call</code>, ואיך הפונקציה <strong>מסתיימת</strong>.</p>
+<pre dir="ltr"><code>; cdecl: the caller cleans up
+push 2
+push 1
+call add_numbers
+add  esp, 8          ; two arguments * 4 bytes
+
+; stdcall: the function cleans up
+push 2
+push 1
+call AddNumbers      ; ends with:  ret 8</code></pre>
+<div class="table-wrap"><table><thead><tr><th>מה רואים</th><th>מסקנה</th></tr></thead><tbody><tr><td><code>add esp, N</code> אחרי ה-<code>call</code></td><td><code>cdecl</code> עם N/4 פרמטרים</td></tr><tr><td>הפונקציה מסתיימת ב-<code>ret N</code></td><td><code>stdcall</code>, <code>thiscall</code> או <code>fastcall</code> עם N/4 פרמטרים על ה-stack</td></tr><tr><td><code>mov ecx, ...</code> או <code>lea ecx, ...</code> ממש לפני ה-<code>call</code></td><td>כנראה <code>thiscall</code>: זה ה-pointer לאובייקט</td></tr><tr><td>הפונקציה משתמשת ב-<code>ecx</code> ו-<code>edx</code> בלי לאתחל אותם</td><td><code>fastcall</code></td></tr></tbody></table></div>
+<p>המקרה של <code>thiscall</code> חשוב במיוחד, כי רוב קוד המשחקים כתוב ב-C++. ה-<code>ecx</code> שנטען לפני הקריאה הוא האובייקט שעליו המתודה פועלת: השחקן, הנשק, העולם. כך מוצאים מבנים בלי לסרוק זיכרון בכלל.</p></section>
+<section class="card " id="s4"><h2>64 ביט: הסכם אחד</h2>
+<p>ב-Windows של 64 ביט יש הסכם אחד לכולם, והוא פשוט יותר:</p>
+<div class="table-wrap"><table><thead><tr><th>מה</th><th>איפה</th></tr></thead><tbody><tr><td>ארבעת הפרמטרים הראשונים</td><td><code>rcx</code>, <code>rdx</code>, <code>r8</code>, <code>r9</code> (ל-float: <code>xmm0</code> עד <code>xmm3</code>)</td></tr><tr><td>פרמטר חמישי והלאה</td><td>על ה-stack</td></tr><tr><td>ערך החזרה</td><td><code>rax</code> (ל-float: <code>xmm0</code>)</td></tr><tr><td>ניקוי ה-stack</td><td>הקורא</td></tr><tr><td><code>this</code> במתודה של C++</td><td><code>rcx</code>, כפרמטר ראשון רגיל</td></tr></tbody></table></div>
+<p>שני פרטים שמפתיעים בפעם הראשונה:</p>
+<ul><li><strong>Shadow space.</strong> הקורא חייב להשאיר 32 בתים פנויים על ה-stack מעל כתובת החזרה, גם אם כל הפרמטרים עוברים ב-registers. לכן כמעט כל פונקציה נפתחת ב-<code>sub rsp, 0x28</code> או דומה.</li><li><strong>יישור.</strong> ברגע ה-<code>call</code>, <code>rsp</code> חייב להתחלק ב-16. קוד שכותבים ביד ומפר את הכלל הזה קורס בהוראות SSE, במקום שנראה לא קשור בכלל.</li></ul>
+<p>ב-Linux וב-macOS של 64 ביט ההסכם שונה (System V): ששת הפרמטרים הראשונים עוברים ב-<code>rdi</code>, <code>rsi</code>, <code>rdx</code>, <code>rcx</code>, <code>r8</code>, <code>r9</code>.</p></section>
+<section class="card " id="s5"><h2>Registers שמורים</h2>
+<p>ההסכם קובע גם אילו registers פונקציה רשאית לדרוס:</p>
+<div class="table-wrap"><table><thead><tr><th>סוג</th><th>32 ביט</th><th>64 ביט (Windows)</th></tr></thead><tbody><tr><td><strong>Volatile</strong> — הפונקציה רשאית לדרוס</td><td><code>eax</code>, <code>ecx</code>, <code>edx</code></td><td><code>rax</code>, <code>rcx</code>, <code>rdx</code>, <code>r8</code>–<code>r11</code></td></tr><tr><td><strong>Non-volatile</strong> — חייבים לחזור כפי שהיו</td><td><code>ebx</code>, <code>esi</code>, <code>edi</code>, <code>ebp</code></td><td><code>rbx</code>, <code>rsi</code>, <code>rdi</code>, <code>rbp</code>, <code>r12</code>–<code>r15</code></td></tr></tbody></table></div>
+<p>זה ההסבר לסדרת ה-<code>push</code> בתחילת כמעט כל פונקציה ולסדרת ה-<code>pop</code> בסופה. וזה גם כלל ברזל לקוד שנזריק בעצמנו בהמשך: כל register ששינינו ואינו volatile חייב לחזור לערכו המקורי, אחרת המשחק ימשיך לרוץ עם ערך שגוי ויקרוס שורות רבות אחר כך.</p></section>
+<section class="card glossary" id="s6"><h2>מילון מונחים</h2>
+<div class="table-wrap"><table><thead><tr><th>מונח</th><th>משמעות</th></tr></thead><tbody><tr><td><strong>Calling convention</strong></td><td>ההסכם על העברת פרמטרים, ערך החזרה וניקוי ה-stack</td></tr><tr><td><strong>Stack frame</strong></td><td>האזור על ה-stack ששייך לקריאה אחת לפונקציה</td></tr><tr><td><strong>Prologue / Epilogue</strong></td><td>הוראות הפתיחה והסגירה של פונקציה</td></tr><tr><td><strong>Caller / Callee</strong></td><td>הפונקציה הקוראת, והפונקציה הנקראת</td></tr><tr><td><strong><code>this</code></strong></td><td>ה-pointer לאובייקט שעליו פועלת מתודה ב-C++</td></tr><tr><td><strong>Shadow space</strong></td><td>32 בתים שהקורא משאיר על ה-stack ב-64 ביט</td></tr><tr><td><strong>Volatile register</strong></td><td>register שפונקציה רשאית לדרוס בלי לשחזר</td></tr></tbody></table></div></section>
+<section class="card quiz" id="s7"><h2>בדיקה עצמית</h2>
+<ol><li>בפונקציה של 32 ביט, מה נמצא ב-<code>[ebp+0xC]</code>? ומה ב-<code>[ebp-4]</code>?</li><li>ראיתם שלושה <code>push</code>, אחריהם <code>call</code>, ואחריו <code>add esp, 0xC</code>. איזה הסכם זה וכמה פרמטרים?</li><li>פונקציה מסתיימת ב-<code>ret 8</code> ולפני הקריאה אליה נטען <code>ecx</code>. מה סביר שזה, וכמה פרמטרים יש לה?</li><li>בקוד 64 ביט, איפה הפרמטר השלישי? ואיפה ערך ההחזרה?</li><li>למה קוד מוזרק חייב לשחזר את <code>ebx</code> אבל לא את <code>eax</code>?</li></ol>
+<p>תשובות: (1) הפרמטר השני, והמשתנה המקומי הראשון. (2) <code>cdecl</code> עם שלושה פרמטרים. (3) <code>thiscall</code>: האובייקט ב-<code>ecx</code> ועוד שני פרמטרים על ה-stack. (4) <code>r8</code>, ו-<code>rax</code>. (5) <code>ebx</code> הוא non-volatile והקוד שמסביב סומך על כך שלא ישתנה. <code>eax</code> הוא volatile.</p></section>
+<nav class="pager"><a class="prev" href="06-hex-editing-files.html"><small>→ השיעור הקודם</small>שיעור 1.6 — Hex Editing: לערוך קבצים בית אחרי בית</a><a class="next" href="08-pe-processes-and-winapi.html"><small>השיעור הבא ←</small>שיעור 1.8 — קובץ PE, תהליכים ו-Windows API</a></nav>
+<footer class="foot">Game Hacking בעברית · שיעורים מקוריים · לתרגול על משחקי offline בלבד</footer>
+</main>
+<aside class="toc"><div class="toc-title">בעמוד זה</div><a href="#s0">הרעיון בקצרה</a><a href="#s1">Stack frame: המרחב של פונקציה אחת</a><a href="#s2">ההסכמים של 32 ביט</a><a href="#s3">איך מזהים את ההסכם בקוד</a><a href="#s4">64 ביט: הסכם אחד</a><a href="#s5">Registers שמורים</a><a href="#s6">מילון מונחים</a><a href="#s7">בדיקה עצמית</a></aside>
+</div>
+</body>
+</html>

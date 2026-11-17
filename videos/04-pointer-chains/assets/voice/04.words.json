@@ -1,0 +1,62 @@
+{
+ "key": "7f6216a4afff84b8e0baabf45764f5520bc54855",
+ "text": "So the recipe is: read the pointer, then add the offset. In that order.",
+ "words": [
+  [
+   "So",
+   0.104
+  ],
+  [
+   "the",
+   0.273
+  ],
+  [
+   "recipe",
+   0.378
+  ],
+  [
+   "is",
+   0.964
+  ],
+  [
+   "read",
+   1.836
+  ],
+  [
+   "the",
+   2.044
+  ],
+  [
+   "pointer",
+   2.122
+  ],
+  [
+   "then",
+   3.034
+  ],
+  [
+   "add",
+   3.294
+  ],
+  [
+   "the",
+   3.503
+  ],
+  [
+   "offset",
+   3.607
+  ],
+  [
+   "In",
+   4.557
+  ],
+  [
+   "that",
+   4.727
+  ],
+  [
+   "order",
+   4.961
+  ]
+ ]
+}

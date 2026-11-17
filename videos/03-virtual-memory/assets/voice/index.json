@@ -1,0 +1,46 @@
+{
+ "voice": "en-US-AvaMultilingualNeural",
+ "rate": "-4%",
+ "lines": [
+  {
+   "id": "01",
+   "duration": 9.901,
+   "text": "Yesterday you found your health at this address. Today you restart the game, and the same address holds garbage. Nothing broke. It moved."
+  },
+  {
+   "id": "02",
+   "duration": 8.336,
+   "text": "Every process lives in its own private map of memory. The same address in two programs is two different places."
+  },
+  {
+   "id": "03",
+   "duration": 10.452,
+   "text": "The map has regions. The game's own file, loaded as a module. The heap, where it creates things while running. And a stack for every thread."
+  },
+  {
+   "id": "04",
+   "duration": 8.512,
+   "text": "Each page of memory carries permissions. Code can be read and run, but not written. Data can be written, but not run."
+  },
+  {
+   "id": "05",
+   "duration": 5.21,
+   "text": "Your player is created on the heap, so it lands somewhere new on every run."
+  },
+  {
+   "id": "06",
+   "duration": 7.271,
+   "text": "Even the module moves. Windows loads it at a random base each time. That is A S L R."
+  },
+  {
+   "id": "07",
+   "duration": 7.527,
+   "text": "But the distance from the start of the module never changes. Base plus offset finds the same spot every time."
+  },
+  {
+   "id": "08",
+   "duration": 4.57,
+   "text": "Never save an address. Save the module and the offset."
+  }
+ ]
+}

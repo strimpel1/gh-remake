@@ -1,0 +1,71 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background-color: #E4F2EC;
+      background-image:
+        linear-gradient(#9CCFC0 3px, transparent 3px), linear-gradient(90deg, #9CCFC0 3px, transparent 3px),
+        linear-gradient(#C4E3D9 1px, transparent 1px), linear-gradient(90deg, #C4E3D9 1px, transparent 1px);
+      background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px; }
+
+    .s7-stage { position: absolute; inset: 0; }
+    .s7-h { position: absolute; font-family: 'Archivo Black', sans-serif; font-size: 96px; line-height: 1.05; letter-spacing: -0.01em; color: #0B2A30; }
+    .s7-m { position: absolute; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 54px; line-height: 1.15; color: #2E6B63; }
+    .s7-acc { color: #E8490F; }
+    .s7-dim { color: #6A9188; }
+    .s7-cell { position: absolute; background: #fff; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; color: #0B2A30; }
+    .s7-cell.on { background: #FF5A1F; color: #fff; }
+    .s7-tile { position: absolute; background: #FF5A1F; color: #fff; border: 12px solid #0B2A30; box-shadow: 16px 16px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s7-card { position: absolute; background: #fff; color: #0B2A30; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s7-card.on { background: #FF5A1F; color: #fff; }
+    .s7-card.soft { background: #CFE9DF; }
+    .s7-bar { position: absolute; background: #0B2A30; }
+  </style>
+  <div id="root" data-composition-id="nop" data-width="1920" data-height="1080">
+    <div id="s7-stage" class="clip s7-stage" data-start="0" data-duration="9.7">
+      <div id="s7-ln" class="s7-card " style="left: 190px; top: 150px; width: 900px; height: 130px; line-height: 114px; font-size: 58px">mov [ebx+0xEC], eax</div>
+      <div id="s7-l0" class="s7-m" style="left: 1150px; top: 182px">6 bytes</div>
+      <div id="s7-o0" class="s7-cell c-s7-o" style="left: 190px; top: 370px; width: 150px; height: 150px; line-height: 134px; font-size: 75px">89</div>
+      <div id="s7-o1" class="s7-cell c-s7-o" style="left: 360px; top: 370px; width: 150px; height: 150px; line-height: 134px; font-size: 75px">83</div>
+      <div id="s7-o2" class="s7-cell c-s7-o" style="left: 530px; top: 370px; width: 150px; height: 150px; line-height: 134px; font-size: 75px">EC</div>
+      <div id="s7-o3" class="s7-cell c-s7-o" style="left: 700px; top: 370px; width: 150px; height: 150px; line-height: 134px; font-size: 75px">00</div>
+      <div id="s7-o4" class="s7-cell c-s7-o" style="left: 870px; top: 370px; width: 150px; height: 150px; line-height: 134px; font-size: 75px">00</div>
+      <div id="s7-o5" class="s7-cell c-s7-o" style="left: 1040px; top: 370px; width: 150px; height: 150px; line-height: 134px; font-size: 75px">00</div>
+      <div id="s7-l1" class="s7-m" style="left: 1250px; top: 410px">the store</div>
+      <div id="s7-n0" class="s7-cell c-s7-n on" style="left: 190px; top: 610px; width: 150px; height: 150px; line-height: 134px; font-size: 75px">90</div>
+      <div id="s7-n1" class="s7-cell c-s7-n on" style="left: 360px; top: 610px; width: 150px; height: 150px; line-height: 134px; font-size: 75px">90</div>
+      <div id="s7-n2" class="s7-cell c-s7-n on" style="left: 530px; top: 610px; width: 150px; height: 150px; line-height: 134px; font-size: 75px">90</div>
+      <div id="s7-n3" class="s7-cell c-s7-n on" style="left: 700px; top: 610px; width: 150px; height: 150px; line-height: 134px; font-size: 75px">90</div>
+      <div id="s7-n4" class="s7-cell c-s7-n on" style="left: 870px; top: 610px; width: 150px; height: 150px; line-height: 134px; font-size: 75px">90</div>
+      <div id="s7-n5" class="s7-cell c-s7-n on" style="left: 1040px; top: 610px; width: 150px; height: 150px; line-height: 134px; font-size: 75px">90</div>
+      <div id="s7-l2" class="s7-m" style="left: 1250px; top: 630px">six NOPs:<br>do nothing</div>
+      <div id="s7-c" class="s7-m" style="left: 190px; top: 850px">same length, or the game crashes</div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const blurIn = (sel, t, d = 0.2) =>
+      tl.fromTo(sel, { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "power2.out" }, t);
+    const blurOut = (sel, t, d = 0.2) => tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d, ease: "power2.in" }, t);
+    const land = (sel, t, from = 1.3, d = 0.35) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
+    const each = (sel, t, gap = 0.12, from = 1.3) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out", stagger: gap }, t);
+    const wipe = (sel, t, d = 0.3) =>
+      tl.fromTo(sel, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: d, ease: "power2.out" }, t);
+    const dim = (sel, t, to = 0.3) => tl.to(sel, { opacity: to, duration: 0.3, ease: "power2.inOut" }, t);
+    blurIn("#s7-stage", 0, 0.25);
+
+    each(".c-s7-o", 0.5, 0.07);
+    blurIn("#s7-l0", 0.9);
+    blurIn("#s7-l1", 0.93);
+    each(".c-s7-n", 1.43, 0.12);
+    blurIn("#s7-l2", 3.07);
+    dim(".c-s7-o", 4.89, 0.35);
+    blurIn("#s7-c", 6.23);
+
+    blurOut("#s7-stage", 9.4, 0.25);
+    window.__timelines["nop"] = tl;
+  </script>
+</template>

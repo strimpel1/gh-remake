@@ -1,0 +1,62 @@
+{
+ "key": "aae5b55d95f7671bef323742a1074420ab115f87",
+ "text": "Destination comes first, source second. So this line copies E A X into something.",
+ "words": [
+  [
+   "Destination",
+   0.052
+  ],
+  [
+   "comes",
+   0.781
+  ],
+  [
+   "first",
+   1.12
+  ],
+  [
+   "source",
+   1.549
+  ],
+  [
+   "second",
+   1.875
+  ],
+  [
+   "So",
+   2.773
+  ],
+  [
+   "this",
+   3.151
+  ],
+  [
+   "line",
+   3.411
+  ],
+  [
+   "copies",
+   3.828
+  ],
+  [
+   "E",
+   4.57
+  ],
+  [
+   "A",
+   5.169
+  ],
+  [
+   "X",
+   5.534
+  ],
+  [
+   "into",
+   5.833
+  ],
+  [
+   "something",
+   6.003
+  ]
+ ]
+}

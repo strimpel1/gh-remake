@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שיעור 1.5 — לקרוא Assembly: המינימום שצריך</title>
+<link rel="stylesheet" href="../assets/style.css">
+<script>
+(function(){var r=document.documentElement,k='gh-he-theme';
+try{var s=localStorage.getItem(k);if(s)r.setAttribute('data-theme',s);}catch(e){}
+window.toggleTheme=function(){var d=r.getAttribute('data-theme');
+if(!d){d=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+var n=d==='dark'?'light':'dark';r.setAttribute('data-theme',n);
+try{localStorage.setItem(k,n);}catch(e){}};
+addEventListener('scroll',function(){var p=document.querySelector('.progress');if(!p)return;
+var h=document.documentElement;var m=h.scrollHeight-h.clientHeight;
+p.style.width=(m>0?(h.scrollTop/m*100):0)+'%';},{passive:true});})();
+</script>
+</head>
+<body>
+<div class="progress"></div>
+<header class="topbar">
+  <a class="home" href="../index.html">🎮 Game Hacking בעברית</a>
+  <span class="crumb"><span dir="auto">יסודות: מספרים, זיכרון ו-Assembly</span></span>
+  <span class="spacer"></span>
+  <span class="badge">לתרגול על משחקי offline בלבד</span>
+  <button class="theme-btn" onclick="toggleTheme()" title="מצב בהיר / כהה" aria-label="מצב בהיר או כהה">◐</button>
+</header>
+<div class="layout">
+<main>
+<section class="hero"><div class="kicker">שיעור 1.5</div><h1>לקרוא Assembly: המינימום שצריך</h1><div class="chips"><span class="chip">מודול: <b dir="auto">יסודות</b></span><span class="chip">יחידות מקור: <b dir="auto">Learn Assembly for Game Hacking, CS420 8 - How to Edit Assembly, Stack Pointers Explained</b></span></div></section>
+<section class="card tldr" id="s0"><h2>הרעיון בקצרה</h2>
+<p>Assembly היא הצורה הקריאה של קוד מכונה: כל שורה היא הוראה אחת למעבד. לא צריך לדעת <strong>לכתוב</strong> תוכנות ב-Assembly. צריך לדעת <strong>לקרוא</strong> עשר שורות ולהבין מה הן עושות לנתון שמעניין אותנו. כמעט כל מה שרואים בפועל מורכב מקומץ הוראות: העתקה, חשבון, השוואה וקפיצה. השיעור משתמש בתחביר Intel, שהוא ברירת המחדל ב-Cheat Engine, ב-x64dbg וב-IDA.</p></section>
+<section class="card " id="s1"><h2>Registers: המשתנים של המעבד</h2>
+<p>Register הוא תא אחסון קטן ומהיר בתוך המעבד. ב-x64 כל register הוא 64 ביט, ואפשר לפנות גם לחלקים שלו:</p>
+<div class="table-wrap"><table><thead><tr><th>64 ביט</th><th>32 ביט</th><th>16 ביט</th><th>8 ביט</th><th>תפקיד אופייני</th></tr></thead><tbody><tr><td><code>rax</code></td><td><code>eax</code></td><td><code>ax</code></td><td><code>al</code></td><td>ערך החזרה של פונקציה, חישובים</td></tr><tr><td><code>rbx</code></td><td><code>ebx</code></td><td><code>bx</code></td><td><code>bl</code></td><td>כללי. הרבה פעמים pointer לאובייקט</td></tr><tr><td><code>rcx</code></td><td><code>ecx</code></td><td><code>cx</code></td><td><code>cl</code></td><td>מונה. ב-C++ של 32 ביט: ה-pointer <code>this</code></td></tr><tr><td><code>rdx</code></td><td><code>edx</code></td><td><code>dx</code></td><td><code>dl</code></td><td>כללי</td></tr><tr><td><code>rsi</code>, <code>rdi</code></td><td><code>esi</code>, <code>edi</code></td><td></td><td></td><td>מקור ויעד בהעתקות, כללי</td></tr><tr><td><code>rsp</code></td><td><code>esp</code></td><td></td><td></td><td>ראש ה-stack</td></tr><tr><td><code>rbp</code></td><td><code>ebp</code></td><td></td><td></td><td>בסיס ה-frame של הפונקציה</td></tr><tr><td><code>rip</code></td><td><code>eip</code></td><td></td><td></td><td>הכתובת של ההוראה הבאה</td></tr><tr><td><code>r8</code>–<code>r15</code></td><td><code>r8d</code>–<code>r15d</code></td><td></td><td></td><td>כלליים, רק ב-64 ביט</td></tr></tbody></table></div>
+<p>בתהליך של 32 ביט קיימים רק השמות שמתחילים ב-<code>e</code>. מספרים עם נקודה חיים ב-registers נפרדים, <code>xmm0</code> עד <code>xmm15</code>.</p></section>
+<section class="card " id="s2"><h2>הוראה, יעד, מקור</h2>
+<p>המבנה הוא תמיד <code>instruction destination, source</code>. היעד בא ראשון:</p>
+<pre dir="ltr"><code>mov eax, 5        ; eax = 5
+mov eax, ebx      ; eax = ebx
+add eax, 2        ; eax = eax + 2</code></pre>
+<p><strong>סוגריים מרובעים פירושם זיכרון.</strong> זה אותו dereference מהשיעור הקודם:</p>
+<pre dir="ltr"><code>mov eax, ebx          ; copy the value of ebx into eax
+mov eax, [ebx]        ; read 4 bytes from the address stored in ebx
+mov eax, [ebx+0xEC]   ; read from address ebx + 0xEC
+mov [ebx+0xEC], eax   ; WRITE eax to address ebx + 0xEC</code></pre>
+<p>השורה האחרונה היא הדפוס החשוב ביותר בקורס: <code>ebx</code> מחזיק את כתובת מבנה השחקן, <code>0xEC</code> הוא ה-offset של השדה, וההוראה כותבת לשדה ערך חדש. כשמוצאים שורה כזו למדנו שני דברים בבת אחת: מה ה-offset של השדה, ואיזה register מחזיק את בסיס המבנה.</p></section>
+<section class="card " id="s3"><h2>ההוראות שרואים כל הזמן</h2>
+<div class="table-wrap"><table><thead><tr><th>הוראה</th><th>מה היא עושה</th><th>דוגמה</th></tr></thead><tbody><tr><td><code>mov</code></td><td>העתקה</td><td><code>mov eax, [ebx+4]</code></td></tr><tr><td><code>lea</code></td><td>חישוב כתובת בלי לקרוא ממנה</td><td><code>lea eax, [ebx+4]</code> שם ב-eax את ebx+4</td></tr><tr><td><code>add</code>, <code>sub</code></td><td>חיבור, חיסור</td><td><code>sub [ebx+0xEC], ecx</code></td></tr><tr><td><code>inc</code>, <code>dec</code></td><td>הוספה או הפחתה של 1</td><td><code>dec dword ptr [esi+0x14]</code></td></tr><tr><td><code>imul</code>, <code>shl</code>, <code>shr</code></td><td>כפל, הזזת ביטים</td><td><code>shl eax, 2</code> מכפיל ב-4</td></tr><tr><td><code>xor</code></td><td>XOR. register עם עצמו מאפס אותו</td><td><code>xor eax, eax</code></td></tr><tr><td><code>cmp</code>, <code>test</code></td><td>השוואה. רק מעדכנת דגלים</td><td><code>cmp eax, 0</code></td></tr><tr><td><code>jmp</code></td><td>קפיצה תמיד</td><td><code>jmp 0x00401234</code></td></tr><tr><td><code>je</code>, <code>jne</code>, <code>jg</code>, <code>jl</code> ועוד</td><td>קפיצה בתנאי, לפי הדגלים</td><td><code>jle 0x00401250</code></td></tr><tr><td><code>call</code>, <code>ret</code></td><td>קריאה לפונקציה וחזרה ממנה</td><td><code>call 0x00405000</code></td></tr><tr><td><code>push</code>, <code>pop</code></td><td>דחיפה ל-stack ושליפה ממנו</td><td><code>push ebp</code></td></tr><tr><td><code>nop</code></td><td>לא עושה כלום. בית אחד, <code>0x90</code></td><td><code>nop</code></td></tr><tr><td><code>movss</code>, <code>addss</code>, <code>subss</code></td><td>אותן פעולות, על float</td><td><code>movss xmm0, [ebx+8]</code></td></tr></tbody></table></div>
+<p>המילים <code>byte ptr</code>, <code>word ptr</code>, <code>dword ptr</code> ו-<code>qword ptr</code> אומרות כמה בתים לקרוא או לכתוב: 1, 2, 4 או 8. הן מופיעות כשאי אפשר להסיק את הגודל מה-register.</p></section>
+<section class="card " id="s4"><h2>תנאים: cmp ואז קפיצה</h2>
+<p><code>if</code> ב-C הופך לשתי הוראות. <code>cmp</code> משווה ומעדכן את ה-<strong>flags</strong>, והוראת הקפיצה שאחריה מחליטה לפיהם:</p>
+<pre dir="ltr"><code>cmp dword ptr [ebx+0xEC], 0   ; compare health with 0
+jg  still_alive               ; jump if greater (health &gt; 0)
+call player_died              ; reached only when health &lt;= 0
+still_alive:</code></pre>
+<p>שימו לב שהקפיצה הרבה פעמים <strong>הפוכה</strong> מהתנאי בקוד המקור: הקומפיילר קופץ <strong>מעל</strong> הבלוק כשהתנאי לא מתקיים.</p>
+<div class="table-wrap"><table><thead><tr><th>קפיצה</th><th>קופצת כאשר</th></tr></thead><tbody><tr><td><code>je</code> / <code>jz</code></td><td>שווה, או התוצאה אפס</td></tr><tr><td><code>jne</code> / <code>jnz</code></td><td>שונה</td></tr><tr><td><code>jg</code>, <code>jge</code></td><td>גדול, גדול או שווה (עם סימן)</td></tr><tr><td><code>jl</code>, <code>jle</code></td><td>קטן, קטן או שווה (עם סימן)</td></tr><tr><td><code>ja</code>, <code>jb</code></td><td>גדול, קטן (בלי סימן)</td></tr></tbody></table></div></section>
+<section class="card " id="s5"><h2>ה-Stack ופונקציות</h2>
+<p>ה-stack הוא אזור זיכרון שגדל כלפי כתובות <strong>נמוכות</strong>. <code>rsp</code> מצביע תמיד על הראש שלו. <code>push</code> מקטין את <code>rsp</code> וכותב, <code>pop</code> קורא ומגדיל.</p>
+<p><code>call</code> דוחפת ל-stack את הכתובת של ההוראה שאחריה (כתובת החזרה) וקופצת לפונקציה. <code>ret</code> שולפת את הכתובת הזו וקופצת אליה חזרה. פונקציה אופיינית ב-32 ביט נפתחת ונסגרת כך:</p>
+<pre dir="ltr"><code>push ebp            ; save the caller&#x27;s frame base
+mov  ebp, esp       ; start our own frame
+sub  esp, 0x10      ; reserve 16 bytes for local variables
+...
+mov  esp, ebp       ; release the locals
+pop  ebp            ; restore the caller&#x27;s frame base
+ret</code></pre>
+<p>בתוך פונקציה כזו, <code>[ebp+8]</code> הוא הפרמטר הראשון ו-<code>[ebp-4]</code> הוא משתנה מקומי. איך בדיוק פרמטרים עוברים בין פונקציות (calling conventions) זה נושא לשיעור נפרד.</p></section>
+<section class="card " id="s6"><h2>דוגמה מלאה: קוד שמוריד חיים</h2>
+<p>נניח שעצרנו על ההוראה שכותבת לשדה החיים, ואלה השורות שסביבה:</p>
+<pre dir="ltr"><code>mov  eax, [ebx+0xEC]     ; 1. eax = current health
+sub  eax, edi            ; 2. eax = health - damage
+mov  [ebx+0xEC], eax     ; 3. store the new health
+test eax, eax            ; 4. is it zero or below?
+jg   0x0042A1C0          ; 5. still alive -&gt; skip ahead
+call 0x0042B300          ; 6. otherwise handle death</code></pre>
+<p>מה למדנו מקריאה בלבד:</p>
+<ul><li><code>ebx</code> מחזיק את בסיס מבנה הדמות, והחיים נמצאים ב-offset <code>0xEC</code>.</li><li><code>edi</code> מחזיק את כמות הנזק.</li><li>שורה 3 היא הכתיבה היחידה לשדה. אם מחליפים אותה ב-<code>nop</code>, החיים לא יורדים.</li></ul>
+<p>הניסוי האחרון הוא התרגיל הקלאסי של התחום, והוא מלמד גם את המלכודת הקלאסית: אותו קוד משרת בדרך כלל <strong>גם את האויבים</strong>. <code>ebx</code> מצביע על מי שנפגע עכשיו, לא דווקא על השחקן, ולכן אחרי ה-<code>nop</code> גם האויבים מפסיקים לאבד חיים. הפתרון, בדיקה של מי נמצא ב-<code>ebx</code> לפני שמחליטים, הוא נושא במסלול 2.</p>
+<p>עוד פרט טכני: כשמחליפים הוראה, חייבים למלא בדיוק את אותו מספר בתים. שורה 3 תופסת 6 בתים, ולכן מחליפים אותה בשישה <code>nop</code>. אחרת כל ההוראות שאחריה יפוענחו לא נכון והמשחק יקרוס.</p></section>
+<section class="card " id="s7"><h2>32 מול 64 בקצרה</h2>
+<div class="table-wrap"><table><thead><tr><th></th><th>32 ביט (x86)</th><th>64 ביט (x64)</th></tr></thead><tbody><tr><td>Registers</td><td><code>eax</code>, <code>ebx</code> וכו'</td><td><code>rax</code>, <code>rbx</code> וכו', ובנוסף <code>r8</code>–<code>r15</code></td></tr><tr><td>גודל pointer</td><td>4 בתים</td><td>8 בתים</td></tr><tr><td>פרמטרים לפונקציה</td><td>בעיקר על ה-stack</td><td>ארבעת הראשונים ב-<code>rcx</code>, <code>rdx</code>, <code>r8</code>, <code>r9</code></td></tr><tr><td>גישה לנתונים סטטיים</td><td>כתובת מוחלטת</td><td>יחסית ל-<code>rip</code>, למשל <code>[rip+0x2A4F10]</code></td></tr></tbody></table></div>
+<p>כתיבה ל-register של 32 ביט בתהליך 64 ביט מאפסת את החצי העליון של ה-register המלא. לכן <code>mov eax, 1</code> שקול בפועל ל-<code>mov rax, 1</code>.</p></section>
+<section class="card glossary" id="s8"><h2>מילון מונחים</h2>
+<div class="table-wrap"><table><thead><tr><th>מונח</th><th>משמעות</th></tr></thead><tbody><tr><td><strong>Register</strong></td><td>תא אחסון בתוך המעבד</td></tr><tr><td><strong>Opcode</strong></td><td>הבתים שמקודדים הוראה אחת</td></tr><tr><td><strong>Operand</strong></td><td>הארגומנט של הוראה: register, מספר או כתובת זיכרון</td></tr><tr><td><strong>Flags</strong></td><td>ביטים שמתעדכנים אחרי חישוב או השוואה, ועליהם נשענות קפיצות בתנאי</td></tr><tr><td><strong>Stack</strong></td><td>אזור זיכרון שגדל כלפי מטה, למשתנים מקומיים ולכתובות חזרה</td></tr><tr><td><strong>Return address</strong></td><td>הכתובת שאליה חוזרים בסוף פונקציה</td></tr><tr><td><strong>NOP</strong></td><td>הוראה שלא עושה כלום, הבית <code>0x90</code></td></tr><tr><td><strong>Intel syntax</strong></td><td>סגנון כתיבה שבו היעד בא לפני המקור</td></tr></tbody></table></div></section>
+<section class="card quiz" id="s9"><h2>בדיקה עצמית</h2>
+<ol><li>מה ההבדל בין <code>mov eax, ebx</code> לבין <code>mov eax, [ebx]</code>?</li><li>מה ההבדל בין <code>mov eax, [ebx+8]</code> לבין <code>lea eax, [ebx+8]</code>?</li><li>ראיתם <code>sub [esi+0x150], eax</code> בקוד שרץ בכל ירייה. מה אפשר להסיק?</li><li>למה <code>xor eax, eax</code> נפוץ יותר מ-<code>mov eax, 0</code>?</li><li>החלפתם הוראה של 6 בתים ב-<code>nop</code> אחד והמשחק קרס. למה?</li></ol>
+<p>תשובות: (1) הראשון מעתיק את הערך של ebx. השני קורא מהזיכרון בכתובת ש-ebx מחזיק. (2) <code>mov</code> קורא את מה ששמור בכתובת. <code>lea</code> שם ב-eax את הכתובת עצמה. (3) <code>esi</code> מחזיק בסיס של מבנה, כנראה נשק. ב-offset <code>0x150</code> יש את התחמושת, ו-<code>eax</code> הוא מספר הכדורים שיורדים. (4) הוא מקודד בפחות בתים והתוצאה זהה. (5) חמשת הבתים שנשארו פוענחו כהוראות חדשות וחסרות משמעות.</p></section>
+<nav class="pager"><a class="prev" href="04-pointers-and-pointer-chains.html"><small>→ השיעור הקודם</small>שיעור 1.4 — Pointers ושרשראות של Pointers</a><a class="next" href="06-hex-editing-files.html"><small>השיעור הבא ←</small>שיעור 1.6 — Hex Editing: לערוך קבצים בית אחרי בית</a></nav>
+<footer class="foot">Game Hacking בעברית · שיעורים מקוריים · לתרגול על משחקי offline בלבד</footer>
+</main>
+<aside class="toc"><div class="toc-title">בעמוד זה</div><a href="#s0">הרעיון בקצרה</a><a href="#s1">Registers: המשתנים של המעבד</a><a href="#s2">הוראה, יעד, מקור</a><a href="#s3">ההוראות שרואים כל הזמן</a><a href="#s4">תנאים: cmp ואז קפיצה</a><a href="#s5">ה-Stack ופונקציות</a><a href="#s6">דוגמה מלאה: קוד שמוריד חיים</a><a href="#s7">32 מול 64 בקצרה</a><a href="#s8">מילון מונחים</a><a href="#s9">בדיקה עצמית</a></aside>
+</div>
+</body>
+</html>

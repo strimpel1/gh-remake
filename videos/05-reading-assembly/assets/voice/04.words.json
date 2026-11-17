@@ -1,0 +1,62 @@
+{
+ "key": "0586e80f7cc50bf2dc31bfd5e0266385bb64634c",
+ "text": "Square brackets mean memory. Not the register itself, but the address stored inside it.",
+ "words": [
+  [
+   "Square",
+   0.052
+  ],
+  [
+   "brackets",
+   0.468
+  ],
+  [
+   "mean",
+   1.197
+  ],
+  [
+   "memory",
+   1.458
+  ],
+  [
+   "Not",
+   2.318
+  ],
+  [
+   "the",
+   2.617
+  ],
+  [
+   "register",
+   2.708
+  ],
+  [
+   "itself",
+   3.177
+  ],
+  [
+   "but",
+   3.971
+  ],
+  [
+   "the",
+   4.128
+  ],
+  [
+   "address",
+   4.349
+  ],
+  [
+   "stored",
+   4.857
+  ],
+  [
+   "inside",
+   5.182
+  ],
+  [
+   "it",
+   5.586
+  ]
+ ]
+}

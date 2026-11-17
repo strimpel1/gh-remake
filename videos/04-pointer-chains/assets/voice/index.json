@@ -1,0 +1,46 @@
+{
+ "voice": "en-US-AvaMultilingualNeural",
+ "rate": "-4%",
+ "lines": [
+  {
+   "id": "01",
+   "duration": 6.459,
+   "text": "Your player moves to a new address on every run. Yet the game always finds it. How?"
+  },
+  {
+   "id": "02",
+   "duration": 6.993,
+   "text": "It keeps a note in a fixed place: a pointer. A pointer is just a number, and that number is an address."
+  },
+  {
+   "id": "03",
+   "duration": 7.385,
+   "text": "Read the note, and you are standing at the start of the player. Health sits a fixed distance in: offset E C."
+  },
+  {
+   "id": "04",
+   "duration": 5.719,
+   "text": "So the recipe is: read the pointer, then add the offset. In that order."
+  },
+  {
+   "id": "05",
+   "duration": 6.591,
+   "text": "Add first and read second, and you land somewhere else entirely. That is the classic mistake."
+  },
+  {
+   "id": "06",
+   "duration": 8.015,
+   "text": "Real games chain several. Player points to weapon, weapon points to ammo. Read, add, repeat."
+  },
+  {
+   "id": "07",
+   "duration": 6.135,
+   "text": "If a link holds zero, stop. There is no player yet, and reading address zero crashes."
+  },
+  {
+   "id": "08",
+   "duration": 4.922,
+   "text": "A pointer chain is the path the game itself walks. Walk it the same way."
+  }
+ ]
+}

@@ -1,0 +1,52 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background-color: #E4F2EC;
+      background-image:
+        linear-gradient(#9CCFC0 3px, transparent 3px), linear-gradient(90deg, #9CCFC0 3px, transparent 3px),
+        linear-gradient(#C4E3D9 1px, transparent 1px), linear-gradient(90deg, #C4E3D9 1px, transparent 1px);
+      background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px;
+      font-family: 'IBM Plex Mono', monospace; color: #0B2A30; }
+    .s9-stage { position: absolute; inset: 0; }
+
+    .s9-cell { position: relative; width: 150px; height: 150px; background: #fff; border: 8px solid #0B2A30;
+      box-shadow: 10px 10px 0 #0B2A30; font-size: 110px; font-weight: 700; line-height: 134px; text-align: center; }
+    .s9-cell.on { background: #FF5A1F; color: #fff; }
+    .s9-pv { position: absolute; left: 0; right: 0; top: -66px; font-size: 40px; line-height: 1; color: #2E6B63; font-weight: 700; }
+
+    .s9-cell { width: 110px; height: 110px; font-size: 80px; line-height: 94px; }
+    .s9-grp { position: absolute; top: 170px; display: flex; gap: 16px; }
+    .s9-dig { position: absolute; top: 170px; width: 150px; height: 110px; line-height: 110px; text-align: center; font-size: 130px; font-weight: 700; color: #E8490F; }
+    .s9-line { position: absolute; left: 192px; right: 192px; top: 420px; font-family: 'Archivo Black', sans-serif; font-size: 128px; line-height: 1.06; letter-spacing: -0.01em; }
+    .s9-line em { font-style: normal; color: #E8490F; }
+    .s9-w { display: inline-block; }
+    .s9-cover { position: absolute; inset: 0; background: #0E4A55; }
+  </style>
+  <div id="root" data-composition-id="claim" data-width="1920" data-height="1080">
+    <div id="s9-stage" class="clip s9-stage" data-start="0" data-duration="7.5">
+      <div id="s9-g1" class="s9-grp" style="left: 192px"><div id="s9-a0" class="s9-cell">0</div><div id="s9-a1" class="s9-cell on">1</div><div id="s9-a2" class="s9-cell on">1</div><div id="s9-a3" class="s9-cell">0</div></div>
+      <div id="s9-d1" class="s9-dig" style="left: 710px">6</div>
+      <div id="s9-g2" class="s9-grp" style="left: 960px"><div id="s9-b0" class="s9-cell">0</div><div id="s9-b1" class="s9-cell on">1</div><div id="s9-b2" class="s9-cell">0</div><div id="s9-b3" class="s9-cell">0</div></div>
+      <div id="s9-d2" class="s9-dig" style="left: 1478px">4</div>
+      <div id="s9-line" class="s9-line" data-hold><span class="s9-w">Hex</span> <span class="s9-w">is</span> <span class="s9-w">the</span> <span class="s9-w">same</span> <span class="s9-w">bits,</span> <br><em><span class="s9-w">four</span> <span class="s9-w">at</span> <span class="s9-w">a</span> <span class="s9-w">time.</span> </em></div>
+      <div id="s9-cover" class="s9-cover" data-layout-ignore></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const blurIn = (sel, t, d = 0.2) =>
+      tl.fromTo(sel, { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "power2.out" }, t);
+    const blurOut = (sel, t, d = 0.2) => tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d, ease: "power2.in" }, t);
+    const land = (sel, t, from = 1.3, d = 0.35) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
+
+    // the game is wiped off the paper, left to right
+    tl.fromTo("#s9-cover", { clipPath: "inset(0 0 0 0%)" }, { clipPath: "inset(0 0 0 100%)", duration: 0.45, ease: "power3.inOut" }, 0);
+    tl.fromTo(".s9-cell", { opacity: 0, scale: 1.3 }, { opacity: 1, scale: 1, duration: 0.25, ease: "expo.out", stagger: 0.05 }, 0.45);
+    land("#s9-d1", 1.1);
+    land("#s9-d2", 1.4);
+    tl.fromTo("#s9-line > .s9-w", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power2.out", stagger: 0.1 }, 2.5);
+    tl.fromTo("#s9-line em .s9-w", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power2.out", stagger: 0.1 }, 3.7);
+
+    window.__timelines["claim"] = tl;
+  </script>
+</template>

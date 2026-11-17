@@ -1,0 +1,78 @@
+{
+ "voice": "en-US-AvaMultilingualNeural",
+ "rate": "-4%",
+ "lines": [
+  {
+   "id": "01",
+   "planned_start": 0.0,
+   "planned_end": 6.5,
+   "duration": 7.294,
+   "fits": false,
+   "text": "Your health says one hundred. But the game never wrote down a one and two zeros. So what did it store?"
+  },
+  {
+   "id": "02",
+   "planned_start": 6.5,
+   "planned_end": 14.0,
+   "duration": 7.958,
+   "fits": false,
+   "text": "Dive into the game's memory and you find rows of this: pairs of digits and letters. One pair is your health."
+  },
+  {
+   "id": "03",
+   "planned_start": 14.0,
+   "planned_end": 21.5,
+   "duration": 8.492,
+   "fits": false,
+   "text": "This one. Six-four. Not sixty-four: this is hexadecimal, base sixteen, and it means exactly one hundred."
+  },
+  {
+   "id": "04",
+   "planned_start": 21.5,
+   "planned_end": 29.0,
+   "duration": 7.124,
+   "fits": true,
+   "text": "Underneath, it is one byte: eight bits, each a zero or a one. That is all the machine really has."
+  },
+  {
+   "id": "05",
+   "planned_start": 29.0,
+   "planned_end": 38.0,
+   "duration": 7.503,
+   "fits": true,
+   "text": "Now split the eight bits into two groups of four. The first group is worth six. The second is worth four."
+  },
+  {
+   "id": "06",
+   "planned_start": 38.0,
+   "planned_end": 47.0,
+   "duration": 8.896,
+   "fits": true,
+   "text": "Four bits can make sixteen patterns, so you need sixteen digits. Zero to nine, then A through F for ten to fifteen."
+  },
+  {
+   "id": "07",
+   "planned_start": 47.0,
+   "planned_end": 56.0,
+   "duration": 8.517,
+   "fits": true,
+   "text": "Fill every bit with a one and both digits become F. F-F is two hundred fifty-five, the most one byte can hold."
+  },
+  {
+   "id": "08",
+   "planned_start": 56.0,
+   "planned_end": 64.0,
+   "duration": 6.149,
+   "fits": true,
+   "text": "So write F-F into that byte, climb back out, and your health reads two hundred fifty-five."
+  },
+  {
+   "id": "09",
+   "planned_start": 64.0,
+   "planned_end": 71.5,
+   "duration": 4.538,
+   "fits": true,
+   "text": "Hex is not a different number. It is the same bits, four at a time."
+  }
+ ]
+}

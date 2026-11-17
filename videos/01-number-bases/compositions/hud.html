@@ -1,0 +1,68 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; color: #fff; font-family: 'League Gothic', sans-serif; background: #0E4A55; }
+    .s1-stage { position: absolute; inset: 0; }
+    .s1-cam { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 38%, #2A97A6 0%, #1C7C8A 35%, #0E4A55 100%); }
+    .s1-world { position: absolute; inset: 0; z-index: 0; isolation: isolate; }
+    .s1-wall { position: absolute; left: -200px; right: -200px; top: 330px; height: 150px; background: #0C4650; border-top: 10px solid #093840; }
+    .s1-floorwrap { position: absolute; left: -200px; right: -200px; top: 480px; bottom: 0; overflow: hidden; background: #0F5560; }
+    .s1-floor { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .s1-crate { position: absolute; z-index: 2; background: #E8B04A; border: 10px solid #B9832E; box-shadow: 14px 14px 0 #093840; }
+    .s1-crate::after { content: ""; position: absolute; inset: 0;
+      background: linear-gradient(45deg, transparent 47%, #B9832E 47%, #B9832E 53%, transparent 53%); }
+    .s1-cross { position: absolute; left: 960px; top: 470px; width: 0; height: 0; z-index: 4; }
+    .s1-cross i { position: absolute; background: #fff; }
+    .s1-cross i:nth-child(1) { left: -34px; top: -3px; width: 22px; height: 6px; }
+    .s1-cross i:nth-child(2) { left: 12px; top: -3px; width: 22px; height: 6px; }
+    .s1-cross i:nth-child(3) { left: -3px; top: -34px; width: 6px; height: 22px; }
+    .s1-cross i:nth-child(4) { left: -3px; top: 12px; width: 6px; height: 22px; }
+    .s1-hud { position: absolute; left: 192px; bottom: 108px; z-index: 5; }
+    .s1-label { font-size: 64px; letter-spacing: 0.08em; line-height: 1; }
+    .s1-num { font-size: 330px; line-height: 0.86; margin-top: 6px; }
+    .s1-bar { position: relative; margin-top: 18px; width: 560px; height: 46px; border: 8px solid #fff; background: #093840; }
+    .s1-fill { position: absolute; left: 0; top: 0; bottom: 0; background: #FF5A1F;
+      background-image: linear-gradient(90deg, transparent 50px, #093840 50px); background-size: 56px 100%; }
+  </style>
+  <div id="root" data-composition-id="hud" data-width="1920" data-height="1080">
+    <div id="s1-stage" class="clip s1-stage" data-start="0" data-duration="8.5">
+      <div id="s1-cam" class="s1-cam" data-layout-allow-overflow>
+        <div id="s1-world" class="s1-world" data-layout-allow-overflow>
+          <div class="s1-wall"></div>
+          <div class="s1-floorwrap"><svg class="s1-floor" viewBox="0 0 2320 600" preserveAspectRatio="none"><rect width="2320" height="600" fill="#14606B"/><g stroke="#0C4650" stroke-width="6"><line x1="1160" y1="-150" x2="-3600" y2="600"/><line x1="1160" y1="-150" x2="-3260" y2="600"/><line x1="1160" y1="-150" x2="-2920" y2="600"/><line x1="1160" y1="-150" x2="-2580" y2="600"/><line x1="1160" y1="-150" x2="-2240" y2="600"/><line x1="1160" y1="-150" x2="-1900" y2="600"/><line x1="1160" y1="-150" x2="-1560" y2="600"/><line x1="1160" y1="-150" x2="-1220" y2="600"/><line x1="1160" y1="-150" x2="-880" y2="600"/><line x1="1160" y1="-150" x2="-540" y2="600"/><line x1="1160" y1="-150" x2="-200" y2="600"/><line x1="1160" y1="-150" x2="140" y2="600"/><line x1="1160" y1="-150" x2="480" y2="600"/><line x1="1160" y1="-150" x2="820" y2="600"/><line x1="1160" y1="-150" x2="1160" y2="600"/><line x1="1160" y1="-150" x2="1500" y2="600"/><line x1="1160" y1="-150" x2="1840" y2="600"/><line x1="1160" y1="-150" x2="2180" y2="600"/><line x1="1160" y1="-150" x2="2520" y2="600"/><line x1="1160" y1="-150" x2="2860" y2="600"/><line x1="1160" y1="-150" x2="3200" y2="600"/><line x1="1160" y1="-150" x2="3540" y2="600"/><line x1="1160" y1="-150" x2="3880" y2="600"/><line x1="1160" y1="-150" x2="4220" y2="600"/><line x1="1160" y1="-150" x2="4560" y2="600"/><line x1="1160" y1="-150" x2="4900" y2="600"/><line x1="1160" y1="-150" x2="5240" y2="600"/><line x1="1160" y1="-150" x2="5580" y2="600"/><line x1="1160" y1="-150" x2="5920" y2="600"/><line x1="0" y1="18" x2="2320" y2="18"/><line x1="0" y1="48" x2="2320" y2="48"/><line x1="0" y1="96" x2="2320" y2="96"/><line x1="0" y1="172" x2="2320" y2="172"/><line x1="0" y1="300" x2="2320" y2="300"/><line x1="0" y1="520" x2="2320" y2="520"/></g></svg></div>
+          <div class="s1-crate" style="left: 1210px; top: 380px; width: 230px; height: 230px"></div>
+          <div class="s1-crate" style="left: 1470px; top: 450px; width: 170px; height: 170px"></div>
+          <div class="s1-crate" style="left: 330px; top: 410px; width: 150px; height: 150px"></div>
+        </div>
+        <div class="s1-cross"><i></i><i></i><i></i><i></i></div>
+        <div id="s1-hud" class="s1-hud">
+          <div class="s1-label">HEALTH</div>
+          <div id="s1-num" class="s1-num">100</div>
+          <div class="s1-bar"><div id="s1-fill" class="s1-fill" style="width: 100%"></div></div>
+        </div>
+      </div>
+      <div id="s1-white" style="position: absolute; inset: 0; background: #fff" data-layout-ignore></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const blurIn = (sel, t, d = 0.2) =>
+      tl.fromTo(sel, { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "power2.out" }, t);
+    const blurOut = (sel, t, d = 0.2) => tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d, ease: "power2.in" }, t);
+    const land = (sel, t, from = 1.3, d = 0.35) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
+
+    // the world looks around a little, then the camera dives into the stem of the "1"
+    tl.fromTo("#s1-world", { x: 60 }, { x: -40, duration: 5.2, ease: "sine.inOut" }, 0);
+    tl.fromTo("#s1-fill", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.9, ease: "power2.out" }, 0.25);
+    const hp = { v: 0 };
+    const num = document.querySelector("#s1-num");
+    tl.fromTo(hp, { v: 0 }, { v: 100, duration: 0.9, ease: "power2.out", onUpdate: () => { num.textContent = Math.round(hp.v); } }, 0.25);
+    gsap.set("#s1-cam", { transformOrigin: "345px 765px" });
+    tl.fromTo("#s1-cam", { scale: 1 }, { scale: 1.35, duration: 2.6, ease: "power2.inOut" }, 5.0);
+    tl.to("#s1-cam", { scale: 5, duration: 0.9, ease: "power3.in" }, 7.6);
+    // the white of the numeral opens over the frame
+    tl.fromTo("#s1-white", { clipPath: "circle(0px at 345px 765px)" }, { clipPath: "circle(2000px at 345px 765px)", duration: 0.5, ease: "power3.in" }, 8.0);
+
+    window.__timelines["hud"] = tl;
+  </script>
+</template>

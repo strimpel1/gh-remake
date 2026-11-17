@@ -1,0 +1,46 @@
+{
+ "voice": "en-US-AvaMultilingualNeural",
+ "rate": "-4%",
+ "lines": [
+  {
+   "id": "01",
+   "duration": 8.461,
+   "text": "You search the game's memory for your health, one hundred. Zero results. The number is right there on screen. So where is it?"
+  },
+  {
+   "id": "02",
+   "duration": 5.716,
+   "text": "It is here, in these four bytes. They just don't say one hundred the way you expected."
+  },
+  {
+   "id": "03",
+   "duration": 6.642,
+   "text": "Read them as a whole number and you get one billion, one hundred twenty million. Nonsense for a health bar."
+  },
+  {
+   "id": "04",
+   "duration": 6.889,
+   "text": "Read the same four bytes as a float, a number with a decimal point, and they say exactly one hundred."
+  },
+  {
+   "id": "05",
+   "duration": 10.612,
+   "text": "A whole number one hundred looks completely different: sixty-four, zero, zero, zero. Same value on screen, different bytes in memory."
+  },
+  {
+   "id": "06",
+   "duration": 10.225,
+   "text": "And the bytes run backwards. One thousand is hex three E eight, but memory stores the small end first: E eight, zero three."
+  },
+  {
+   "id": "07",
+   "duration": 7.754,
+   "text": "So when a search finds nothing, change the type. Whole numbers for things you count. Floats for things that move."
+  },
+  {
+   "id": "08",
+   "duration": 4.583,
+   "text": "Memory holds only bytes. The type is how you choose to read them."
+  }
+ ]
+}

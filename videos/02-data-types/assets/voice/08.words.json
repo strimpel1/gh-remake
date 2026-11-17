@@ -1,0 +1,58 @@
+{
+ "key": "34aaa33f6be07c5a066549cff6c3b16eb7db9149",
+ "text": "Memory holds only bytes. The type is how you choose to read them.",
+ "words": [
+  [
+   "Memory",
+   0.078
+  ],
+  [
+   "holds",
+   0.534
+  ],
+  [
+   "only",
+   1.016
+  ],
+  [
+   "bytes",
+   1.315
+  ],
+  [
+   "The",
+   2.305
+  ],
+  [
+   "type",
+   2.383
+  ],
+  [
+   "is",
+   2.76
+  ],
+  [
+   "how",
+   2.891
+  ],
+  [
+   "you",
+   3.06
+  ],
+  [
+   "choose",
+   3.203
+  ],
+  [
+   "to",
+   3.581
+  ],
+  [
+   "read",
+   3.685
+  ],
+  [
+   "them",
+   3.971
+  ]
+ ]
+}

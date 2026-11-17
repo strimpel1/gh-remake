@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שיעור 1.6 — Hex Editing: לערוך קבצים בית אחרי בית</title>
+<link rel="stylesheet" href="../assets/style.css">
+<script>
+(function(){var r=document.documentElement,k='gh-he-theme';
+try{var s=localStorage.getItem(k);if(s)r.setAttribute('data-theme',s);}catch(e){}
+window.toggleTheme=function(){var d=r.getAttribute('data-theme');
+if(!d){d=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+var n=d==='dark'?'light':'dark';r.setAttribute('data-theme',n);
+try{localStorage.setItem(k,n);}catch(e){}};
+addEventListener('scroll',function(){var p=document.querySelector('.progress');if(!p)return;
+var h=document.documentElement;var m=h.scrollHeight-h.clientHeight;
+p.style.width=(m>0?(h.scrollTop/m*100):0)+'%';},{passive:true});})();
+</script>
+</head>
+<body>
+<div class="progress"></div>
+<header class="topbar">
+  <a class="home" href="../index.html">🎮 Game Hacking בעברית</a>
+  <span class="crumb"><span dir="auto">יסודות: מספרים, זיכרון ו-Assembly</span></span>
+  <span class="spacer"></span>
+  <span class="badge">לתרגול על משחקי offline בלבד</span>
+  <button class="theme-btn" onclick="toggleTheme()" title="מצב בהיר / כהה" aria-label="מצב בהיר או כהה">◐</button>
+</header>
+<div class="layout">
+<main>
+<section class="hero"><div class="kicker">שיעור 1.6</div><h1>Hex Editing: לערוך קבצים בית אחרי בית</h1><div class="chips"><span class="chip">מודול: <b dir="auto">יסודות</b></span><span class="chip">יחידות מקור: <b dir="auto">CS420 4 - How to Hex Edit Games</b></span></div></section>
+<section class="card tldr" id="s0"><h2>הרעיון בקצרה</h2>
+<p>עד עכשיו דיברנו על זיכרון של תהליך רץ. אבל אותם בתים בדיוק נמצאים גם <strong>בקבצים על הדיסק</strong>: קובצי שמירה, קובצי הגדרות, וקובץ ה-EXE עצמו. <strong>Hex editor</strong> הוא כלי שפותח כל קובץ כרצף בתים גולמי ומאפשר לשנות אותם. זו הדרך הפשוטה ביותר לשנות משחק, כי לא צריך debugger ולא צריך שהמשחק ירוץ, וכל מה שלמדנו על hex, טיפוסי נתונים ו-little-endian חל כאן בלי שינוי.</p></section>
+<section class="card " id="s1"><h2>מה רואים ב-Hex editor</h2>
+<p>כל hex editor (HxD הוא הנפוץ ב-Windows, ו-ImHex מתקדם יותר) מציג שלוש עמודות:</p>
+<pre dir="ltr"><code>Offset    00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F   Decoded text
+00000000  53 41 56 45 01 00 00 00 64 00 00 00 E8 03 00 00   SAVE....d...è...
+00000010  42 6F 62 00 00 00 00 00 00 00 C8 42 00 00 00 00   Bob.......ÈB....</code></pre>
+<div class="table-wrap"><table><thead><tr><th>עמודה</th><th>מה היא מראה</th></tr></thead><tbody><tr><td><strong>Offset</strong></td><td>המרחק מתחילת הקובץ, ב-hex. השורה השנייה מתחילה ב-offset <code>0x10</code></td></tr><tr><td><strong>Hex</strong></td><td>הבתים עצמם, 16 בשורה</td></tr><tr><td><strong>Decoded text</strong></td><td>אותם בתים כתווי ASCII. בתים שאינם תו מודפס מוצגים כנקודה</td></tr></tbody></table></div>
+<p>בדוגמה אפשר כבר לקרוא: <code>53 41 56 45</code> הם האותיות SAVE, <code>64 00 00 00</code> הוא 100 כ-int, <code>E8 03 00 00</code> הוא 1000, <code>42 6F 62 00</code> הוא השם Bob, ו-<code>00 00 C8 42</code> הוא 100.0 כ-float.</p></section>
+<section class="card " id="s2"><h2>למצוא ערך בקובץ שמירה</h2>
+<p>השיטה זהה לסריקת זיכרון, רק איטית יותר וידנית:</p>
+<ol><li><strong>מגבים את הקובץ.</strong> תמיד, לפני כל דבר אחר.</li><li>שומרים את המשחק כשיש לכם, נניח, 1000 זהב. מחפשים בקובץ את רצף הבתים <code>E8 03 00 00</code>.</li><li>אם יש כמה תוצאות, משנים את הערך במשחק (למשל ל-1250, כלומר <code>E2 04 00 00</code>), שומרים שוב ובודקים איזה מהמקומות השתנה.</li><li>משנים את הבתים, שומרים את הקובץ וטוענים את המשחק.</li></ol>
+<p>טיפ: רוב העורכים יודעים להשוות שני קבצים (ב-HxD: Analysis ואז Data comparison). שתי שמירות שההבדל היחיד ביניהן הוא פעולה אחת במשחק מצביעות ישר על הבתים הנכונים.</p></section>
+<section class="card " id="s3"><h2>שלושה דברים שמשבשים את התוכנית</h2>
+<ul><li><strong>Checksum.</strong> משחקים רבים שומרים בקובץ גם סכום ביקורת של התוכן. שיניתם בית אחד בלי לעדכן את הסכום, והמשחק מודיע שהשמירה פגומה. הסימן: שדה של 4 בתים, בדרך כלל בתחילת הקובץ או בסופו, שמשתנה לגמרי אחרי כל שמירה. הפתרון דורש להבין איך הסכום מחושב, וזה כבר תרגיל Reverse Engineering.</li><li><strong>דחיסה והצפנה.</strong> אם הקובץ נראה כמו רעש אקראי ואין בו אף מחרוזת קריאה, הוא דחוס או מוצפן. חיפוש ערכים לא יעבוד עד שמפענחים אותו.</li><li><strong>שינוי אורך.</strong> ב-hex editor <strong>דורסים</strong> בתים (overwrite) ולא מוסיפים (insert). קבצים בינאריים מלאים ב-offsets פנימיים, והוספת בית אחד מזיזה את כל מה שאחריו ושוברת אותם. רוצים שם ארוך יותר? צריך למצוא גם את שדה האורך ולהבין את מבנה הקובץ.</li></ul></section>
+<section class="card " id="s4"><h2>לערוך את ה-EXE עצמו</h2>
+<p>גם קוד הוא בתים בקובץ. את ה-<code>nop</code> מהשיעור הקודם אפשר לכתוב ישירות לקובץ ה-EXE במקום לזיכרון, והשינוי נשאר לתמיד. לזה קוראים <strong>patch</strong>.</p>
+<p>יש רק מלכודת אחת: כתובת בזיכרון ו-offset בקובץ הם לא אותו מספר. הקובץ נטען לזיכרון בפריסה אחרת מזו שעל הדיסק. את ההמרה עושים לפי טבלת ה-sections של הקובץ (עליה בשיעור 1.8), ובפועל כל debugger יודע לעשות אותה בשבילכם. ב-x64dbg משנים את ההוראה בזיכרון ואז בוחרים File ואז Patch file, והכלי כותב את השינוי למקום הנכון בקובץ.</p>
+<p>קובץ שנחתם דיגיטלית מאבד את תוקף החתימה אחרי patch. זה לא מפריע לתרגול על תוכנות שלכם, אבל כדאי לדעת שזה קורה.</p></section>
+<section class="card " id="s5"><h2>תרגיל</h2>
+<p>כתבו ב-C תוכנה קטנה ששומרת לקובץ struct עם <code>int health</code>, <code>int gold</code>, <code>float x</code> ו-<code>char name[16]</code>, ותוכנה שנייה שקוראת ומדפיסה אותו. פתחו את הקובץ ב-hex editor, זהו כל שדה לפי הבתים שלו, שנו את הזהב ואת השם, והריצו את התוכנה הקוראת כדי לבדוק את עצמכם.</p></section>
+<section class="card glossary" id="s6"><h2>מילון מונחים</h2>
+<div class="table-wrap"><table><thead><tr><th>מונח</th><th>משמעות</th></tr></thead><tbody><tr><td><strong>Hex editor</strong></td><td>כלי שמציג ועורך קובץ כרצף בתים גולמי</td></tr><tr><td><strong>File offset</strong></td><td>מרחק בבתים מתחילת הקובץ</td></tr><tr><td><strong>Magic bytes</strong></td><td>בתים קבועים בתחילת קובץ שמזהים את סוגו, כמו <code>MZ</code> בקובץ EXE</td></tr><tr><td><strong>Checksum</strong></td><td>ערך שמחושב מתוכן הקובץ ומשמש לזיהוי שינויים</td></tr><tr><td><strong>Overwrite / Insert</strong></td><td>דריסה של בתים קיימים, לעומת הוספה שמזיזה את ההמשך</td></tr><tr><td><strong>Patch</strong></td><td>שינוי קבוע של בתים בקובץ הרצה</td></tr></tbody></table></div></section>
+<section class="card quiz" id="s7"><h2>בדיקה עצמית</h2>
+<ol><li>באיזה offset נמצא הבית ה-18 בקובץ?</li><li>חיפשתם <code>E8 03 00 00</code> ומצאתם חמישה מקומות. איך תדעו איזה מהם הוא הזהב?</li><li>שיניתם ערך אחד והמשחק טוען שהשמירה פגומה. מה כנראה קרה?</li><li>למה לא מוסיפים בתים באמצע קובץ בינארי?</li><li>למה כתובת של הוראה בזיכרון אינה ה-offset שלה בקובץ ה-EXE?</li></ol>
+<p>תשובות: (1) <code>0x11</code>, כי הספירה מתחילה מאפס. (2) משנים את הזהב במשחק, שומרים שוב ובודקים איזה מקום השתנה בהתאם. (3) יש checksum שלא עודכן. (4) כי offsets פנימיים בקובץ מפסיקים להצביע למקום הנכון. (5) כי הקובץ נטען לזיכרון בפריסה אחרת, section אחרי section.</p></section>
+<nav class="pager"><a class="prev" href="05-reading-assembly.html"><small>→ השיעור הקודם</small>שיעור 1.5 — לקרוא Assembly: המינימום שצריך</a><a class="next" href="07-stack-and-calling-conventions.html"><small>השיעור הבא ←</small>שיעור 1.7 — ה-Stack ו-Calling Conventions</a></nav>
+<footer class="foot">Game Hacking בעברית · שיעורים מקוריים · לתרגול על משחקי offline בלבד</footer>
+</main>
+<aside class="toc"><div class="toc-title">בעמוד זה</div><a href="#s0">הרעיון בקצרה</a><a href="#s1">מה רואים ב-Hex editor</a><a href="#s2">למצוא ערך בקובץ שמירה</a><a href="#s3">שלושה דברים שמשבשים את התוכנית</a><a href="#s4">לערוך את ה-EXE עצמו</a><a href="#s5">תרגיל</a><a href="#s6">מילון מונחים</a><a href="#s7">בדיקה עצמית</a></aside>
+</div>
+</body>
+</html>

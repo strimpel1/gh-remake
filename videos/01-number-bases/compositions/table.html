@@ -1,0 +1,63 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background-color: #E4F2EC;
+      background-image:
+        linear-gradient(#9CCFC0 3px, transparent 3px), linear-gradient(90deg, #9CCFC0 3px, transparent 3px),
+        linear-gradient(#C4E3D9 1px, transparent 1px), linear-gradient(90deg, #C4E3D9 1px, transparent 1px);
+      background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px;
+      font-family: 'IBM Plex Mono', monospace; color: #0B2A30; }
+    .s6-stage { position: absolute; inset: 0; }
+
+    .s6-head { position: absolute; left: 0; right: 0; top: 60px; text-align: center; font-family: 'Archivo Black', sans-serif; font-size: 72px; line-height: 1; }
+    .s6-r { position: absolute; width: 660px; height: 84px; display: flex; align-items: center; font-weight: 700; background: #fff;
+      border: 6px solid #0B2A30; box-shadow: 8px 8px 0 #0B2A30; }
+    .s6-r span { width: 270px; text-align: center; font-size: 60px; letter-spacing: 0.08em; }
+    .s6-r i { width: 70px; height: 8px; background: #0B2A30; }
+    .s6-r b { width: 150px; text-align: center; font-size: 70px; }
+    .s6-r u { width: 140px; text-align: center; font-size: 44px; text-decoration: none; color: #2E6B63; }
+    .s6-r.az { background: #E8490F; color: #fff; }
+    .s6-r.az i { background: #fff; }
+    .s6-r.az u { color: #fff; }
+  </style>
+  <div id="root" data-composition-id="table" data-width="1920" data-height="1080">
+    <div id="s6-stage" class="clip s6-stage" data-start="0" data-duration="9.9">
+      <div id="s6-head" class="s6-head">4 bits &rarr; 16 patterns &rarr; 16 digits</div>
+      <div id="s6-r0" class="s6-r" style="left: 250px; top: 168px"><span>0000</span><i></i><b>0</b><u>0</u></div>
+      <div id="s6-r1" class="s6-r" style="left: 250px; top: 268px"><span>0001</span><i></i><b>1</b><u>1</u></div>
+      <div id="s6-r2" class="s6-r" style="left: 250px; top: 368px"><span>0010</span><i></i><b>2</b><u>2</u></div>
+      <div id="s6-r3" class="s6-r" style="left: 250px; top: 468px"><span>0011</span><i></i><b>3</b><u>3</u></div>
+      <div id="s6-r4" class="s6-r" style="left: 250px; top: 568px"><span>0100</span><i></i><b>4</b><u>4</u></div>
+      <div id="s6-r5" class="s6-r" style="left: 250px; top: 668px"><span>0101</span><i></i><b>5</b><u>5</u></div>
+      <div id="s6-r6" class="s6-r" style="left: 250px; top: 768px"><span>0110</span><i></i><b>6</b><u>6</u></div>
+      <div id="s6-r7" class="s6-r" style="left: 250px; top: 868px"><span>0111</span><i></i><b>7</b><u>7</u></div>
+      <div id="s6-r8" class="s6-r" style="left: 1010px; top: 168px"><span>1000</span><i></i><b>8</b><u>8</u></div>
+      <div id="s6-r9" class="s6-r" style="left: 1010px; top: 268px"><span>1001</span><i></i><b>9</b><u>9</u></div>
+      <div id="s6-r10" class="s6-r az" style="left: 1010px; top: 368px"><span>1010</span><i></i><b>A</b><u>10</u></div>
+      <div id="s6-r11" class="s6-r az" style="left: 1010px; top: 468px"><span>1011</span><i></i><b>B</b><u>11</u></div>
+      <div id="s6-r12" class="s6-r az" style="left: 1010px; top: 568px"><span>1100</span><i></i><b>C</b><u>12</u></div>
+      <div id="s6-r13" class="s6-r az" style="left: 1010px; top: 668px"><span>1101</span><i></i><b>D</b><u>13</u></div>
+      <div id="s6-r14" class="s6-r az" style="left: 1010px; top: 768px"><span>1110</span><i></i><b>E</b><u>14</u></div>
+      <div id="s6-r15" class="s6-r az" style="left: 1010px; top: 868px"><span>1111</span><i></i><b>F</b><u>15</u></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const blurIn = (sel, t, d = 0.2) =>
+      tl.fromTo(sel, { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "power2.out" }, t);
+    const blurOut = (sel, t, d = 0.2) => tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d, ease: "power2.in" }, t);
+    const land = (sel, t, from = 1.3, d = 0.35) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
+
+    blurIn("#s6-stage", 0, 0.25);
+    blurIn("#s6-head", 0.5);
+    // one row per count: 0-9 quickly, then A-F with room to read each
+    gsap.set(".s6-r", { transformOrigin: "50% 0" });
+    for (let n = 0; n < 16; n++) {
+      const t = n < 10 ? 3.5 + n * 0.2 : 6.6 + (n - 10) * 0.3;
+      tl.fromTo("#s6-r" + n, { opacity: 0, scaleY: 0.2 }, { opacity: 1, scaleY: 1, duration: 0.22, ease: "power3.out" }, t);
+    }
+    blurOut("#s6-stage", 9.6, 0.25);
+
+    window.__timelines["table"] = tl;
+  </script>
+</template>

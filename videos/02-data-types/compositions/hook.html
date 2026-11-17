@@ -1,0 +1,65 @@
+<template>
+  <style>
+    .s1-stage { position: absolute; inset: 0; }
+    .s1-h { position: absolute; font-family: 'Archivo Black', sans-serif; font-size: 96px; line-height: 1.05; letter-spacing: -0.01em; color: #0B2A30; }
+    .s1-m { position: absolute; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 54px; line-height: 1.15; color: #2E6B63; }
+    .s1-acc { color: #E8490F; }
+    .s1-dim { color: #6A9188; }
+    .s1-cell { position: absolute; background: #fff; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; color: #0B2A30; }
+    .s1-cell.on { background: #FF5A1F; color: #fff; }
+    .s1-tile { position: absolute; background: #FF5A1F; color: #fff; border: 12px solid #0B2A30; box-shadow: 16px 16px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s1-card { position: absolute; background: #fff; color: #0B2A30; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s1-card.on { background: #FF5A1F; color: #fff; }
+    .s1-card.soft { background: #CFE9DF; }
+    .s1-bar { position: absolute; background: #0B2A30; }
+
+    #root { position: absolute; inset: 0; overflow: hidden; background: radial-gradient(ellipse at 50% 38%, #2A97A6 0%, #1C7C8A 35%, #0E4A55 100%); }
+    .s1-wall { position: absolute; left: 0; right: 0; top: 330px; height: 150px; background: #0C4650; border-top: 10px solid #093840; }
+    .s1-floor { position: absolute; left: 0; top: 480px; width: 1920px; height: 600px; }
+    .s1-crate { position: absolute; background: #E8B04A; border: 10px solid #B9832E; box-shadow: 14px 14px 0 #093840; }
+    .s1-crate::after { content: ""; position: absolute; inset: 0; background: linear-gradient(45deg, transparent 47%, #B9832E 47%, #B9832E 53%, transparent 53%); }
+    .s1-hudl { position: absolute; font-family: 'League Gothic', sans-serif; font-size: 64px; letter-spacing: 0.08em; line-height: 1; color: #fff; }
+    .s1-hudn { position: absolute; font-family: 'League Gothic', sans-serif; font-size: 330px; line-height: 0.86; color: #fff; }
+    .s1-hudbar { position: absolute; width: 560px; height: 46px; border: 8px solid #fff; background: #FF5A1F;
+      background-image: linear-gradient(90deg, transparent 50px, #093840 50px); background-size: 56px 100%; }
+    .s1-h { color: #fff; }
+    .s1-m { color: #BFE6DD; }
+  </style>
+  <div id="root" data-composition-id="hook" data-width="1920" data-height="1080">
+    <div id="s1-stage" class="clip s1-stage" data-start="0" data-duration="9.6">
+      <div class="s1-wall"></div>
+      <svg class="s1-floor" viewBox="0 0 1920 600" preserveAspectRatio="none"><rect width="1920" height="600" fill="#14606B"/><g stroke="#0C4650" stroke-width="6"><line x1="960" y1="-150" x2="-3120" y2="600"/><line x1="960" y1="-150" x2="-2780" y2="600"/><line x1="960" y1="-150" x2="-2440" y2="600"/><line x1="960" y1="-150" x2="-2100" y2="600"/><line x1="960" y1="-150" x2="-1760" y2="600"/><line x1="960" y1="-150" x2="-1420" y2="600"/><line x1="960" y1="-150" x2="-1080" y2="600"/><line x1="960" y1="-150" x2="-740" y2="600"/><line x1="960" y1="-150" x2="-400" y2="600"/><line x1="960" y1="-150" x2="-60" y2="600"/><line x1="960" y1="-150" x2="280" y2="600"/><line x1="960" y1="-150" x2="620" y2="600"/><line x1="960" y1="-150" x2="960" y2="600"/><line x1="960" y1="-150" x2="1300" y2="600"/><line x1="960" y1="-150" x2="1640" y2="600"/><line x1="960" y1="-150" x2="1980" y2="600"/><line x1="960" y1="-150" x2="2320" y2="600"/><line x1="960" y1="-150" x2="2660" y2="600"/><line x1="960" y1="-150" x2="3000" y2="600"/><line x1="960" y1="-150" x2="3340" y2="600"/><line x1="960" y1="-150" x2="3680" y2="600"/><line x1="960" y1="-150" x2="4020" y2="600"/><line x1="960" y1="-150" x2="4360" y2="600"/><line x1="960" y1="-150" x2="4700" y2="600"/><line x1="960" y1="-150" x2="5040" y2="600"/><line x1="0" y1="18" x2="1920" y2="18"/><line x1="0" y1="48" x2="1920" y2="48"/><line x1="0" y1="96" x2="1920" y2="96"/><line x1="0" y1="172" x2="1920" y2="172"/><line x1="0" y1="300" x2="1920" y2="300"/><line x1="0" y1="520" x2="1920" y2="520"/></g></svg>
+      <div class="s1-crate" style="left: 1210px; top: 380px; width: 230px; height: 230px"></div>
+      <div class="s1-crate" style="left: 1470px; top: 450px; width: 170px; height: 170px"></div>
+      <div class="s1-hudl" style="left: 192px; top: 560px">HEALTH</div>
+      <div id="s1-hudn" class="s1-hudn" style="left: 192px; top: 630px">100</div>
+      <div class="s1-hudbar" style="left: 192px; top: 926px"></div>
+      <div id="s1-q" class="s1-card " style="left: 1010px; top: 150px; width: 720px; height: 120px; line-height: 104px; font-size: 50px">search: 100 &nbsp;(4 Bytes)</div>
+      <div id="s1-r" class="s1-card on" style="left: 1010px; top: 310px; width: 720px; height: 120px; line-height: 104px; font-size: 60px">0 results</div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const blurIn = (sel, t, d = 0.2) =>
+      tl.fromTo(sel, { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "power2.out" }, t);
+    const blurOut = (sel, t, d = 0.2) => tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d, ease: "power2.in" }, t);
+    const land = (sel, t, from = 1.3, d = 0.35) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
+    const each = (sel, t, gap = 0.12, from = 1.3) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out", stagger: gap }, t);
+    const wipe = (sel, t, d = 0.3) =>
+      tl.fromTo(sel, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: d, ease: "power2.out" }, t);
+    const dim = (sel, t, to = 0.3) => tl.to(sel, { opacity: to, duration: 0.3, ease: "power2.inOut" }, t);
+
+    land("#s1-q", 0.63);
+    land("#s1-r", 3.64);
+    tl.fromTo("#s1-hudn", { scale: 1 }, { scale: 1.08, duration: 0.2, ease: "power2.out", yoyo: true, repeat: 1 }, 6.4);
+    tl.fromTo("#s1-r", { rotation: 0 }, { rotation: -3, duration: 0.25, ease: "power2.out" }, 7.86);
+
+    blurOut("#s1-stage", 9.3, 0.25);
+    window.__timelines["hook"] = tl;
+  </script>
+</template>

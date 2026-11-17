@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שיעור 1.4 — Pointers ושרשראות של Pointers</title>
+<link rel="stylesheet" href="../assets/style.css">
+<script>
+(function(){var r=document.documentElement,k='gh-he-theme';
+try{var s=localStorage.getItem(k);if(s)r.setAttribute('data-theme',s);}catch(e){}
+window.toggleTheme=function(){var d=r.getAttribute('data-theme');
+if(!d){d=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+var n=d==='dark'?'light':'dark';r.setAttribute('data-theme',n);
+try{localStorage.setItem(k,n);}catch(e){}};
+addEventListener('scroll',function(){var p=document.querySelector('.progress');if(!p)return;
+var h=document.documentElement;var m=h.scrollHeight-h.clientHeight;
+p.style.width=(m>0?(h.scrollTop/m*100):0)+'%';},{passive:true});})();
+</script>
+</head>
+<body>
+<div class="progress"></div>
+<header class="topbar">
+  <a class="home" href="../index.html">🎮 Game Hacking בעברית</a>
+  <span class="crumb"><span dir="auto">יסודות: מספרים, זיכרון ו-Assembly</span></span>
+  <span class="spacer"></span>
+  <span class="badge">לתרגול על משחקי offline בלבד</span>
+  <button class="theme-btn" onclick="toggleTheme()" title="מצב בהיר / כהה" aria-label="מצב בהיר או כהה">◐</button>
+</header>
+<div class="layout">
+<main>
+<section class="hero"><div class="kicker">שיעור 1.4</div><h1>Pointers ושרשראות של Pointers</h1><div class="chips"><span class="chip">מודול: <b dir="auto">יסודות</b></span><span class="chip">יחידות מקור: <b dir="auto">CS420 7 - Virtual Memory &amp; Multilevel Pointers, Multi Level Pointers In Depth</b></span></div></section>
+<section class="card tldr" id="s0"><h2>הרעיון בקצרה</h2>
+<p><strong>Pointer</strong> הוא משתנה שהערך שלו הוא כתובת של נתון אחר. משחקים בנויים משכבות של אובייקטים שמצביעים זה על זה: המשחק מחזיק pointer לעולם, העולם ל-שחקן, השחקן לנשק. כדי להגיע לנתון בצורה ששורדת הפעלה מחדש, הולכים באותה דרך שהמשחק הולך: מתחילים מכתובת סטטית ועוקבים אחרי ה-pointers, אחד אחרי השני. לרצף הזה קוראים <strong>pointer chain</strong> או multilevel pointer.</p></section>
+<section class="card " id="s1"><h2>Pointer הוא סתם מספר</h2>
+<p>אין בזיכרון שום סימון מיוחד ל-pointer. אלה 4 בתים (בתהליך 32 ביט) או 8 בתים (ב-64 ביט) שבמקרה מכילים כתובת תקפה.</p>
+<pre dir="ltr"><code>address       bytes          as 4-byte value
+0x0058AC00    00 20 3F 0A    0x0A3F2000    &lt;- looks like an address
+0x0A3F2000    64 00 00 00    100           &lt;- the value it points to</code></pre>
+<p>הפעולה "ללכת לכתובת ששמורה כאן ולקרוא מה שיש שם" נקראת <strong>dereference</strong>. בכתיבה מקובלת מסמנים אותה בסוגריים מרובעים: <code>[0x0058AC00]</code> פירושו "הערך שנמצא בכתובת <code>0x0058AC00</code>", כלומר <code>0x0A3F2000</code>.</p>
+<p>איך מזהים pointer בתצוגת זיכרון? ערך שנראה כמו כתובת באזור של ה-heap או של module, ושאם הולכים אליו מוצאים נתונים הגיוניים. ב-64 ביט קל עוד יותר: שמונה בתים שמתחילים ב-<code>00 00 7F</code> או דומה.</p></section>
+<section class="card " id="s2"><h2>רמה אחת: בסיס ועוד offset</h2>
+<p>בשיעור 1.2 ראינו ששדה במבנה נמצא ב-offset קבוע מתחילתו. בשיעור 1.3 ראינו שהמבנה עצמו זז בין הפעלות, אבל יש משתנה סטטי שמחזיק את כתובתו. מחברים:</p>
+<pre dir="ltr"><code>health address = [game.exe + 0x18AC00] + 0xEC</code></pre>
+<p>קוראים את זה מבפנים החוצה:</p>
+<ol><li>לוקחים את ה-base של <code>game.exe</code> ומוסיפים <code>0x18AC00</code>. מקבלים כתובת סטטית.</li><li>קוראים את הערך ששמור שם. זו הכתובת הנוכחית של מבנה השחקן.</li><li>מוסיפים <code>0xEC</code>. זו הכתובת של שדה החיים.</li></ol>
+<p>הטעות הקלאסית היא לחבר את ה-offset לפני ה-dereference. <code>[base + 0x18AC00] + 0xEC</code> ו-<code>[base + 0x18AC00 + 0xEC]</code> הן שתי כתובות שונות לגמרי.</p></section>
+<section class="card " id="s3"><h2>כמה רמות</h2>
+<p>במשחק אמיתי יש בדרך כלל כמה תחנות. למשל, התחמושת של הנשק הנוכחי:</p>
+<pre dir="ltr"><code>game.exe + 0x18AC00   -&gt;  pointer to Player
+Player   + 0x364      -&gt;  pointer to current Weapon
+Weapon   + 0x14       -&gt;  pointer to Ammo info
+AmmoInfo + 0x0        -&gt;  ammo in clip (the value)</code></pre>
+<p>ובכתיבה מקוצרת:</p>
+<pre dir="ltr"><code>[[[game.exe + 0x18AC00] + 0x364] + 0x14] + 0x0</code></pre>
+<p>הכלל זהה בכל רמה: <strong>קוראים pointer, מוסיפים offset, וחוזרים על זה.</strong> ה-offset האחרון לא עובר dereference. הוא מוביל לכתובת של הערך עצמו.</p>
+<p>בקוד, פונקציה כזו נראית כך (בגרסה שרצה בתוך התהליך עצמו):</p>
+<pre dir="ltr"><code>uintptr_t ResolveChain(uintptr_t base, const std::vector&lt;unsigned&gt;&amp; offsets)
+{
+    uintptr_t addr = base;
+    for (unsigned off : offsets) {
+        addr = *(uintptr_t*)addr;   // dereference
+        addr += off;                // then add the offset
+    }
+    return addr;                    // address of the final value
+}
+
+// usage: int* ammo = (int*)ResolveChain(moduleBase + 0x18AC00, {0x364, 0x14, 0x0});</code></pre>
+<p>כל הכתובות וה-offsets בשיעור הזה הם דוגמאות להמחשה. בכל משחק, ובכל גרסה שלו, הם שונים. במסלול 2 נלמד למצוא אותם.</p></section>
+<section class="card " id="s4"><h2>למה ה-offsets יציבים והכתובות לא</h2>
+<div class="table-wrap"><table><thead><tr><th>מה</th><th>משתנה בין הפעלות?</th><th>למה</th></tr></thead><tbody><tr><td>base של ה-module</td><td>כן</td><td>ASLR</td></tr><tr><td>כתובת של אובייקט ב-heap</td><td>כן</td><td>מוקצה מחדש בכל פעם</td></tr><tr><td>offset של משתנה סטטי בתוך ה-module</td><td>לא</td><td>נקבע בזמן הקומפילציה</td></tr><tr><td>offset של שדה בתוך struct</td><td>לא</td><td>נקבע בזמן הקומפילציה</td></tr></tbody></table></div>
+<p>כל מה שנקבע בקומפילציה נשאר יציב עד שהמפתחים מוציאים גרסה חדשה. אחרי עדכון משחק ה-offsets עלולים לזוז, וזו הסיבה ש-trainers "נשברים" בעדכונים. הפתרון לזה, pattern scanning, מחכה במסלול 6.</p></section>
+<section class="card " id="s5"><h2>איפה שרשרת נשברת</h2>
+<ul><li><strong>Null pointer.</strong> אחת התחנות מכילה 0, למשל כי השחקן עוד לא נכנס למשחק או שאין לו נשק ביד. dereference של 0 הוא access violation. בודקים כל תחנה לפני שממשיכים.</li><li><strong>אובייקט שהוחלף.</strong> השחקן מת ונוצר מחדש בכתובת אחרת. מי ששמר את הכתובת הסופית במקום לפענח את השרשרת מחדש כותב עכשיו לזיכרון של מישהו אחר.</li><li><strong>שרשרת שעובדת במקרה.</strong> כלים לחיפוש pointers מחזירים אלפי מסלולים, ורובם תקפים רק עד ההפעלה הבאה או עד השלב הבא. שרשרת טובה היא קצרה, מתחילה ב-module של המשחק עצמו, ושורדת הפעלה מחדש, טעינת שלב ומוות של הדמות.</li><li><strong>32 מול 64.</strong> בתהליך 64 ביט כל pointer הוא 8 בתים. קריאה של 4 בתים בלבד מחזירה חצי כתובת.</li></ul></section>
+<section class="card " id="s6"><h2>תרגיל על נייר</h2>
+<p>נתון קטע הזיכרון הבא בתהליך 32 ביט, כשה-base של <code>game.exe</code> הוא <code>0x00400000</code>:</p>
+<div class="table-wrap"><table><thead><tr><th>כתובת</th><th>ערך (4 בתים)</th></tr></thead><tbody><tr><td><code>0x00401000</code></td><td><code>0x02A00000</code></td></tr><tr><td><code>0x02A00010</code></td><td><code>0x02B50000</code></td></tr><tr><td><code>0x02A00020</code></td><td><code>0x00000019</code></td></tr><tr><td><code>0x02B50008</code></td><td><code>0x0000004B</code></td></tr></tbody></table></div>
+<p>פענחו את <code>[[game.exe + 0x1000] + 0x10] + 0x8</code>. מה הכתובת הסופית ומה הערך שבה?</p>
+<p>פתרון: <code>game.exe + 0x1000</code> הוא <code>0x00401000</code>, ושם שמור <code>0x02A00000</code>. מוסיפים <code>0x10</code> ומגיעים ל-<code>0x02A00010</code>, ושם שמור <code>0x02B50000</code>. מוסיפים <code>0x8</code> ומקבלים את הכתובת הסופית <code>0x02B50008</code>. הערך שבה הוא <code>0x4B</code>, כלומר 75.</p></section>
+<section class="card glossary" id="s7"><h2>מילון מונחים</h2>
+<div class="table-wrap"><table><thead><tr><th>מונח</th><th>משמעות</th></tr></thead><tbody><tr><td><strong>Pointer</strong></td><td>משתנה שמחזיק כתובת של נתון אחר</td></tr><tr><td><strong>Dereference</strong></td><td>קריאת הערך שנמצא בכתובת שה-pointer מחזיק</td></tr><tr><td><strong>Static address</strong></td><td>כתובת במקום קבוע ביחס ל-module</td></tr><tr><td><strong>Pointer chain</strong></td><td>רצף של pointers ו-offsets מכתובת סטטית עד לערך</td></tr><tr><td><strong>Null pointer</strong></td><td>pointer שערכו 0, כלומר לא מצביע על כלום</td></tr><tr><td><strong><code>uintptr_t</code></strong></td><td>טיפוס ב-C++ שגודלו כגודל כתובת: 4 או 8 בתים</td></tr></tbody></table></div></section>
+<section class="card quiz" id="s8"><h2>בדיקה עצמית</h2>
+<ol><li>מה ההבדל בין <code>[A] + 0x10</code> לבין <code>[A + 0x10]</code>?</li><li>בשרשרת עם שלושה offsets, כמה פעולות dereference מבצעים?</li><li>למה offset של שדה בתוך struct לא משתנה בין הפעלות, אבל כן עלול להשתנות אחרי עדכון משחק?</li><li>השרשרת שלכם עובדת, ואז המשחק קורס בתפריט הראשי. מה הסיבה הסבירה?</li><li>מה שלושת הסימנים של שרשרת אמינה?</li></ol>
+<p>תשובות: (1) הראשון קורא את הכתובת ששמורה ב-A ואז מוסיף 16. השני קורא את מה ששמור 16 בתים אחרי A. (2) שלוש: אחת לפני כל offset. (3) הוא נקבע בקומפילציה. גרסה חדשה היא קומפילציה חדשה, ואולי נוספו שדות. (4) Null pointer: בתפריט עדיין אין אובייקט שחקן. (5) קצרה, מתחילה ב-module של המשחק, ושורדת הפעלה מחדש והחלפת שלב.</p></section>
+<nav class="pager"><a class="prev" href="03-virtual-memory.html"><small>→ השיעור הקודם</small>שיעור 1.3 — Virtual Memory: מפת הזיכרון של תהליך</a><a class="next" href="05-reading-assembly.html"><small>השיעור הבא ←</small>שיעור 1.5 — לקרוא Assembly: המינימום שצריך</a></nav>
+<footer class="foot">Game Hacking בעברית · שיעורים מקוריים · לתרגול על משחקי offline בלבד</footer>
+</main>
+<aside class="toc"><div class="toc-title">בעמוד זה</div><a href="#s0">הרעיון בקצרה</a><a href="#s1">Pointer הוא סתם מספר</a><a href="#s2">רמה אחת: בסיס ועוד offset</a><a href="#s3">כמה רמות</a><a href="#s4">למה ה-offsets יציבים והכתובות לא</a><a href="#s5">איפה שרשרת נשברת</a><a href="#s6">תרגיל על נייר</a><a href="#s7">מילון מונחים</a><a href="#s8">בדיקה עצמית</a></aside>
+</div>
+</body>
+</html>

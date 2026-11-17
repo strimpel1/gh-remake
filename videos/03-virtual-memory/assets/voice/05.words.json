@@ -1,0 +1,66 @@
+{
+ "key": "b19310364f63d624f18d86dc6dceff47c124353d",
+ "text": "Your player is created on the heap, so it lands somewhere new on every run.",
+ "words": [
+  [
+   "Your",
+   0.091
+  ],
+  [
+   "player",
+   0.221
+  ],
+  [
+   "is",
+   0.716
+  ],
+  [
+   "created",
+   0.99
+  ],
+  [
+   "on",
+   1.471
+  ],
+  [
+   "the",
+   1.589
+  ],
+  [
+   "heap",
+   1.654
+  ],
+  [
+   "so",
+   2.357
+  ],
+  [
+   "it",
+   2.578
+  ],
+  [
+   "lands",
+   2.721
+  ],
+  [
+   "somewhere",
+   3.047
+  ],
+  [
+   "new",
+   3.411
+  ],
+  [
+   "on",
+   3.802
+  ],
+  [
+   "every",
+   4.18
+  ],
+  [
+   "run",
+   4.505
+  ]
+ ]
+}

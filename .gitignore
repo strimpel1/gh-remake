@@ -1,0 +1,9 @@
+.env
+.env.*
+node_modules/
+.hyperframes/
+__pycache__/
+*.pyc
+videos/*/boards/review/
+videos/*/boards/.film.html
+videos/*/boards/.posed.html

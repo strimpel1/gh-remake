@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שיעור 1.1 — בסיסי ספירה: בינארי, עשרוני והקסדצימלי</title>
+<link rel="stylesheet" href="../assets/style.css">
+<script>
+(function(){var r=document.documentElement,k='gh-he-theme';
+try{var s=localStorage.getItem(k);if(s)r.setAttribute('data-theme',s);}catch(e){}
+window.toggleTheme=function(){var d=r.getAttribute('data-theme');
+if(!d){d=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+var n=d==='dark'?'light':'dark';r.setAttribute('data-theme',n);
+try{localStorage.setItem(k,n);}catch(e){}};
+addEventListener('scroll',function(){var p=document.querySelector('.progress');if(!p)return;
+var h=document.documentElement;var m=h.scrollHeight-h.clientHeight;
+p.style.width=(m>0?(h.scrollTop/m*100):0)+'%';},{passive:true});})();
+</script>
+</head>
+<body>
+<div class="progress"></div>
+<header class="topbar">
+  <a class="home" href="../index.html">🎮 Game Hacking בעברית</a>
+  <span class="crumb"><span dir="auto">יסודות: מספרים, זיכרון ו-Assembly</span></span>
+  <span class="spacer"></span>
+  <span class="badge">לתרגול על משחקי offline בלבד</span>
+  <button class="theme-btn" onclick="toggleTheme()" title="מצב בהיר / כהה" aria-label="מצב בהיר או כהה">◐</button>
+</header>
+<div class="layout">
+<main>
+<section class="hero"><div class="kicker">שיעור 1.1</div><h1>בסיסי ספירה: בינארי, עשרוני והקסדצימלי</h1><div class="chips"><span class="chip">מודול: <b dir="auto">יסודות</b></span><span class="chip">יחידות מקור: <b dir="auto">CS420 3 - Base Systems: Hex, Decimal &amp; Binary</b></span></div></section>
+<section class="card tldr" id="s0"><h2>הרעיון בקצרה</h2>
+<p>מחשב שומר הכול כביטים — אפסים ואחדים. לקרוא שורות ארוכות של ביטים זה סיוט, ולכן כל כלי בתחום מציג זיכרון ב-<strong>hexadecimal</strong> (בקיצור hex), בסיס 16. הסיבה היא נוחות טהורה: ספרת hex אחת היא בדיוק ארבעה ביטים, ושתי ספרות hex הן בדיוק בית (byte) אחד. מי שקורא hex בשטף קורא זיכרון.</p></section>
+<section class="card " id="s1"><h2>אותו מספר, שלוש כתיבות</h2>
+<p>בסיס ספירה קובע כמה ספרות יש לנו, ומה שווה כל מקום במספר. בעשרוני כל מקום שווה פי 10 מהקודם. בבינארי פי 2. ב-hex פי 16.</p>
+<div class="table-wrap"><table><thead><tr><th>בסיס</th><th>ספרות</th><th>סימון מקובל</th><th>המספר 255</th></tr></thead><tbody><tr><td>Binary (2)</td><td>0, 1</td><td><code>0b</code> בהתחלה</td><td><code>0b11111111</code></td></tr><tr><td>Decimal (10)</td><td>0–9</td><td>בלי סימון</td><td><code>255</code></td></tr><tr><td>Hexadecimal (16)</td><td>0–9, A–F</td><td><code>0x</code> בהתחלה, או <code>h</code> בסוף</td><td><code>0xFF</code></td></tr></tbody></table></div>
+<p>ב-hex האותיות ממשיכות את הספירה: A=10, B=11, C=12, D=13, E=14, F=15.</p>
+<p>חשוב להבין שאלה שלוש <strong>דרכי כתיבה</strong> של אותו ערך. בזיכרון יש רק ביטים. הכלי הוא שמחליט איך להציג אותם.</p></section>
+<section class="card " id="s2"><h2>למה דווקא hex</h2>
+<p>כי ההמרה בין hex לבינארי היא החלפה פשוטה, ספרה מול ארבעה ביטים, בלי שום חישוב:</p>
+<div class="table-wrap"><table><thead><tr><th>Hex</th><th>Binary</th><th>Hex</th><th>Binary</th></tr></thead><tbody><tr><td>0</td><td>0000</td><td>8</td><td>1000</td></tr><tr><td>1</td><td>0001</td><td>9</td><td>1001</td></tr><tr><td>2</td><td>0010</td><td>A</td><td>1010</td></tr><tr><td>3</td><td>0011</td><td>B</td><td>1011</td></tr><tr><td>4</td><td>0100</td><td>C</td><td>1100</td></tr><tr><td>5</td><td>0101</td><td>D</td><td>1101</td></tr><tr><td>6</td><td>0110</td><td>E</td><td>1110</td></tr><tr><td>7</td><td>0111</td><td>F</td><td>1111</td></tr></tbody></table></div>
+<p>לכן <code>0xC8</code> הוא <code>1100 1000</code>, וזהו. ההמרה מעשרוני לבינארי דורשת חישוב אמיתי, וזו הסיבה שעשרוני לא נוח לקריאת זיכרון.</p>
+<p>כדאי לזכור גם את הגדלים:</p>
+<ul><li><strong>Bit</strong> — ספרה בינארית אחת.</li><li><strong>Nibble</strong> — ארבעה ביטים, ספרת hex אחת.</li><li><strong>Byte</strong> — שמונה ביטים, שתי ספרות hex. טווח: <code>0x00</code> עד <code>0xFF</code> (0 עד 255).</li><li>ארבעה בתים הם שמונה ספרות hex. כתובת בתהליך של 32 ביט נראית כך: <code>0x00F8A3C0</code>.</li></ul></section>
+<section class="card " id="s3"><h2>המרה מ-hex לעשרוני</h2>
+<p>מכפילים כל ספרה בערך המקום שלה ומחברים. המקומות, מימין לשמאל: 1, 16, 256, 4096.</p>
+<pre dir="ltr"><code>0x3E8  =  3*256 + 14*16 + 8*1
+       =  768   + 224   + 8
+       =  1000</code></pre></section>
+<section class="card " id="s4"><h2>המרה מעשרוני ל-hex</h2>
+<p>מחלקים ב-16 שוב ושוב ורושמים את השאריות. השארית האחרונה היא הספרה השמאלית.</p>
+<pre dir="ltr"><code>1000 / 16 = 62   remainder 8
+  62 / 16 = 3    remainder 14 (E)
+   3 / 16 = 0    remainder 3
+
+read bottom to top:  3 E 8  -&gt;  0x3E8</code></pre>
+<p>בפועל אף אחד לא עושה את זה על נייר. פותחים את המחשבון של Windows במצב <strong>Programmer</strong>, שמציג את אותו ערך ב-HEX, DEC, OCT ו-BIN בו-זמנית. התרגול הידני נועד רק כדי שהמספרים יפסיקו להיראות מאיימים.</p></section>
+<section class="card " id="s5"><h2>חשבון ב-hex: מה שבאמת עושים כל יום</h2>
+<p>השימוש היומיומי הוא חיבור של כתובת ו-offset. מבנה השחקן מתחיל ב-<code>0x00F8A3C0</code>, והחיים שלו נמצאים <code>0xEC</code> בתים אחריו:</p>
+<pre dir="ltr"><code>  0x00F8A3C0
++ 0x000000EC
+------------
+  0x00F8A4AC</code></pre>
+<p>עובדים כמו בחיבור רגיל, רק שנושאים 1 כשמגיעים ל-16 ולא ל-10: <code>C0 + EC</code> = 192 + 236 = 428 = <code>0x1AC</code>, כלומר רושמים <code>AC</code> ונושאים 1 לספרה הבאה.</p>
+<p>כמה ערכים שחוזרים כל הזמן וכדאי לזהות במבט:</p>
+<div class="table-wrap"><table><thead><tr><th>Hex</th><th>עשרוני</th><th>איפה פוגשים אותו</th></tr></thead><tbody><tr><td><code>0x10</code></td><td>16</td><td>צעד נפוץ בין שדות ובין שורות בתצוגת זיכרון</td></tr><tr><td><code>0x64</code></td><td>100</td><td>ערך התחלתי אופייני לחיים</td></tr><tr><td><code>0xFF</code></td><td>255</td><td>הערך המרבי של בית</td></tr><tr><td><code>0x100</code></td><td>256</td><td></td></tr><tr><td><code>0x3E8</code></td><td>1000</td><td></td></tr><tr><td><code>0x1000</code></td><td>4096</td><td>גודל עמוד זיכרון (page)</td></tr><tr><td><code>0x7FFFFFFF</code></td><td>2,147,483,647</td><td>הערך המרבי של מספר שלם בן 4 בתים עם סימן</td></tr><tr><td><code>0xFFFFFFFF</code></td><td>4,294,967,295 או 1-</td><td>תלוי אם קוראים אותו עם סימן או בלי. על זה בשיעור הבא</td></tr></tbody></table></div></section>
+<section class="card " id="s6"><h2>מלכודות נפוצות</h2>
+<ul><li><strong>לשכוח באיזה בסיס הכלי מציג.</strong> ב-Cheat Engine ערכים מוצגים כברירת מחדל בעשרוני וכתובות ב-hex. <code>100</code> בעמודת הערך ו-<code>100</code> בעמודת הכתובת הם שני מספרים שונים.</li><li><strong><code>0x10</code> הוא לא עשר.</strong> זה 16. הטעות הזו אחראית לחלק נכבד מה-offsets השגויים של מתחילים.</li><li><strong>hex בלי סימון.</strong> ב-debugger מספרים מופיעים הרבה פעמים בלי <code>0x</code>. אם יש בהם אותיות A–F זה ברור, אבל <code>20</code> יכול להיות 32. כשיש ספק, מניחים hex.</li></ul></section>
+<section class="card glossary" id="s7"><h2>מילון מונחים</h2>
+<div class="table-wrap"><table><thead><tr><th>מונח</th><th>משמעות</th></tr></thead><tbody><tr><td><strong>Bit</strong></td><td>ספרה בינארית, 0 או 1</td></tr><tr><td><strong>Nibble</strong></td><td>ארבעה ביטים, ספרת hex אחת</td></tr><tr><td><strong>Byte</strong></td><td>שמונה ביטים, שתי ספרות hex</td></tr><tr><td><strong>Hexadecimal</strong></td><td>בסיס 16, הספרות 0–9 ו-A–F</td></tr><tr><td><strong>Prefix <code>0x</code></strong></td><td>סימון שאומר שהמספר שאחריו כתוב ב-hex</td></tr><tr><td><strong>Offset</strong></td><td>מרחק בבתים מכתובת בסיס</td></tr></tbody></table></div></section>
+<section class="card quiz" id="s8"><h2>בדיקה עצמית</h2>
+<ol><li>כמה ספרות hex צריך כדי לכתוב ערך של שני בתים?</li><li>מהו <code>0x2A</code> בעשרוני? ומהו 200 ב-hex?</li><li>כתבו את <code>0xB4</code> בבינארי בלי לחשב.</li><li>מבנה מתחיל ב-<code>0x0040F010</code> והשדה שמחפשים נמצא ב-offset <code>0xF8</code>. מה הכתובת שלו?</li><li>למה <code>0x10 + 0x10</code> הוא <code>0x20</code> ולא <code>0x100</code>?</li></ol>
+<p>תשובות: (1) ארבע. (2) 42, ו-<code>0xC8</code>. (3) <code>1011 0100</code>. (4) <code>0x0040F108</code>. (5) כי 16 + 16 = 32, ו-32 הוא שתי "שש-עשרות" ואפס יחידות.</p></section>
+<nav class="pager"><span></span><a class="next" href="02-data-types-in-memory.html"><small>השיעור הבא ←</small>שיעור 1.2 — טיפוסי נתונים: איך ערכים נראים בזיכרון</a></nav>
+<footer class="foot">Game Hacking בעברית · שיעורים מקוריים · לתרגול על משחקי offline בלבד</footer>
+</main>
+<aside class="toc"><div class="toc-title">בעמוד זה</div><a href="#s0">הרעיון בקצרה</a><a href="#s1">אותו מספר, שלוש כתיבות</a><a href="#s2">למה דווקא hex</a><a href="#s3">המרה מ-hex לעשרוני</a><a href="#s4">המרה מעשרוני ל-hex</a><a href="#s5">חשבון ב-hex: מה שבאמת עושים כל יום</a><a href="#s6">מלכודות נפוצות</a><a href="#s7">מילון מונחים</a><a href="#s8">בדיקה עצמית</a></aside>
+</div>
+</body>
+</html>

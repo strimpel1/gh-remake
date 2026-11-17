@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שיעור 0.1 — מפת הדרכים וסביבת העבודה</title>
+<link rel="stylesheet" href="../assets/style.css">
+<script>
+(function(){var r=document.documentElement,k='gh-he-theme';
+try{var s=localStorage.getItem(k);if(s)r.setAttribute('data-theme',s);}catch(e){}
+window.toggleTheme=function(){var d=r.getAttribute('data-theme');
+if(!d){d=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+var n=d==='dark'?'light':'dark';r.setAttribute('data-theme',n);
+try{localStorage.setItem(k,n);}catch(e){}};
+addEventListener('scroll',function(){var p=document.querySelector('.progress');if(!p)return;
+var h=document.documentElement;var m=h.scrollHeight-h.clientHeight;
+p.style.width=(m>0?(h.scrollTop/m*100):0)+'%';},{passive:true});})();
+</script>
+</head>
+<body>
+<div class="progress"></div>
+<header class="topbar">
+  <a class="home" href="../index.html">🎮 Game Hacking בעברית</a>
+  <span class="crumb"><span dir="auto">מתחילים כאן</span></span>
+  <span class="spacer"></span>
+  <span class="badge">לתרגול על משחקי offline בלבד</span>
+  <button class="theme-btn" onclick="toggleTheme()" title="מצב בהיר / כהה" aria-label="מצב בהיר או כהה">◐</button>
+</header>
+<div class="layout">
+<main>
+<section class="hero"><div class="kicker">שיעור 0.1</div><h1>מפת הדרכים וסביבת העבודה</h1><div class="chips"><span class="chip">מודול: <b dir="auto">מתחילים כאן</b></span><span class="chip">יחידות מקור: <b dir="auto">How to Learn Game Hacking, Game Hacking Course Intro</b></span></div></section>
+<section class="card tldr" id="s0"><h2>הרעיון בקצרה</h2>
+<p>Game Hacking הוא Reverse Engineering עם משוב מיידי: משנים בית אחד בזיכרון, והדמות על המסך מפסיקה לאבד חיים. בגלל זה זו אחת הדרכים הטובות ללמוד איך תוכנה עובדת באמת — זיכרון, Assembly, מערכת ההפעלה ו-debugging. הקורס בנוי כסולם: כל מסלול נשען על הקודם, ואין קיצורי דרך אמיתיים.</p></section>
+<section class="card " id="s1"><h2>על מה מתרגלים</h2>
+<p>כל מה שנלמד כאן מתורגל רק על מטרות שמותר לגעת בהן:</p>
+<ul><li><strong>משחקי single-player</strong> שרצים אצלכם על המחשב, בלי רכיב מקוון.</li><li><strong>משחקי קוד פתוח</strong> כמו AssaultCube, מול בוטים במצב offline. זו מטרת התרגול הקלאסית: קטנה, פשוטה, וקוד המקור זמין להשוואה.</li><li><strong>תוכנות שכתבתם בעצמכם.</strong> משחק קונסולה של 40 שורות ב-C הוא מטרה מצוינת לשיעורים הראשונים, כי אתם יודעים בדיוק מה אמור להיות בזיכרון.</li><li><strong>CrackMes</strong> — תוכנות אתגר שנכתבו במיוחד כדי שיפרצו אותן.</li></ul>
+<p>משחקים מקוונים ושחקנים אחרים מחוץ לתחום: זה פוגע באנשים אמיתיים, מפר את תנאי השימוש, ומסתיים בחסימת חשבון. הקורס גם לא מלמד לעקוף Anti-Cheat של משחק חי. מסלול 11 מסביר איך מנגנוני זיהוי <strong>עובדים</strong>, כי זה חלק מהבנת המערכת וגם הצד שבו יש משרות.</p></section>
+<section class="card " id="s2"><h2>סולם המיומנויות</h2>
+<div class="table-wrap"><table><thead><tr><th>שלב</th><th>מסלולים</th><th>מה יודעים לעשות בסופו</th></tr></thead><tbody><tr><td>1. להבין</td><td>1</td><td>לקרוא hex, לזהות טיפוסי נתונים בזיכרון, לקרוא Assembly בסיסי</td></tr><tr><td>2. למצוא</td><td>2–3</td><td>לאתר ערכים ומבנים בזיכרון עם Cheat Engine, ReClass ו-debugger</td></tr><tr><td>3. לשנות מבחוץ</td><td>4</td><td>לכתוב תוכנה נפרדת שקוראת וכותבת לזיכרון של תהליך אחר</td></tr><tr><td>4. לשנות מבפנים</td><td>5–6</td><td>להכניס קוד משלכם לתהליך, ליירט פונקציות ולקרוא להן</td></tr><tr><td>5. לצייר</td><td>7–8</td><td>להציג מידע על המסך (ESP, תפריט) ולבנות יכולות שלמות</td></tr><tr><td>6. להתרחב</td><td>9–15</td><td>מנועי משחק, Kernel, מנגנוני הגנה, Malware, Exploits ו-CTF</td></tr></tbody></table></div>
+<p>הטעות הנפוצה ביותר היא לקפוץ לשלב 4 או 5 עם קוד מועתק. זה עובד עד השינוי הראשון במשחק, ואז אין דרך לתקן כי לא ברור מה הקוד עושה. מי שעבר את שלבים 1–2 ברצינות מתקן offset שבור בעשר דקות.</p></section>
+<section class="card " id="s3"><h2>מה צריך לדעת לפני שמתחילים</h2>
+<ul><li><strong>C או C++ בסיסי:</strong> משתנים, לולאות, פונקציות, מצביעים (pointers) ו-struct. לא צריך להיות מומחה, אבל pointers חייבים להיות מובנים. רוב הכלים והדוגמאות בתחום כתובים ב-C++.</li><li><strong>שימוש נוח ב-Windows:</strong> Task Manager, הרשאות מנהל, התקנת תוכנות.</li><li>סבלנות. רוב הזמן מוקדש לחיפוש ולהבנה, לא לכתיבת קוד.</li></ul></section>
+<section class="card " id="s4"><h2>סביבת העבודה</h2>
+<div class="table-wrap"><table><thead><tr><th>כלי</th><th>בשביל מה</th><th>מתי צריך</th></tr></thead><tbody><tr><td><strong>Cheat Engine</strong></td><td>סריקת זיכרון, debugger ועורך Assembly בכלי אחד</td><td>מסלול 2</td></tr><tr><td><strong>Visual Studio Community</strong></td><td>קומפיילר ו-debugger ל-C++ ו-C#</td><td>מסלול 4</td></tr><tr><td><strong>x64dbg</strong></td><td>debugger ל-Windows, ל-32 ול-64 ביט</td><td>מסלול 3</td></tr><tr><td><strong>Ghidra</strong> או <strong>IDA Free</strong></td><td>disassembler ו-decompiler לניתוח סטטי</td><td>מסלול 3</td></tr><tr><td><strong>ReClass.NET</strong></td><td>מיפוי מבני נתונים (structs) מתוך זיכרון חי</td><td>מסלול 3</td></tr><tr><td><strong>AssaultCube</strong></td><td>מטרת התרגול הראשית</td><td>מסלול 2</td></tr></tbody></table></div>
+<p>שתי המלצות מעשיות:</p>
+<ul><li><strong>מורידים כלים רק מהאתר הרשמי או מה-GitHub של הפרויקט.</strong> בתחום הזה מסתובבות הרבה גרסאות עם תוספות לא רצויות. המתקין הרשמי של Cheat Engine עצמו מציע תוכנות נלוות, אז קוראים כל מסך לפני שלוחצים Next.</li><li><strong>עובדים בתוך מכונה וירטואלית (VM).</strong> כלי התחום מדליקים אזעקות אצל Antivirus, ובמסלולים המתקדמים (Malware, Kernel) VM הוא חובה ולא המלצה. עדיף להתרגל כבר עכשיו.</li></ul></section>
+<section class="card " id="s5"><h2>איך ללמוד מהקורס</h2>
+<ol><li>קוראים את השיעור עד הסוף.</li><li>משחזרים כל דוגמה בעצמכם, על המחשב. קריאה בלבד כמעט לא נשארת.</li><li>עונים על שאלות הבדיקה העצמית בלי להציץ.</li><li>משנים משהו בדוגמה ובודקים אם התוצאה תואמת את מה שציפיתם. כאן קורית הלמידה.</li></ol></section>
+<section class="card glossary" id="s6"><h2>מילון מונחים</h2>
+<div class="table-wrap"><table><thead><tr><th>מונח</th><th>משמעות</th></tr></thead><tbody><tr><td><strong>Reverse Engineering</strong></td><td>הבנת אופן הפעולה של תוכנה מתוך הקובץ המקומפל, בלי קוד המקור</td></tr><tr><td><strong>Process</strong> (תהליך)</td><td>תוכנה רצה, עם מרחב זיכרון משלה</td></tr><tr><td><strong>Debugger</strong></td><td>כלי שעוצר תוכנה באמצע ריצה ומאפשר לבחון ולשנות את מצבה</td></tr><tr><td><strong>Disassembler</strong></td><td>כלי שמתרגם קוד מכונה לטקסט Assembly קריא</td></tr><tr><td><strong>Offset</strong></td><td>מרחק בבתים מנקודת התחלה ידועה, למשל מתחילת מבנה</td></tr><tr><td><strong>Trainer</strong></td><td>תוכנה נפרדת שמשנה ערכים בזיכרון של משחק</td></tr><tr><td><strong>CrackMe</strong></td><td>תוכנת אתגר שנועדה לתרגול Reverse Engineering</td></tr></tbody></table></div></section>
+<section class="card quiz" id="s7"><h2>בדיקה עצמית</h2>
+<ol><li>למה משחק קוד פתוח הוא מטרת תרגול טובה יותר ממשחק מסחרי גדול?</li><li>מה ההבדל בין שלב 3 לשלב 4 בסולם המיומנויות?</li><li>למה כדאי לעבוד בתוך VM כבר מההתחלה?</li><li>מה קורה למי שמדלג ישר לקוד מועתק, כשהמשחק מתעדכן?</li></ol></section>
+<nav class="pager"><span></span><span></span></nav>
+<footer class="foot">Game Hacking בעברית · שיעורים מקוריים · לתרגול על משחקי offline בלבד</footer>
+</main>
+<aside class="toc"><div class="toc-title">בעמוד זה</div><a href="#s0">הרעיון בקצרה</a><a href="#s1">על מה מתרגלים</a><a href="#s2">סולם המיומנויות</a><a href="#s3">מה צריך לדעת לפני שמתחילים</a><a href="#s4">סביבת העבודה</a><a href="#s5">איך ללמוד מהקורס</a><a href="#s6">מילון מונחים</a><a href="#s7">בדיקה עצמית</a></aside>
+</div>
+</body>
+</html>

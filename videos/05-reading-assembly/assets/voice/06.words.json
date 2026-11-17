@@ -1,0 +1,62 @@
+{
+ "key": "b6293ef9e0632aabc9cd615d5d375985bf8aad3c",
+ "text": "Two lines earlier, a subtract: health minus damage. Then this line stores the result.",
+ "words": [
+  [
+   "Two",
+   0.104
+  ],
+  [
+   "lines",
+   0.352
+  ],
+  [
+   "earlier",
+   0.69
+  ],
+  [
+   "a",
+   1.224
+  ],
+  [
+   "subtract",
+   1.25
+  ],
+  [
+   "health",
+   2.37
+  ],
+  [
+   "minus",
+   2.63
+  ],
+  [
+   "damage",
+   3.099
+  ],
+  [
+   "Then",
+   4.115
+  ],
+  [
+   "this",
+   4.596
+  ],
+  [
+   "line",
+   4.831
+  ],
+  [
+   "stores",
+   5.299
+  ],
+  [
+   "the",
+   5.703
+  ],
+  [
+   "result",
+   5.781
+  ]
+ ]
+}

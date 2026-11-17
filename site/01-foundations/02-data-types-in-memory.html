@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שיעור 1.2 — טיפוסי נתונים: איך ערכים נראים בזיכרון</title>
+<link rel="stylesheet" href="../assets/style.css">
+<script>
+(function(){var r=document.documentElement,k='gh-he-theme';
+try{var s=localStorage.getItem(k);if(s)r.setAttribute('data-theme',s);}catch(e){}
+window.toggleTheme=function(){var d=r.getAttribute('data-theme');
+if(!d){d=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+var n=d==='dark'?'light':'dark';r.setAttribute('data-theme',n);
+try{localStorage.setItem(k,n);}catch(e){}};
+addEventListener('scroll',function(){var p=document.querySelector('.progress');if(!p)return;
+var h=document.documentElement;var m=h.scrollHeight-h.clientHeight;
+p.style.width=(m>0?(h.scrollTop/m*100):0)+'%';},{passive:true});})();
+</script>
+</head>
+<body>
+<div class="progress"></div>
+<header class="topbar">
+  <a class="home" href="../index.html">🎮 Game Hacking בעברית</a>
+  <span class="crumb"><span dir="auto">יסודות: מספרים, זיכרון ו-Assembly</span></span>
+  <span class="spacer"></span>
+  <span class="badge">לתרגול על משחקי offline בלבד</span>
+  <button class="theme-btn" onclick="toggleTheme()" title="מצב בהיר / כהה" aria-label="מצב בהיר או כהה">◐</button>
+</header>
+<div class="layout">
+<main>
+<section class="hero"><div class="kicker">שיעור 1.2</div><h1>טיפוסי נתונים: איך ערכים נראים בזיכרון</h1><div class="chips"><span class="chip">מודול: <b dir="auto">יסודות</b></span><span class="chip">יחידות מקור: <b dir="auto">CS420 5 - Memory Editing &amp; Data Types, Low Level C Data Types</b></span></div></section>
+<section class="card tldr" id="s0"><h2>הרעיון בקצרה</h2>
+<p>בזיכרון אין "מספרים" ואין "טקסט". יש רק בתים. <strong>טיפוס הנתונים</strong> (data type) הוא ההחלטה איך לפרש אותם: כמה בתים לקרוא, והאם הם מספר שלם, מספר עם נקודה או תו. אותם ארבעה בתים יכולים להיות 1,120,403,456 או 100.0, תלוי רק בשאלה איך קוראים אותם. כשמחפשים ערך במשחק ולא מוצאים, ברוב המקרים הסיבה היא שחיפשנו בטיפוס הלא נכון.</p></section>
+<section class="card " id="s1"><h2>הטיפוסים שפוגשים כל יום</h2>
+<div class="table-wrap"><table><thead><tr><th>טיפוס ב-C</th><th>השם ב-Cheat Engine</th><th>גודל</th><th>טווח או דיוק</th><th>שימוש אופייני במשחק</th></tr></thead><tbody><tr><td><code>char</code> / <code>bool</code></td><td>Byte</td><td>1</td><td>0 עד 255</td><td>דגלים: האם קופץ, האם חי</td></tr><tr><td><code>short</code></td><td>2 Bytes</td><td>2</td><td>0 עד 65,535</td><td>מזהי פריטים, ערכים קטנים</td></tr><tr><td><code>int</code></td><td>4 Bytes</td><td>4</td><td>עד כ-4.29 מיליארד</td><td>חיים, תחמושת, כסף, ניקוד</td></tr><tr><td><code>long long</code></td><td>8 Bytes</td><td>8</td><td>עצום</td><td>כסף במשחקים גדולים, מזהים</td></tr><tr><td><code>float</code></td><td>Float</td><td>4</td><td>כ-7 ספרות משמעותיות</td><td>מיקום, מהירות, זוויות, לפעמים חיים</td></tr><tr><td><code>double</code></td><td>Double</td><td>8</td><td>כ-15 ספרות משמעותיות</td><td>מנועים מסוימים, שפות סקריפט</td></tr><tr><td><code>char[]</code></td><td>String</td><td>משתנה</td><td>—</td><td>שמות שחקנים, טקסט</td></tr><tr><td>pointer</td><td>4 או 8 Bytes</td><td>4 או 8</td><td>—</td><td>כתובת של נתון אחר</td></tr></tbody></table></div>
+<p>הטווחים בטבלה הם לקריאה בלי סימן. גודל ה-pointer נקבע לפי התהליך: 4 בתים בתהליך של 32 ביט, 8 בתים בתהליך של 64 ביט.</p>
+<p>כלל אצבע: מה שנספר ביחידות שלמות הוא בדרך כלל <code>int</code>. מה שזז ברצף (מיקום, זווית, מהירות) הוא כמעט תמיד <code>float</code>.</p></section>
+<section class="card " id="s2"><h2>Little-endian: הבתים הפוכים</h2>
+<p>מעבדי x86 ו-x64 שומרים מספר בן כמה בתים כשהבית <strong>הפחות משמעותי ראשון</strong>. הסדר הזה נקרא little-endian. המספר 1000 הוא <code>0x000003E8</code>, ובזיכרון הוא נראה כך:</p>
+<pre dir="ltr"><code>value:      0x000003E8   (1000)
+in memory:  E8 03 00 00</code></pre>
+<p>כלים כמו Cheat Engine הופכים את הסדר בשבילכם כשהם מציגים ערך. אבל בתצוגת בתים גולמית (hex view) רואים את הסדר האמיתי. מי שמחפש את רצף הבתים <code>00 00 03 E8</code> לא ימצא כלום.</p></section>
+<section class="card " id="s3"><h2>מספרים שלמים עם סימן</h2>
+<p><code>int</code> יכול להיות <strong>unsigned</strong> (בלי סימן, רק אי-שליליים) או <strong>signed</strong> (עם סימן). ההבדל הוא רק בפירוש. מספרים שליליים נשמרים בשיטת <strong>two's complement</strong>, שבה הביט העליון מסמן שלילי:</p>
+<div class="table-wrap"><table><thead><tr><th>בתים בזיכרון</th><th>כ-unsigned</th><th>כ-signed</th></tr></thead><tbody><tr><td><code>64 00 00 00</code></td><td>100</td><td>100</td></tr><tr><td><code>FF FF FF 7F</code></td><td>2,147,483,647</td><td>2,147,483,647</td></tr><tr><td><code>00 00 00 80</code></td><td>2,147,483,648</td><td>2,147,483,648-</td></tr><tr><td><code>FF FF FF FF</code></td><td>4,294,967,295</td><td>1-</td></tr></tbody></table></div>
+<p>מכאן נובעת תופעה מוכרת: מוסיפים 1 לערך המרבי, והוא "מתגלגל" לערך השלילי ביותר. זה נקרא <strong>integer overflow</strong>, והוא ההסבר לבאגים שבהם כסף במשחק הופך פתאום למינוס שני מיליארד.</p></section>
+<section class="card " id="s4"><h2>Float: מספרים עם נקודה</h2>
+<p><code>float</code> נשמר לפי תקן IEEE 754: ביט אחד לסימן, 8 ביטים למעריך (exponent) ו-23 ביטים לשבר. לא צריך לחשב את זה ביד, אבל צריך לדעת איך זה נראה:</p>
+<pre dir="ltr"><code>100.0 as float:  0x42C80000   in memory: 00 00 C8 42
+100   as int:    0x00000064   in memory: 64 00 00 00</code></pre>
+<p>שלוש מסקנות מעשיות:</p>
+<ul><li><strong>אותו ערך על המסך, בתים שונים לגמרי.</strong> אם המשחק שומר חיים כ-<code>float</code>, חיפוש של 100 כ-4 Bytes לא ימצא אותם.</li><li><strong>מה שמוצג אינו בהכרח מה שנשמר.</strong> המסך מראה 87, ובזיכרון יש 87.3406. לכן ב-float מחפשים טווח ("בין 87 ל-88") ולא ערך מדויק.</li><li><strong>float שנקרא בטעות כ-int נראה כמו מספר ענק</strong> סביב מיליארד. כשרואים ערכים כמו 1,120,403,456 ליד נתוני שחקן, כדאי לנסות להציג אותם כ-float.</li></ul></section>
+<section class="card " id="s5"><h2>טקסט</h2>
+<p>מחרוזת (string) היא רצף של תווים שמסתיים בבית אפס (null terminator). יש שני קידודים נפוצים ב-Windows:</p>
+<pre dir="ltr"><code>&quot;Bob&quot; as ASCII:   42 6F 62 00
+&quot;Bob&quot; as UTF-16:  42 00 6F 00 62 00 00 00</code></pre>
+<p>ב-UTF-16 כל תו תופס שני בתים, ולכן בין האותיות האנגליות מופיעים אפסים. ב-Cheat Engine זו האפשרות Unicode בחיפוש מחרוזות. אם חיפוש שם שחקן נכשל, מנסים את הקידוד השני.</p></section>
+<section class="card " id="s6"><h2>Struct: כמה ערכים ברצף</h2>
+<p>משחק לא שומר את החיים של השחקן לבד. הוא שומר <strong>מבנה</strong> (struct) שמרכז את כל נתוני השחקן, שדה אחרי שדה:</p>
+<pre dir="ltr"><code>struct Player {
+    int   health;    // offset 0x00
+    int   armor;     // offset 0x04
+    float x;         // offset 0x08
+    float y;         // offset 0x0C
+    float z;         // offset 0x10
+    char  name[16];  // offset 0x14
+};</code></pre>
+<p>ה-offset של כל שדה הוא סכום הגדלים של השדות שלפניו. אם המבנה מתחיל ב-<code>0x00F8A3C0</code>, אז <code>armor</code> נמצא ב-<code>0x00F8A3C4</code> ו-<code>z</code> ב-<code>0x00F8A3D0</code>.</p>
+<p>שני דברים נובעים מזה:</p>
+<ul><li><strong>מצאתם שדה אחד, מצאתם את השכנים.</strong> שלושה floats צמודים שמשתנים כשזזים הם כמעט בוודאות קואורדינטות X, Y, Z. זה הבסיס לכל מיפוי מבנים בהמשך הקורס.</li><li><strong>Padding.</strong> הקומפיילר מיישר שדות לכתובות נוחות למעבד. <code>char</code> שאחריו <code>int</code> יתפוס בפועל ארבעה בתים, שלושה מהם ריקים. לכן offsets במבנה אמיתי לא תמיד תואמים חישוב נאיבי, וחורים של כמה בתים בין שדות הם דבר רגיל.</li></ul></section>
+<section class="card " id="s7"><h2>איך מנחשים טיפוס של ערך לא מוכר</h2>
+<ol><li><strong>נספר ביחידות שלמות?</strong> מתחילים ב-4 Bytes.</li><li><strong>לא נמצא?</strong> מנסים Float, ואחריו 2 Bytes, Byte ו-Double.</li><li><strong>מוצג כפס או באחוזים בלי מספר?</strong> כנראה float בין 0 ל-1, או בין 0 ל-100. מחפשים "ערך לא ידוע" ומסננים לפי עלה או ירד. זו הטכניקה המרכזית של מסלול 2.</li><li><strong>הערך בזיכרון שונה מהמסך?</strong> יש משחקים שמכפילים (87 נשמר כ-870) או מצפינים ערכים. חוזרים לחיפוש לפי שינוי.</li></ol></section>
+<section class="card glossary" id="s8"><h2>מילון מונחים</h2>
+<div class="table-wrap"><table><thead><tr><th>מונח</th><th>משמעות</th></tr></thead><tbody><tr><td><strong>Data type</strong></td><td>הכלל שקובע כמה בתים קוראים ואיך מפרשים אותם</td></tr><tr><td><strong>Little-endian</strong></td><td>סדר שמירה שבו הבית הפחות משמעותי בא ראשון</td></tr><tr><td><strong>Signed / Unsigned</strong></td><td>מספר שלם עם סימן או בלעדיו</td></tr><tr><td><strong>Two's complement</strong></td><td>שיטת הייצוג של מספרים שליליים</td></tr><tr><td><strong>Integer overflow</strong></td><td>גלישה מעבר לערך המרבי של הטיפוס</td></tr><tr><td><strong>IEEE 754</strong></td><td>התקן לייצוג של float ו-double</td></tr><tr><td><strong>Null terminator</strong></td><td>בית אפס שמסמן סוף מחרוזת</td></tr><tr><td><strong>Struct</strong></td><td>קבוצת שדות שנשמרים ברצף בזיכרון</td></tr><tr><td><strong>Padding</strong></td><td>בתים ריקים שהקומפיילר מוסיף כדי ליישר שדות</td></tr></tbody></table></div></section>
+<section class="card quiz" id="s9"><h2>בדיקה עצמית</h2>
+<ol><li>איך נראה המספר 258 כ-<code>int</code> בזיכרון, בית אחרי בית?</li><li>חיפשתם חיים בערך 100 כ-4 Bytes ולא נמצא דבר. מה שני הדברים הראשונים שתנסו?</li><li>מה הערך של <code>FF FF FF FF</code> כ-signed int? ומה כ-unsigned?</li><li>במבנה <code>Player</code> שלמעלה, מה ה-offset של <code>name</code>? למה?</li><li>ראיתם בזיכרון <code>41 00 6C 00 69 00 00 00</code>. מה זה כנראה?</li></ol>
+<p>תשובות: (1) <code>02 01 00 00</code>, כי 258 הוא <code>0x0102</code> והסדר הפוך. (2) חיפוש כ-Float, ואז חיפוש "ערך לא ידוע" עם סינון לפי שינוי. (3) 1-, ו-4,294,967,295. (4) <code>0x14</code>, כי לפניו חמישה שדות של 4 בתים. (5) המחרוזת "Ali" בקידוד UTF-16.</p></section>
+<nav class="pager"><a class="prev" href="01-number-bases.html"><small>→ השיעור הקודם</small>שיעור 1.1 — בסיסי ספירה: בינארי, עשרוני והקסדצימלי</a><a class="next" href="03-virtual-memory.html"><small>השיעור הבא ←</small>שיעור 1.3 — Virtual Memory: מפת הזיכרון של תהליך</a></nav>
+<footer class="foot">Game Hacking בעברית · שיעורים מקוריים · לתרגול על משחקי offline בלבד</footer>
+</main>
+<aside class="toc"><div class="toc-title">בעמוד זה</div><a href="#s0">הרעיון בקצרה</a><a href="#s1">הטיפוסים שפוגשים כל יום</a><a href="#s2">Little-endian: הבתים הפוכים</a><a href="#s3">מספרים שלמים עם סימן</a><a href="#s4">Float: מספרים עם נקודה</a><a href="#s5">טקסט</a><a href="#s6">Struct: כמה ערכים ברצף</a><a href="#s7">איך מנחשים טיפוס של ערך לא מוכר</a><a href="#s8">מילון מונחים</a><a href="#s9">בדיקה עצמית</a></aside>
+</div>
+</body>
+</html>

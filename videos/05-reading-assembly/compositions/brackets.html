@@ -1,0 +1,62 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background-color: #E4F2EC;
+      background-image:
+        linear-gradient(#9CCFC0 3px, transparent 3px), linear-gradient(90deg, #9CCFC0 3px, transparent 3px),
+        linear-gradient(#C4E3D9 1px, transparent 1px), linear-gradient(90deg, #C4E3D9 1px, transparent 1px);
+      background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px; }
+
+    .s4-stage { position: absolute; inset: 0; }
+    .s4-h { position: absolute; font-family: 'Archivo Black', sans-serif; font-size: 96px; line-height: 1.05; letter-spacing: -0.01em; color: #0B2A30; }
+    .s4-m { position: absolute; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 54px; line-height: 1.15; color: #2E6B63; }
+    .s4-acc { color: #E8490F; }
+    .s4-dim { color: #6A9188; }
+    .s4-cell { position: absolute; background: #fff; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; color: #0B2A30; }
+    .s4-cell.on { background: #FF5A1F; color: #fff; }
+    .s4-tile { position: absolute; background: #FF5A1F; color: #fff; border: 12px solid #0B2A30; box-shadow: 16px 16px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s4-card { position: absolute; background: #fff; color: #0B2A30; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s4-card.on { background: #FF5A1F; color: #fff; }
+    .s4-card.soft { background: #CFE9DF; }
+    .s4-bar { position: absolute; background: #0B2A30; }
+
+    .s4-m span { display: inline-block; }
+
+    .s4-card { line-height: 1.25 !important; }
+  </style>
+  <div id="root" data-composition-id="brackets" data-width="1920" data-height="1080">
+    <div id="s4-stage" class="clip s4-stage" data-start="0" data-duration="7.2">
+      <div id="s4-ln" class="s4-m" style="left: 276px; top: 170px; font-size: 120px; color: #0B2A30"><span id="s4-x1">mov</span> <span id="s4-x2">[ebx+0xEC]</span>, <span id="s4-x3">eax</span></div>
+      <div id="s4-c" class="s4-h" style="left: 276px; top: 370px; font-size: 90px"><span class="s4-acc">[ ]</span> means memory</div>
+      <div id="s4-reg" class="s4-m" style="left: 276px; top: 620px; font-size: 60px; color: #0B2A30">ebx = 0x0A3F2000</div>
+      <div id="s4-b" class="s4-bar" style="left: 880px; top: 652px; width: 200px; height: 12px"></div>
+      <div id="s4-mem" class="s4-tile" style="left: 1100px; top: 580px; width: 560px; height: 160px; line-height: 136px; font-size: 60px">0x0A3F20EC</div>
+      <div id="s4-n" class="s4-m" style="left: 276px; top: 800px; font-size: 46px">the register holds an address; the brackets go there</div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const blurIn = (sel, t, d = 0.2) =>
+      tl.fromTo(sel, { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "power2.out" }, t);
+    const blurOut = (sel, t, d = 0.2) => tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d, ease: "power2.in" }, t);
+    const land = (sel, t, from = 1.3, d = 0.35) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
+    const each = (sel, t, gap = 0.12, from = 1.3) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out", stagger: gap }, t);
+    const wipe = (sel, t, d = 0.3) =>
+      tl.fromTo(sel, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: d, ease: "power2.out" }, t);
+    const dim = (sel, t, to = 0.3) => tl.to(sel, { opacity: to, duration: 0.3, ease: "power2.inOut" }, t);
+    blurIn("#s4-stage", 0, 0.25);
+
+    wipe("#s4-c", 0.45, 0.5);
+    blurIn("#s4-reg", 3.11);
+    wipe("#s4-b", 4.75, 0.25);
+    land("#s4-mem", 5.26);
+    blurIn("#s4-n", 2.72);
+
+    blurOut("#s4-stage", 6.9, 0.25);
+    window.__timelines["brackets"] = tl;
+  </script>
+</template>

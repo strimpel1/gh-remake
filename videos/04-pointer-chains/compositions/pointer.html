@@ -1,0 +1,61 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background-color: #E4F2EC;
+      background-image:
+        linear-gradient(#9CCFC0 3px, transparent 3px), linear-gradient(90deg, #9CCFC0 3px, transparent 3px),
+        linear-gradient(#C4E3D9 1px, transparent 1px), linear-gradient(90deg, #C4E3D9 1px, transparent 1px);
+      background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px; }
+
+    .s2-stage { position: absolute; inset: 0; }
+    .s2-h { position: absolute; font-family: 'Archivo Black', sans-serif; font-size: 96px; line-height: 1.05; letter-spacing: -0.01em; color: #0B2A30; }
+    .s2-m { position: absolute; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 54px; line-height: 1.15; color: #2E6B63; }
+    .s2-acc { color: #E8490F; }
+    .s2-dim { color: #6A9188; }
+    .s2-cell { position: absolute; background: #fff; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; color: #0B2A30; }
+    .s2-cell.on { background: #FF5A1F; color: #fff; }
+    .s2-tile { position: absolute; background: #FF5A1F; color: #fff; border: 12px solid #0B2A30; box-shadow: 16px 16px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s2-card { position: absolute; background: #fff; color: #0B2A30; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s2-card.on { background: #FF5A1F; color: #fff; }
+    .s2-card.soft { background: #CFE9DF; }
+    .s2-bar { position: absolute; background: #0B2A30; }
+  </style>
+  <div id="root" data-composition-id="pointer" data-width="1920" data-height="1080">
+    <div id="s2-stage" class="clip s2-stage" data-start="0" data-duration="8.1">
+      <div id="s2-l" class="s2-m" style="left: 190px; top: 210px">a fixed place</div>
+      <div id="s2-s" class="s2-card soft" style="left: 190px; top: 300px; width: 700px; height: 130px; line-height: 114px; font-size: 46px">game.exe + 0x18AC00</div>
+      <div id="s2-v" class="s2-card " style="left: 190px; top: 460px; width: 700px; height: 130px; line-height: 114px; font-size: 60px">0x0A3F2000</div>
+      <div id="s2-b" class="s2-bar" style="left: 890px; top: 519px; width: 210px; height: 12px"></div>
+      <div id="s2-pl" class="s2-tile" style="left: 1100px; top: 420px; width: 560px; height: 210px; line-height: 186px; font-size: 84px">player</div>
+      <div id="s2-at" class="s2-m" style="left: 1100px; top: 670px">at 0x0A3F2000</div>
+      <div id="s2-c" class="s2-h" style="left: 0px; top: 830px; font-size: 70px; width: 1920px; text-align: center">a pointer is a number that is an address</div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const blurIn = (sel, t, d = 0.2) =>
+      tl.fromTo(sel, { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "power2.out" }, t);
+    const blurOut = (sel, t, d = 0.2) => tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d, ease: "power2.in" }, t);
+    const land = (sel, t, from = 1.3, d = 0.35) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
+    const each = (sel, t, gap = 0.12, from = 1.3) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out", stagger: gap }, t);
+    const wipe = (sel, t, d = 0.3) =>
+      tl.fromTo(sel, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: d, ease: "power2.out" }, t);
+    const dim = (sel, t, to = 0.3) => tl.to(sel, { opacity: to, duration: 0.3, ease: "power2.inOut" }, t);
+    blurIn("#s2-stage", 0, 0.25);
+
+    land("#s2-s", 0.93);
+    blurIn("#s2-l", 1.47);
+    land("#s2-v", 4.54);
+    wipe("#s2-b", 5.89, 0.3);
+    land("#s2-pl", 6.39);
+    blurIn("#s2-at", 6.59);
+    blurIn("#s2-c", 3.59);
+
+    blurOut("#s2-stage", 7.8, 0.25);
+    window.__timelines["pointer"] = tl;
+  </script>
+</template>
