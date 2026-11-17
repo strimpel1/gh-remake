@@ -311,6 +311,10 @@ def build(build_file, scenes, title=""):
   </script>
 </template>
 """.replace("{p}", p).replace("@p", p)
+        ids = re.findall(r'id="([^"]+)"', doc)
+        dup = sorted({i for i in ids if ids.count(i) > 1})
+        if dup:   # one animation call would hide or move two elements
+            sys.exit(f'scene "{s.sid}": duplicate ids {dup}')
         (comp / f"{s.sid}.html").write_text(doc, encoding="utf-8")
         hosts.append(f'      <div id="{s.sid}" data-composition-id="{s.sid}" data-composition-src="compositions/{s.sid}.html" data-start="{round(start, 2)}" '
                      f'data-duration="{dur}" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>')

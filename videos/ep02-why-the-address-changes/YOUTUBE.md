@@ -30,8 +30,7 @@ Everything in this series is practiced on open-source games, offline, against bo
 
 ⏱️ CHAPTERS
 0:00 The address that stopped working
-0:44 Three runs, three addresses
-0:54 Virtual memory
+0:44 Three runs, and virtual memory
 1:21 The real memory map
 2:02 The heap, and why the player moves
 2:27 Proof with a C++ program

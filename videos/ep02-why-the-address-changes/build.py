@@ -415,12 +415,12 @@ scenes = [
                       "So the whole chain fits on one line.",
           body=txt("@p-t", 120, 110, "the real chain, this run", "h", fs=90) + chain()
           + term("@p-o", 120, 700, 1680, ['<span class="hi">[[[[</span>ac_client.exe+17E0A8<span class="hi">]</span>+364<span class="hi">]</span>+14<span class="hi">]]</span>  =  20'], fs=62)
-          + txt("@p-c2", 1010, 920, "four reads, four pairs", "m", fs=54, color="#E8490F")
+          + txt("@p-n2", 120, 1000, "four reads, four pairs of brackets", "m", fs=50, color="#E8490F")
           + txt("@p-c", 120, 920, "[ x ] = read what is stored at x", "m", fs=54),
           js="""
     land("#@p-o", <<brackets-0.3>>, 1.03, 0.5);
     blurIn("#@p-c", <<means>>);
-    blurIn("#@p-c2", <<whole>>);
+    blurIn("#@p-n2", <<whole>>);
 """, enter=False),
 
     Scene("null", "One more thing. A pointer can also hold zero. In many games, before a match starts, there is no player yet. Follow a zero pointer and you read "
