@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שיעור 2.8 — AOB: סקריפטים ששורדים עדכון משחק</title>
+<link rel="stylesheet" href="../assets/style.css">
+<script>
+(function(){var r=document.documentElement,k='gh-he-theme';
+try{var s=localStorage.getItem(k);if(s)r.setAttribute('data-theme',s);}catch(e){}
+window.toggleTheme=function(){var d=r.getAttribute('data-theme');
+if(!d){d=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+var n=d==='dark'?'light':'dark';r.setAttribute('data-theme',n);
+try{localStorage.setItem(k,n);}catch(e){}};
+addEventListener('scroll',function(){var p=document.querySelector('.progress');if(!p)return;
+var h=document.documentElement;var m=h.scrollHeight-h.clientHeight;
+p.style.width=(m>0?(h.scrollTop/m*100):0)+'%';},{passive:true});})();
+</script>
+</head>
+<body>
+<div class="progress"></div>
+<header class="topbar">
+  <a class="home" href="../index.html">🎮 Game Hacking בעברית</a>
+  <span class="crumb"><span dir="auto">סריקת זיכרון עם Cheat Engine</span></span>
+  <span class="spacer"></span>
+  <span class="badge">לתרגול על משחקי offline בלבד</span>
+  <button class="theme-btn" onclick="toggleTheme()" title="מצב בהיר / כהה" aria-label="מצב בהיר או כהה">◐</button>
+</header>
+<div class="layout">
+<main>
+<section class="hero"><div class="kicker">שיעור 2.8</div><h1>AOB: סקריפטים ששורדים עדכון משחק</h1><div class="chips"><span class="chip">מודול: <b dir="auto">סריקת זיכרון עם Cheat Engine</b></span><span class="chip">יחידות מקור: <b dir="auto">How To Update Broken Cheat Engine Table Scripts (GH210), Intro to Complex Cheat Engine Scripts (GH209)</b></span></div></section>
+<section class="card tldr" id="s0"><h2>הרעיון בקצרה</h2>
+<p>הסקריפטים מהשיעורים הקודמים מזריקים בכתובת קבועה, כמו <code>&quot;game.exe&quot;+2A1B0</code>. המשחק מתעדכן, המפתחים מוסיפים כמה שורות קוד, וכל מה שאחריהן זז. הכתובת הזו מצביעה עכשיו לאמצע הוראה אחרת, והסקריפט במקרה הטוב לא עושה כלום ובמקרה הרע מקריס את המשחק. הפתרון הוא לא לזכור <strong>איפה</strong> הקוד נמצא אלא <strong>איך הוא נראה</strong>: מחפשים בזיכרון את רצף הבתים של ההוראות עצמן. לרצף כזה קוראים <strong>AOB</strong> (Array of Bytes) או signature.</p></section>
+<section class="card " id="s1"><h2>למה זה עובד</h2>
+<p>כשמשחק מתעדכן, רוב הקוד שלו לא משתנה. הפונקציה שמעדכנת את החיים נשארת אותה פונקציה, עם אותם בתים, רק במקום אחר. מי שמחפש את הבתים ימצא אותה בכל מקום שתהיה.</p>
+<pre dir="ltr"><code>before the update:  game.exe+2A1B0:  89 83 EC 00 00 00 85 C0 7F 0C
+after the update:   game.exe+2A4D0:  89 83 EC 00 00 00 85 C0 7F 0C</code></pre>
+<p>הכתובת השתנתה. הבתים לא.</p></section>
+<section class="card " id="s2"><h2>לבחור signature</h2>
+<p>Signature טוב עומד בשני תנאים: הוא <strong>ייחודי</strong> (מופיע פעם אחת בלבד ב-module), והוא <strong>יציב</strong> (לא מכיל בתים שמשתנים בין גרסאות).</p>
+<p>הבתים שמשתנים הם בעיקר כתובות ומרחקים שמקודדים בתוך ההוראות:</p>
+<div class="table-wrap"><table><thead><tr><th>סוג בית</th><th>דוגמה</th><th>יציב?</th></tr></thead><tbody><tr><td>opcode</td><td><code>89 83</code> (שהוא <code>mov [ebx+...],eax</code>)</td><td>כן</td></tr><tr><td>offset של שדה במבנה</td><td><code>EC 00 00 00</code></td><td>בדרך כלל, עד שהמבנה משתנה</td></tr><tr><td>יעד של <code>call</code> או <code>jmp</code> רחוק</td><td>ארבעת הבתים שאחרי <code>E8</code> או <code>E9</code></td><td>לא</td></tr><tr><td>כתובת מוחלטת של משתנה גלובלי</td><td><code>A1 xx xx xx xx</code></td><td>לא</td></tr><tr><td>קפיצה קצרה</td><td><code>7F 0C</code></td><td>בדרך כלל</td></tr></tbody></table></div>
+<p>את הבתים הלא יציבים מחליפים ב-<strong>wildcard</strong>, שנכתב <code>??</code>: "כאן יכול להיות כל בית".</p>
+<pre dir="ltr"><code>E8 ?? ?? ?? ?? 89 83 EC 00 00 00 85 C0</code></pre>
+<p>כמה אורך צריך? מספיק כדי להיות ייחודי. מתחילים מההוראה שרוצים, ומוסיפים הוראות לפניה ואחריה עד שהחיפוש מחזיר תוצאה אחת. בודקים את זה ב-CE עצמו: Value Type <strong>Array of byte</strong>, מסמנים רק את ה-module של המשחק, ומחפשים. תוצאה אחת בדיוק היא התשובה שרוצים.</p></section>
+<section class="card " id="s3"><h2>AOB injection</h2>
+<p>ב-Auto Assembler: <strong>Template</strong> ואז <strong>AOB injection</strong>. CE מציע signature בעצמו ובונה את השלד:</p>
+<pre dir="ltr"><code>[ENABLE]
+aobscanmodule(INJECT,game.exe,89 83 EC 00 00 00 85 C0)
+alloc(newmem,2048)
+label(code)
+label(return)
+
+newmem:
+  // your code goes here
+
+code:
+  mov [ebx+000000EC],eax
+  jmp return
+
+INJECT:
+  jmp newmem
+  nop
+return:
+registersymbol(INJECT)
+
+[DISABLE]
+INJECT:
+  db 89 83 EC 00 00 00
+
+unregistersymbol(INJECT)
+dealloc(newmem)</code></pre>
+<div class="table-wrap"><table><thead><tr><th>פקודה</th><th>מה היא עושה</th></tr></thead><tbody><tr><td><code>aobscanmodule(INJECT,game.exe,...)</code></td><td>מחפשת את הרצף בתוך ה-module ושומרת את הכתובת שנמצאה בשם <code>INJECT</code></td></tr><tr><td><code>aobscan(NAME,...)</code></td><td>אותו דבר בכל זיכרון התהליך. איטי יותר, ומשמש לקוד שלא נמצא ב-module</td></tr><tr><td><code>registersymbol(INJECT)</code></td><td>שומרת את השם, כדי שחלק ה-<code>[DISABLE]</code> ידע לאן לחזור</td></tr><tr><td><code>db 89 83 ...</code></td><td>כותבת את הבתים המקוריים חזרה, בית אחר בית</td></tr></tbody></table></div>
+<p>ההבדל היחיד מהשלד של שיעור 2.5 הוא שורת החיפוש בהתחלה. כל השאר זהה.</p>
+<p>CE בוחר signature אוטומטית, אבל לא תמיד טוב: לפעמים הוא כולל בתים של כתובות. כדאי לעבור עליו, להחליף ב-<code>??</code> את מה שנראה כמו כתובת, ולוודא שהוא עדיין ייחודי.</p></section>
+<section class="card " id="s4"><h2>לתקן טבלה שנשברה</h2>
+<p>הסדר שחוסך זמן:</p>
+<ol><li><strong>מפעילים כל סקריפט בנפרד.</strong> סקריפט AOB שלא מוצא את הרצף פשוט מסרב להידלק, וזה סימן ברור.</li><li><strong>לסקריפט שנשבר:</strong> פותחים אותו ומעתיקים את ה-signature. מחפשים אותו כ-Array of byte, ומקצרים אותו מהסוף, כמה בתים בכל פעם, עד שיש תוצאות.</li><li><strong>יש תוצאה אחת:</strong> הולכים אליה ב-Memory View ומשווים את ההוראות לקוד שבסקריפט. בדרך כלל השתנה בית אחד או שניים, לרוב offset של שדה. מעדכנים את ה-signature ואת הקוד.</li><li><strong>יש כמה תוצאות, או שהקוד נראה אחרת לגמרי:</strong> הפונקציה נכתבה מחדש. מוצאים את הערך מההתחלה (סריקה, ואז Find out what writes) ובונים הזרקה חדשה.</li><li><strong>Pointers שנשברו:</strong> בדרך כלל זזה רק הכתובת הסטטית בתחילת השרשרת, וה-offsets בהמשך נשארו. מוצאים שוב את הכתובת, ומחפשים רק את הרמה הראשונה.</li></ol>
+<p>שתי סיבות נפוצות לשבירה שאינן הזזה של קוד:</p>
+<ul><li><strong>מבנה שגדל.</strong> נוסף שדה באמצע המבנה, וכל offset שאחריו גדל ב-4 או ב-8. הסימן: כמה סקריפטים נשברו יחד, וכולם נוגעים לאותו אובייקט.</li><li><strong>קומפיילר אחר.</strong> המשחק נבנה מחדש עם הגדרות אחרות, וההוראות משתמשות עכשיו ב-registers אחרים. כאן אין קיצור דרך.</li></ul></section>
+<section class="card " id="s5"><h2>מה הלאה</h2>
+<p>כאן מסתיים מסלול Cheat Engine. למדתם למצוא ערכים, להפוך אותם ל-pointers, לשנות את הקוד שנוגע בהם, ולשמור על כל זה בחיים אחרי עדכון. כל הטכניקות האלה יחזרו בהמשך בלי Cheat Engine: במסלול 3 עם כלי Reverse Engineering ייעודיים, ובמסלול 4 בקוד שתכתבו בעצמכם. חיפוש AOB יחזור במסלול 6 בשם pattern scanning, כפונקציה שתכתבו ב-C++.</p></section>
+<section class="card glossary" id="s6"><h2>מילון מונחים</h2>
+<div class="table-wrap"><table><thead><tr><th>מונח</th><th>משמעות</th></tr></thead><tbody><tr><td><strong>AOB</strong></td><td>Array of Bytes: רצף בתים שמזהה קטע קוד</td></tr><tr><td><strong>Signature / Pattern</strong></td><td>שמות נוספים לאותו דבר</td></tr><tr><td><strong>Wildcard</strong></td><td><code>??</code>, מקום ברצף שבו מתקבל כל בית</td></tr><tr><td><strong><code>aobscanmodule</code></strong></td><td>חיפוש רצף בתוך module אחד</td></tr><tr><td><strong><code>db</code></strong></td><td>הנחיה שכותבת בתים גולמיים</td></tr><tr><td><strong>Symbol</strong></td><td>שם שמייצג כתובת וזמין לסקריפטים אחרים ולטבלה</td></tr></tbody></table></div></section>
+<section class="card quiz" id="s7"><h2>בדיקה עצמית</h2>
+<ol><li>למה סקריפט שמזריק ב-<code>&quot;game.exe&quot;+2A1B0</code> נשבר אחרי עדכון?</li><li>אילו בתים ב-signature מחליפים ב-<code>??</code>?</li><li>החיפוש אחרי ה-signature שלכם מחזיר שלוש תוצאות. מה עושים?</li><li>כמה סקריפטים שנוגעים לשחקן נשברו יחד, וה-signatures שלהם עדיין נמצאים. מה כנראה קרה?</li><li>מה ההבדל בין <code>aobscan</code> ל-<code>aobscanmodule</code>?</li></ol>
+<p>תשובות: (1) קוד שנוסף לפני הנקודה הזו הזיז את כל מה שאחריו. (2) כתובות מוחלטות ויעדים של <code>call</code> ו-<code>jmp</code>, שמשתנים בין גרסאות. (3) מאריכים אותו בהוראות שלפניו או אחריו עד שנשארת תוצאה אחת. (4) המבנה של השחקן גדל, וה-offsets של השדות זזו. (5) הראשונה מחפשת בכל זיכרון התהליך, והשנייה רק בתוך module אחד, ולכן מהירה ומדויקת יותר.</p></section>
+<nav class="pager"><a class="prev" href="07-floats-and-multipliers.html"><small>→ השיעור הקודם</small>שיעור 2.7 — Floats, XMM ומכפילים</a><span></span></nav>
+<footer class="foot">Game Hacking בעברית · שיעורים מקוריים · לתרגול על משחקי offline בלבד</footer>
+</main>
+<aside class="toc"><div class="toc-title">בעמוד זה</div><a href="#s0">הרעיון בקצרה</a><a href="#s1">למה זה עובד</a><a href="#s2">לבחור signature</a><a href="#s3">AOB injection</a><a href="#s4">לתקן טבלה שנשברה</a><a href="#s5">מה הלאה</a><a href="#s6">מילון מונחים</a><a href="#s7">בדיקה עצמית</a></aside>
+</div>
+</body>
+</html>

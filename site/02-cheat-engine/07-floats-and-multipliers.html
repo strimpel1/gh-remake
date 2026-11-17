@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שיעור 2.7 — Floats, XMM ומכפילים</title>
+<link rel="stylesheet" href="../assets/style.css">
+<script>
+(function(){var r=document.documentElement,k='gh-he-theme';
+try{var s=localStorage.getItem(k);if(s)r.setAttribute('data-theme',s);}catch(e){}
+window.toggleTheme=function(){var d=r.getAttribute('data-theme');
+if(!d){d=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+var n=d==='dark'?'light':'dark';r.setAttribute('data-theme',n);
+try{localStorage.setItem(k,n);}catch(e){}};
+addEventListener('scroll',function(){var p=document.querySelector('.progress');if(!p)return;
+var h=document.documentElement;var m=h.scrollHeight-h.clientHeight;
+p.style.width=(m>0?(h.scrollTop/m*100):0)+'%';},{passive:true});})();
+</script>
+</head>
+<body>
+<div class="progress"></div>
+<header class="topbar">
+  <a class="home" href="../index.html">🎮 Game Hacking בעברית</a>
+  <span class="crumb"><span dir="auto">סריקת זיכרון עם Cheat Engine</span></span>
+  <span class="spacer"></span>
+  <span class="badge">לתרגול על משחקי offline בלבד</span>
+  <button class="theme-btn" onclick="toggleTheme()" title="מצב בהיר / כהה" aria-label="מצב בהיר או כהה">◐</button>
+</header>
+<div class="layout">
+<main>
+<section class="hero"><div class="kicker">שיעור 2.7</div><h1>Floats, XMM ומכפילים</h1><div class="chips"><span class="chip">מודול: <b dir="auto">סריקת זיכרון עם Cheat Engine</b></span><span class="chip">יחידות מקור: <b dir="auto">Floating Point Values &amp; XMM Registers (GH204), Floats - Defense &amp; Damage Boost (GH207), Movement Speed Hack (GHS211)</b></span></div></section>
+<section class="card tldr" id="s0"><h2>הרעיון בקצרה</h2>
+<p>לכתוב ערך קבוע זה שינוי גס. מעניין יותר לשנות <strong>כמה</strong>: פי שניים, חצי, פי אחד וחצי. בשביל זה צריך לעשות חשבון בתוך הקוד המוזרק, ורוב הערכים המעניינים במשחק הם floats. חשבון ב-float לא נעשה ב-registers הרגילים אלא ב-registers נפרדים, <code>xmm0</code> עד <code>xmm15</code>, עם סט הוראות משלהם. השיעור הזה מכסה את המעט שצריך כדי לכתוב סקריפט מכפיל.</p></section>
+<section class="card " id="s1"><h2>ההוראות של float</h2>
+<div class="table-wrap"><table><thead><tr><th>הוראה</th><th>מה היא עושה</th><th>המקבילה למספרים שלמים</th></tr></thead><tbody><tr><td><code>movss</code></td><td>מעתיקה float אחד</td><td><code>mov</code></td></tr><tr><td><code>addss</code> / <code>subss</code></td><td>חיבור, חיסור</td><td><code>add</code> / <code>sub</code></td></tr><tr><td><code>mulss</code> / <code>divss</code></td><td>כפל, חילוק</td><td><code>imul</code> / <code>idiv</code></td></tr><tr><td><code>comiss</code> / <code>ucomiss</code></td><td>השוואה, מעדכנת דגלים</td><td><code>cmp</code></td></tr><tr><td><code>cvtsi2ss</code></td><td>ממירה מספר שלם ל-float</td><td>—</td></tr><tr><td><code>cvttss2si</code></td><td>ממירה float למספר שלם, בקיצוץ</td><td>—</td></tr><tr><td><code>xorps xmm0,xmm0</code></td><td>מאפסת register</td><td><code>xor eax,eax</code></td></tr></tbody></table></div>
+<p>הסיומת <code>ss</code> פירושה scalar single: float אחד של 4 בתים. לגרסאות עם <code>sd</code> (למשל <code>movsd</code>, <code>mulsd</code>) אותה משמעות עבור double של 8 בתים.</p>
+<p>קוד שמעדכן ערך שנשמר כ-float נראה למשל כך:</p>
+<pre dir="ltr"><code>movss xmm0,[ebx+000000EC]   // xmm0 = the current value
+subss xmm0,xmm1             // subtract the amount held in xmm1
+movss [ebx+000000EC],xmm0   // store it back</code></pre>
+<p>המבנה זהה למה שקראנו בשיעור 1.5. רק השמות השתנו.</p>
+<p>במשחקים ישנים של 32 ביט תפגשו גם את הדור הקודם, הוראות FPU: <code>fld</code> טוענת ערך, <code>fmul</code> מכפילה, <code>fstp</code> שומרת. ההיגיון דומה, אבל הן עובדות על מחסנית פנימית ולא על registers בעלי שם.</p></section>
+<section class="card " id="s2"><h2>קבועים בסקריפט</h2>
+<p>להוראות float אין צורה שמקבלת מספר ישירות. אי אפשר לכתוב <code>mulss xmm1,2.0</code>. המכפיל חייב לשבת בזיכרון, והסקריפט מגדיר לו מקום:</p>
+<pre dir="ltr"><code>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(multiplier)
+
+newmem:
+  mulss xmm1,[multiplier]     // the amount, times our multiplier
+  subss xmm0,xmm1             // the original instruction
+  jmp returnhere
+
+multiplier:
+  dd (float)0.5
+
+&quot;game.exe&quot;+2A1B0:
+  jmp newmem
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+&quot;game.exe&quot;+2A1B0:
+  subss xmm0,xmm1</code></pre>
+<p><code>dd</code> כותב 4 בתים, ו-<code>(float)0.5</code> אומר ל-Auto Assembler לקודד את המספר כ-float. בלי זה, מספר שלם היה נכתב כמספר שלם, ואז נקרא כ-float זעיר וחסר משמעות.</p>
+<p>שתי נקודות עדינות:</p>
+<ul><li><strong>הקבוע יושב אחרי ה-<code>jmp</code>.</strong> הוא נתון ולא קוד. אם המעבד יגיע אליו בריצה, הוא ינסה לבצע את הבתים שלו כהוראות.</li><li><strong>ב-64 ביט</strong> הפנייה ל-<code>[multiplier]</code> היא יחסית ל-<code>rip</code> ועובדת רק אם הקבוע קרוב לקוד. כשהוא באותו בלוק <code>alloc</code>, זה מובטח.</li></ul></section>
+<section class="card " id="s3"><h2>מכפיל שאפשר לשנות מהטבלה</h2>
+<p>כדי לשנות את המכפיל בלי לערוך את הסקריפט, חושפים אותו כסמל:</p>
+<pre dir="ltr"><code>label(multiplier)
+registersymbol(multiplier)</code></pre>
+<p>ובחלק <code>[DISABLE]</code> מוסיפים <code>unregistersymbol(multiplier)</code>. עכשיו אפשר להוסיף לטבלה רשומה שהכתובת שלה היא המילה <code>multiplier</code>, מטיפוס Float, ולשנות את הערך בזמן שהמשחק רץ. אפשר גם לתת לה hotkeys של הגדלה והקטנה.</p></section>
+<section class="card " id="s4"><h2>כשהערך הוא מספר שלם</h2>
+<p>כשהערך הוא <code>int</code>, אפשר להכפיל ישירות:</p>
+<pre dir="ltr"><code>newmem:
+  imul edi,edi,2            // the amount, times 2
+  sub [ebx+000000EC],edi    // the original instruction</code></pre>
+<p><code>shl edi,1</code> עושה אותו דבר, כי הזזה בביט אחד היא כפל ב-2. למכפיל לא שלם, כמו 1.5, ממירים ל-float ובחזרה:</p>
+<pre dir="ltr"><code>cvtsi2ss xmm0,edi           // int -&gt; float
+mulss xmm0,[multiplier]
+cvttss2si edi,xmm0          // float -&gt; int</code></pre>
+<p>אם <code>xmm0</code> בשימוש בקוד שמסביב, צריך לשמור ולשחזר אותו. אין <code>push</code> ל-registers של XMM, ולכן עושים את זה דרך ה-stack:</p>
+<pre dir="ltr"><code>sub esp,10
+movdqu [esp],xmm0
+  ...
+movdqu xmm0,[esp]
+add esp,10</code></pre></section>
+<section class="card " id="s5"><h2>דוגמה: מהירות תנועה</h2>
+<ol><li>מוצאים את הקואורדינטות של הדמות (שיעור 2.4).</li><li>מפעילים עליהן <strong>Find out what writes to this address</strong> בזמן תנועה. ההוראה שמופיעה מוסיפה את המהירות למיקום.</li><li>מזהים את ה-register שמחזיק את המהירות, ומכפילים אותו בקוד מוזרק לפני ההוראה המקורית.</li><li>אם ההוראה משותפת לכל הדמויות, מוסיפים את הבדיקה משיעור 2.6.</li></ol>
+<p>כדאי להתחיל עם מכפיל קטן, 1.2 או 1.5. במכפילים גדולים הדמות עוברת דרך קירות או נופלת מהמפה, כי בדיקות ההתנגשות של המשחק נבנו למהירות הרגילה. זו דוגמה טובה לכלל רחב יותר: המשחק מניח הנחות על הערכים שלו, וערך שחורג מהן שובר דברים במקומות לא צפויים.</p></section>
+<section class="card glossary" id="s6"><h2>מילון מונחים</h2>
+<div class="table-wrap"><table><thead><tr><th>מונח</th><th>משמעות</th></tr></thead><tbody><tr><td><strong>XMM registers</strong></td><td>registers של 128 ביט שמשמשים לחשבון ב-float וב-double</td></tr><tr><td><strong>SSE</strong></td><td>סט ההוראות שעובד על XMM</td></tr><tr><td><strong>Scalar single (<code>ss</code>)</strong></td><td>float אחד של 4 בתים</td></tr><tr><td><strong><code>dd</code></strong></td><td>הנחיה שכותבת 4 בתים של נתונים לתוך הסקריפט</td></tr><tr><td><strong><code>registersymbol</code></strong></td><td>חשיפת label כשם שאפשר להשתמש בו בטבלה</td></tr><tr><td><strong>FPU</strong></td><td>יחידת הנקודה הצפה הישנה, עם הוראות כמו <code>fld</code> ו-<code>fstp</code></td></tr></tbody></table></div></section>
+<section class="card quiz" id="s7"><h2>בדיקה עצמית</h2>
+<ol><li>למה אי אפשר לכתוב <code>mulss xmm1,2.0</code>?</li><li>מה היה קורה אילו כתבנו <code>dd 2</code> במקום <code>dd (float)2.0</code>?</li><li>למה הקבוע <code>multiplier</code> חייב להופיע אחרי ה-<code>jmp returnhere</code>?</li><li>ערך שמור ב-<code>edi</code> כמספר שלם ורוצים להכפיל אותו ב-1.5. מה שלושת הצעדים?</li><li>מהירות התנועה הוכפלה ב-5 והדמות נופלת דרך הרצפה. למה?</li></ol>
+<p>תשובות: (1) להוראות SSE אין צורה שמקבלת מספר ישירות. האופרנד חייב להיות register או זיכרון. (2) המספר השלם 2 היה נקרא כ-float זעיר מאוד, והתוצאה הייתה מתאפסת. (3) הוא נתון. אם המעבד יגיע אליו, הוא ינסה לבצע אותו כקוד. (4) המרה ל-float עם <code>cvtsi2ss</code>, כפל עם <code>mulss</code>, והמרה חזרה עם <code>cvttss2si</code>. (5) בדיקות ההתנגשות נבנו למהירות רגילה, וצעד גדול מדי מדלג מעליהן.</p></section>
+<nav class="pager"><a class="prev" href="06-shared-code-and-structures.html"><small>→ השיעור הקודם</small>שיעור 2.6 — Shared Code ומבני נתונים: מי נמצא ב-register</a><a class="next" href="08-aob-and-updating-scripts.html"><small>השיעור הבא ←</small>שיעור 2.8 — AOB: סקריפטים ששורדים עדכון משחק</a></nav>
+<footer class="foot">Game Hacking בעברית · שיעורים מקוריים · לתרגול על משחקי offline בלבד</footer>
+</main>
+<aside class="toc"><div class="toc-title">בעמוד זה</div><a href="#s0">הרעיון בקצרה</a><a href="#s1">ההוראות של float</a><a href="#s2">קבועים בסקריפט</a><a href="#s3">מכפיל שאפשר לשנות מהטבלה</a><a href="#s4">כשהערך הוא מספר שלם</a><a href="#s5">דוגמה: מהירות תנועה</a><a href="#s6">מילון מונחים</a><a href="#s7">בדיקה עצמית</a></aside>
+</div>
+</body>
+</html>

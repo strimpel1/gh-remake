@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שיעור 2.6 — Shared Code ומבני נתונים: מי נמצא ב-register</title>
+<link rel="stylesheet" href="../assets/style.css">
+<script>
+(function(){var r=document.documentElement,k='gh-he-theme';
+try{var s=localStorage.getItem(k);if(s)r.setAttribute('data-theme',s);}catch(e){}
+window.toggleTheme=function(){var d=r.getAttribute('data-theme');
+if(!d){d=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+var n=d==='dark'?'light':'dark';r.setAttribute('data-theme',n);
+try{localStorage.setItem(k,n);}catch(e){}};
+addEventListener('scroll',function(){var p=document.querySelector('.progress');if(!p)return;
+var h=document.documentElement;var m=h.scrollHeight-h.clientHeight;
+p.style.width=(m>0?(h.scrollTop/m*100):0)+'%';},{passive:true});})();
+</script>
+</head>
+<body>
+<div class="progress"></div>
+<header class="topbar">
+  <a class="home" href="../index.html">🎮 Game Hacking בעברית</a>
+  <span class="crumb"><span dir="auto">סריקת זיכרון עם Cheat Engine</span></span>
+  <span class="spacer"></span>
+  <span class="badge">לתרגול על משחקי offline בלבד</span>
+  <button class="theme-btn" onclick="toggleTheme()" title="מצב בהיר / כהה" aria-label="מצב בהיר או כהה">◐</button>
+</header>
+<div class="layout">
+<main>
+<section class="hero"><div class="kicker">שיעור 2.6</div><h1>Shared Code ומבני נתונים: מי נמצא ב-register</h1><div class="chips"><span class="chip">מודול: <b dir="auto">סריקת זיכרון עם Cheat Engine</b></span><span class="chip">יחידות מקור: <b dir="auto">Cheat Engine Shared OpCode (GH203), How to Use Cheat Engine&#x27;s Struct Dissector, How To Find the EntityList</b></span></div></section>
+<section class="card tldr" id="s0"><h2>הרעיון בקצרה</h2>
+<p>מפתחי משחקים לא כותבים פונקציה אחת לשחקן ועוד אחת לכל דמות אחרת. יש פונקציה אחת, והיא מקבלת pointer לדמות שעליה היא פועלת. לכן ההוראה שמעדכנת את החיים שלכם מעדכנת גם את החיים של כל השאר, וכל שינוי בה משפיע על כולם. לזה קוראים <strong>shared code</strong>. הפתרון: בתוך הקוד המוזרק בודקים <strong>מי</strong> נמצא ב-register לפני שמחליטים מה לעשות. כדי לבדוק, צריך למצוא במבנה שדה שמבדיל בין הדמות שלכם לאחרות, וזה מה שהשיעור הזה מלמד.</p></section>
+<section class="card " id="s1"><h2>לוודא שהקוד משותף</h2>
+<p>ב-Memory View, לחיצה ימנית על ההוראה, ואז <strong>Find out what addresses this instruction accesses</strong>. נפתח חלון שמתמלא בכתובות בכל פעם שההוראה רצה.</p>
+<ul><li>הדמות שלכם נפגעת: מופיעה כתובת אחת.</li><li>בוט נפגע: מופיעה כתובת נוספת.</li><li>בוט אחר: עוד אחת.</li></ul>
+<p>כל כתובת כאן היא שדה החיים של דמות אחרת. אם מחסירים ממנה את ה-offset של החיים, מקבלים את בסיס המבנה של אותה דמות. עכשיו יש לנו כמה מבנים מאותו סוג, של דמויות שונות, וזה בדיוק מה שצריך כדי להשוות.</p></section>
+<section class="card " id="s2"><h2>Dissect data/structures: להשוות מבנים</h2>
+<ol><li>ב-Memory View: <strong>Tools</strong> ואז <strong>Dissect data/structures</strong> (Ctrl+D).</li><li>בשורת הכתובת כותבים את בסיס המבנה של הדמות שלכם (הכתובת של החיים פחות ה-offset).</li><li><strong>Structures</strong> ואז <strong>Define new structure</strong>. CE מנחש את טיפוסי השדות.</li><li><strong>File</strong> ואז <strong>Add extra address</strong>, ומוסיפים את בסיסי המבנים של שתיים או שלוש דמויות אחרות. כל אחת מקבלת עמודה.</li></ol>
+<p>עכשיו כל שורה היא offset אחד, וכל עמודה היא דמות. CE צובע שורות שבהן הערכים שונים בין העמודות. אפשר לקבץ עמודות (הדמות שלכם בקבוצה אחת, הבוטים בשנייה) כדי שהצביעה תדגיש בדיוק את מה שמבדיל בין הקבוצות.</p></section>
+<section class="card " id="s3"><h2>מה מחפשים</h2>
+<p>שדה שערכו <strong>זהה אצל כל הבוטים ושונה אצלכם</strong>, ושלא משתנה במהלך המשחק:</p>
+<div class="table-wrap"><table><thead><tr><th>סוג שדה</th><th>איך הוא נראה</th><th>אמינות</th></tr></thead><tbody><tr><td>מספר קבוצה (team)</td><td>1 אצלכם, 2 אצל הבוטים</td><td>גבוהה</td></tr><tr><td>דגל "נשלט על ידי שחקן"</td><td>1 מול 0, בדרך כלל Byte</td><td>גבוהה</td></tr><tr><td>pointer לבקר (controller, AI)</td><td>אצלכם pointer תקף, אצל הבוטים 0, או להפך</td><td>גבוהה</td></tr><tr><td>vtable, ארבעת הבתים הראשונים של המבנה</td><td>זהה לכל הבוטים ושונה אצלכם, אם אלה מחלקות שונות</td><td>גבוהה, אבל משתנה בעדכוני משחק</td></tr><tr><td>שם</td><td>מחרוזת או pointer למחרוזת</td><td>בינונית</td></tr><tr><td>מזהה ייחודי (ID)</td><td>שונה אצל כולם</td><td>לא שימושי להבחנה בין קבוצות</td></tr></tbody></table></div>
+<p>שדות שנראים שונים אבל לא עוזרים: חיים, מיקום, זווית ותחמושת. הם שונים אצל כולם ומשתנים כל הזמן.</p>
+<p>בדיקה שחוסכת טעויות: טוענים שלב אחר, או מפעילים את המשחק מחדש, ומוודאים שהשדה שבחרתם עדיין מבדיל באותו אופן.</p></section>
+<section class="card " id="s4"><h2>הסקריפט: בדיקה לפני פעולה</h2>
+<p>נניח שמצאנו שב-offset <code>0x224</code> יש 1 אצל הדמות שלכם ו-2 אצל הבוטים. הקוד המוזרק בודק קודם, ורק אז פועל:</p>
+<pre dir="ltr"><code>newmem:
+  cmp [ebx+00000224],1    // is this our own character?
+  jne originalcode        // no: let the game do its normal thing
+  mov eax,#100            // yes: write our own value
+
+originalcode:
+  mov [ebx+000000EC],eax
+
+exit:
+  jmp returnhere</code></pre>
+<p>זה כל הרעיון: השוואה, קפיצה מעל הקוד שלנו כשהתנאי לא מתקיים, ואז ההוראה המקורית. אותו שלד משמש לכל שינוי שאמור לחול רק על חלק מהדמויות.</p>
+<p>זכרו את הכלל משיעור 2.5: <code>cmp</code> משנה את הדגלים. אם ההוראה שאחרי נקודת ההזרקה נשענת עליהם, עוטפים ב-<code>pushfd</code> ו-<code>popfd</code>.</p></section>
+<section class="card " id="s5"><h2>מהמבנה אל רשימת הישויות</h2>
+<p>חלון ה-Find out what addresses נתן לנו במקרה משהו חשוב: רשימה של כל הדמויות שהקוד נגע בהן. המשחק עצמו מחזיק רשימה כזו באופן מסודר, ה-<strong>entity list</strong>: מערך של pointers, אחד לכל דמות.</p>
+<p>איך מוצאים אותה: לוקחים בסיס של מבנה של בוט ומחפשים אותו כערך (כמו בשיעור 2.3). אחת התוצאות תהיה בתוך רצף של pointers צמודים, 4 או 8 בתים זה מזה, שכל אחד מהם מצביע למבנה של דמות אחרת. זה המערך. ה-pointer אליו הוא נקודת הפתיחה למסלולים 7 ו-8, שבהם עוברים על כל הדמויות וקוראים את הנתונים של כל אחת.</p></section>
+<section class="card glossary" id="s6"><h2>מילון מונחים</h2>
+<div class="table-wrap"><table><thead><tr><th>מונח</th><th>משמעות</th></tr></thead><tbody><tr><td><strong>Shared code</strong></td><td>קוד אחד שמשרת כמה אובייקטים מאותו סוג</td></tr><tr><td><strong>Dissect data/structures</strong></td><td>הכלי של CE להצגה ולהשוואה של מבנים</td></tr><tr><td><strong>Entity</strong></td><td>אובייקט במשחק: דמות, ולפעמים גם פריט</td></tr><tr><td><strong>Entity list</strong></td><td>מערך ה-pointers לכל הישויות</td></tr><tr><td><strong>Team ID</strong></td><td>שדה שמציין לאיזו קבוצה שייכת דמות</td></tr><tr><td><strong>vtable</strong></td><td>pointer בתחילת אובייקט C++ לטבלת המתודות של המחלקה שלו</td></tr></tbody></table></div></section>
+<section class="card quiz" id="s7"><h2>בדיקה עצמית</h2>
+<ol><li>איך מוודאים שהוראה משרתת יותר מדמות אחת?</li><li>ברשימה של Find out what addresses מופיעה הכתובת <code>0B2004EC</code>, וה-offset של החיים הוא <code>0xEC</code>. מה בסיס המבנה?</li><li>למה שדה החיים אינו שדה טוב להבחנה בין דמויות?</li><li>מצאתם שדה ששווה 1 אצלכם ו-2 אצל הבוטים. מה הבדיקה שכדאי לעשות לפני שסומכים עליו?</li><li>איך נראית entity list בזיכרון?</li></ol>
+<p>תשובות: (1) Find out what addresses this instruction accesses, ואז גורמים להוראה לרוץ על דמויות אחרות ורואים אם מופיעות כתובות נוספות. (2) <code>0B200400</code>. (3) הוא שונה אצל כולם ומשתנה כל הזמן. (4) לטעון שלב אחר או להפעיל מחדש ולוודא שהוא עדיין מבדיל. (5) רצף של pointers צמודים, שכל אחד מצביע למבנה של ישות אחרת.</p></section>
+<nav class="pager"><a class="prev" href="05-code-injection-and-scripts.html"><small>→ השיעור הקודם</small>שיעור 2.5 — Code Injection וסקריפטים ב-Auto Assembler</a><a class="next" href="07-floats-and-multipliers.html"><small>השיעור הבא ←</small>שיעור 2.7 — Floats, XMM ומכפילים</a></nav>
+<footer class="foot">Game Hacking בעברית · שיעורים מקוריים · לתרגול על משחקי offline בלבד</footer>
+</main>
+<aside class="toc"><div class="toc-title">בעמוד זה</div><a href="#s0">הרעיון בקצרה</a><a href="#s1">לוודא שהקוד משותף</a><a href="#s2">Dissect data/structures: להשוות מבנים</a><a href="#s3">מה מחפשים</a><a href="#s4">הסקריפט: בדיקה לפני פעולה</a><a href="#s5">מהמבנה אל רשימת הישויות</a><a href="#s6">מילון מונחים</a><a href="#s7">בדיקה עצמית</a></aside>
+</div>
+</body>
+</html>
