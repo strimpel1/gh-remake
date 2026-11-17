@@ -1,0 +1,24 @@
+[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+  // dec [eax] is not copied here
+
+originalcode:
+  lea eax,[esp+1C]
+
+exit:
+  jmp returnhere
+
+ac_client.exe+C73EF:
+  jmp newmem
+  nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+ac_client.exe+C73EF:
+  db FF 08 8D 44 24 1C

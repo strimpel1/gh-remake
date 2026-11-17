@@ -1,0 +1,70 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background-color: #E4F2EC;
+      background-image:
+        linear-gradient(#9CCFC0 3px, transparent 3px), linear-gradient(90deg, #9CCFC0 3px, transparent 3px),
+        linear-gradient(#C4E3D9 1px, transparent 1px), linear-gradient(90deg, #C4E3D9 1px, transparent 1px);
+      background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px; }
+
+    .s2-stage { position: absolute; inset: 0; }
+    .s2-h { position: absolute; font-family: 'Archivo Black', sans-serif; font-size: 96px; line-height: 1.05; letter-spacing: -0.01em; color: #0B2A30; }
+    .s2-m { position: absolute; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 54px; line-height: 1.15; color: #2E6B63; }
+    .s2-acc { color: #E8490F; }
+    .s2-dim { color: #6A9188; }
+    .s2-cell { position: absolute; background: #fff; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; color: #0B2A30; }
+    .s2-cell.on { background: #FF5A1F; color: #fff; }
+    .s2-tile { position: absolute; background: #FF5A1F; color: #fff; border: 12px solid #0B2A30; box-shadow: 16px 16px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s2-card { position: absolute; background: #fff; color: #0B2A30; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s2-card.on { background: #FF5A1F; color: #fff; }
+    .s2-card.soft { background: #CFE9DF; }
+    .s2-bar { position: absolute; background: #0B2A30; }
+    .s2-shot { position: absolute; overflow: hidden; background: #fff; border: 8px solid #0B2A30; box-shadow: 12px 12px 0 #0B2A30; }
+    .s2-shot img, .s2-shot video { position: absolute; display: block; max-width: none; }
+    .s2-mark { position: absolute; border: 8px solid #FF5A1F; border-radius: 12px; box-shadow: 0 0 0 6px rgba(255, 90, 31, 0.28); }
+    .s2-tag { position: absolute; background: #FF5A1F; color: #fff; border: 6px solid #0B2A30; box-shadow: 8px 8px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; padding: 6px 22px; white-space: nowrap; }
+    .s2-term { position: absolute; background: #0B2A30; border: 8px solid #0B2A30; box-shadow: 12px 12px 0 #2E6B63; padding: 26px 34px;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 500; color: #E4F2EC; white-space: pre; }
+    .s2-term .hi { color: #FF9A6B; font-weight: 700; }
+    .s2-term .dimc { color: #7FB5A8; }
+    .s2-media { position: absolute; inset: 0; }
+  </style>
+  <div id="root" data-composition-id="hook" data-width="1920" data-height="1080">
+    <div id="s2-stage" class="clip s2-stage" data-start="0" data-duration="10.3">
+      <div id="s2-t" class="s2-h" style="left: 190px; top: 110px; font-size: 88px">2,253 answers is not an answer</div>
+      <div id="s2-a" class="s2-tile" style="left: 190px; top: 340px; width: 520px; height: 190px; line-height: 166px; font-size: 120px">2,253</div>
+      <div id="s2-r1" class="s2-h" style="left: 750px; top: 370px; font-size: 110px">&rarr;</div>
+      <div id="s2-b" class="s2-tile" style="left: 900px; top: 340px; width: 300px; height: 190px; line-height: 166px; font-size: 120px">2</div>
+      <div id="s2-r2" class="s2-h" style="left: 1240px; top: 370px; font-size: 110px">&rarr;</div>
+      <div id="s2-c" class="s2-card on" style="left: 1390px; top: 340px; width: 300px; height: 174px; line-height: 158px; font-size: 120px">1</div>
+      <div id="s2-d" class="s2-m" style="left: 190px; top: 660px; font-size: 58px">1. cut the list down to one address</div>
+      <div id="s2-e" class="s2-m" style="left: 190px; top: 760px; font-size: 58px">2. change the number inside it</div>
+      <div id="s2-g" class="s2-m" style="left: 190px; top: 860px; font-size: 58px">3. <span class="s2-acc">watch the game obey</span></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const blurIn = (sel, t, d = 0.2) =>
+      tl.fromTo(sel, { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "power2.out" }, t);
+    const blurOut = (sel, t, d = 0.2) => tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d, ease: "power2.in" }, t);
+    const land = (sel, t, from = 1.3, d = 0.35) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
+    const each = (sel, t, gap = 0.12, from = 1.3) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out", stagger: gap }, t);
+    const wipe = (sel, t, d = 0.3) =>
+      tl.fromTo(sel, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: d, ease: "power2.out" }, t);
+    const dim = (sel, t, to = 0.3) => tl.to(sel, { opacity: to, duration: 0.3, ease: "power2.inOut" }, t);
+    blurIn("#s2-stage", 0, 0.25);
+
+    wipe("#s2-t", 0.3, 0.6);
+    land("#s2-a", 0.5);
+    blurIn("#s2-r1", 3.55); land("#s2-b", 3.75); blurIn("#s2-r2", 4.71); land("#s2-c", 5.01);
+    blurIn("#s2-d", 4.05); blurIn("#s2-e", 6.23); blurIn("#s2-g", 8.12);
+
+    blurOut("#s2-stage", 10.0, 0.25);
+    window.__timelines["hook"] = tl;
+  </script>
+</template>

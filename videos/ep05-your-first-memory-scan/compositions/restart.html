@@ -1,0 +1,71 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background-color: #E4F2EC;
+      background-image:
+        linear-gradient(#9CCFC0 3px, transparent 3px), linear-gradient(90deg, #9CCFC0 3px, transparent 3px),
+        linear-gradient(#C4E3D9 1px, transparent 1px), linear-gradient(90deg, #C4E3D9 1px, transparent 1px);
+      background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px; }
+
+    .s32-stage { position: absolute; inset: 0; }
+    .s32-h { position: absolute; font-family: 'Archivo Black', sans-serif; font-size: 96px; line-height: 1.05; letter-spacing: -0.01em; color: #0B2A30; }
+    .s32-m { position: absolute; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 54px; line-height: 1.15; color: #2E6B63; }
+    .s32-acc { color: #E8490F; }
+    .s32-dim { color: #6A9188; }
+    .s32-cell { position: absolute; background: #fff; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; color: #0B2A30; }
+    .s32-cell.on { background: #FF5A1F; color: #fff; }
+    .s32-tile { position: absolute; background: #FF5A1F; color: #fff; border: 12px solid #0B2A30; box-shadow: 16px 16px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s32-card { position: absolute; background: #fff; color: #0B2A30; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s32-card.on { background: #FF5A1F; color: #fff; }
+    .s32-card.soft { background: #CFE9DF; }
+    .s32-bar { position: absolute; background: #0B2A30; }
+    .s32-shot { position: absolute; overflow: hidden; background: #fff; border: 8px solid #0B2A30; box-shadow: 12px 12px 0 #0B2A30; }
+    .s32-shot img, .s32-shot video { position: absolute; display: block; max-width: none; }
+    .s32-mark { position: absolute; border: 8px solid #FF5A1F; border-radius: 12px; box-shadow: 0 0 0 6px rgba(255, 90, 31, 0.28); }
+    .s32-tag { position: absolute; background: #FF5A1F; color: #fff; border: 6px solid #0B2A30; box-shadow: 8px 8px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; padding: 6px 22px; white-space: nowrap; }
+    .s32-term { position: absolute; background: #0B2A30; border: 8px solid #0B2A30; box-shadow: 12px 12px 0 #2E6B63; padding: 26px 34px;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 500; color: #E4F2EC; white-space: pre; }
+    .s32-term .hi { color: #FF9A6B; font-weight: 700; }
+    .s32-term .dimc { color: #7FB5A8; }
+    .s32-media { position: absolute; inset: 0; }
+  </style>
+  <div id="root" data-composition-id="restart" data-width="1920" data-height="1080">
+    <div id="s32-stage" class="clip s32-stage" data-start="0" data-duration="19.7">
+      <div id="s32-ce" class="s32-shot" style="left: 80px; top: 150px; width: 1760px; height: 197px"><img src="assets/shots/a_restart2.png" style="left: 0.0px; top: -1201.9px; width: 1744.0px; height: 1830.4px"></div>
+      <div id="s32-g" class="s32-shot" style="left: 80px; top: 390px; width: 1760px; height: 424px"><img src="assets/shots/a_restart_game.png" style="left: 0.0px; top: -616.2px; width: 1744.0px; height: 1024.4px"></div>
+      <div id="s32-m1" class="s32-mark" style="left: 1404px; top: 219px; width: 126px; height: 51px"></div>
+      <div id="s32-m2" class="s32-mark" style="left: 1404px; top: 266px; width: 126px; height: 51px"></div>
+      <div id="s32-m3" class="s32-mark" style="left: 606px; top: 715px; width: 231px; height: 88px"></div>
+      <div id="s32-g1" class="s32-tag" style="left: 1180px; top: 60px; font-size: 36px">after a restart: the same list</div>
+      <div id="s32-g2" class="s32-tag" style="left: 80px; top: 840px; font-size: 36px">the game</div>
+      <div id="s32-k" class="s32-tile" style="left: 1100px; top: 850px; width: 520px; height: 120px; line-height: 96px; font-size: 70px">00846288</div>
+      <div id="s32-kl" class="s32-h" style="left: 420px; top: 870px; font-size: 54px">the magazine, this run:</div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const blurIn = (sel, t, d = 0.2) =>
+      tl.fromTo(sel, { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "power2.out" }, t);
+    const blurOut = (sel, t, d = 0.2) => tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d, ease: "power2.in" }, t);
+    const land = (sel, t, from = 1.3, d = 0.35) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
+    const each = (sel, t, gap = 0.12, from = 1.3) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out", stagger: gap }, t);
+    const wipe = (sel, t, d = 0.3) =>
+      tl.fromTo(sel, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: d, ease: "power2.out" }, t);
+    const dim = (sel, t, to = 0.3) => tl.to(sel, { opacity: to, duration: 0.3, ease: "power2.inOut" }, t);
+    blurIn("#s32-stage", 0, 0.25);
+
+    land("#s32-ce", 0.2, 1.02, 0.4); land("#s32-g", 0.3, 1.02, 0.4); land("#s32-g1", 0.5); land("#s32-g2", 0.7);
+    land("#s32-m3", 6.48, 1.4);
+    land("#s32-m1", 8.92, 1.4);
+    land("#s32-m2", 14.32, 1.4);
+    blurIn("#s32-kl", 12.84); land("#s32-k", 15.5);
+
+    blurOut("#s32-stage", 19.4, 0.25);
+    window.__timelines["restart"] = tl;
+  </script>
+</template>

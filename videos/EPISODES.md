@@ -20,9 +20,9 @@ read `ep01-bytes-behind-the-health-bar/build.py` and `ep02-why-the-address-chang
 |---|---|---|---|---|
 | 1 | `ep01-bytes-behind-the-health-bar` | What 100 Health Really Looks Like in Memory | 1.1, 1.2 | Why the Address Changes |
 | 2 | `ep02-why-the-address-changes` | Why the Health Address Changes Every Restart | 1.3, 1.4 | Read One Line of Assembly |
-| 3 | `ep03-read-one-line-of-assembly` | (write it) | 1.5 reading assembly, 1.7 stack and calling conventions | Inside the Files |
-| 4 | `ep04-inside-the-files` | (write it) | 1.6 hex editing files, 1.8 PE, processes and WinAPI | Your First Memory Scan |
-| 5 | `ep05-your-first-memory-scan` | (write it) | 2.1 first scan, 2.2 scan types and unknown values | Finding the Pointer |
+| 3 | `ep03-read-one-line-of-assembly` | The One Line of Assembly That Takes Your Ammo | 1.5 reading assembly, 1.7 stack and calling conventions | Inside the Files |
+| 4 | `ep04-inside-the-files` | 9999 Gold With a Hex Editor, and What Is Inside an EXE | 1.6 hex editing files, 1.8 PE, processes and WinAPI | Your First Memory Scan |
+| 5 | `ep05-your-first-memory-scan` | How to Find a Value in a Game's Memory with Cheat Engine | 2.1 first scan, 2.2 scan types and unknown values | Finding the Pointer |
 | 6 | `ep06-finding-the-pointer` | (write it) | 2.3 finding pointers, 2.4 cheat tables and hotkeys | Changing the Code |
 | 7 | `ep07-changing-the-code` | (write it) | 2.5 code injection and scripts, 2.6 shared code and structures | Scripts That Survive an Update |
 | 8 | `ep08-scripts-that-survive-an-update` | (write it) | 2.7 floats and multipliers, 2.8 AOB and updating scripts | (end of the Cheat Engine track: tease external trainers in general terms) |
@@ -88,6 +88,10 @@ example. If a lesson's source text goes beyond that, leave that part out.
 - **An element added in a fix gets an id nothing else in the scene uses** (helpers like `chain()` already take ids such as
   `@p-c2`). The kit now stops the build on duplicate ids. After any fix, look at frames of the scene you touched.
 - **Keep text out of the bottom 80 px** (nothing below y = 1000): YouTube's progress bar covers that strip.
+- **"The last lines of the function" are the real last lines.** Search the saved disassembly for every `ret`: a function
+  can return early.
+- **A count on screen ("N functions in all") is counted from the saved output with a script**, never by eye.
+- A tag or label never covers text inside a capture.
 - Hex and addresses are spelled for the voice the way episodes 1 and 2 do it ("zero zero eight nine, seven eight six C").
 
 ## Before you call it done

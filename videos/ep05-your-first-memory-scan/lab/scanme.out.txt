@@ -1,0 +1,48 @@
+  SCAN ME            a practice target
+
+  gold     250       
+  health   [####################]
+  energy   87        
+
+  G gold   H hit   R rest   E energy   Q quit
+--- key g
+  SCAN ME            a practice target
+
+  gold     257       
+  health   [####################]
+  energy   87        
+
+  G gold   H hit   R rest   E energy   Q quit
+--- key g
+  SCAN ME            a practice target
+
+  gold     264       
+  health   [####################]
+  energy   87        
+
+  G gold   H hit   R rest   E energy   Q quit
+--- key h
+  SCAN ME            a practice target
+
+  gold     264       
+  health   [##################..]
+  energy   87        
+
+  G gold   H hit   R rest   E energy   Q quit
+--- key e
+  SCAN ME            a practice target
+
+  gold     264       
+  health   [##################..]
+  energy   84        
+
+  G gold   H hit   R rest   E energy   Q quit
+--- key r
+  SCAN ME            a practice target
+
+  gold     264       
+  health   [###################.]
+  energy   84        
+
+  G gold   H hit   R rest   E energy   Q quit
+--- in memory: gold 264, health 92.50, energy 84.04

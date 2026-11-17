@@ -1,0 +1,74 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background-color: #E4F2EC;
+      background-image:
+        linear-gradient(#9CCFC0 3px, transparent 3px), linear-gradient(90deg, #9CCFC0 3px, transparent 3px),
+        linear-gradient(#C4E3D9 1px, transparent 1px), linear-gradient(90deg, #C4E3D9 1px, transparent 1px);
+      background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px; }
+
+    .s25-stage { position: absolute; inset: 0; }
+    .s25-h { position: absolute; font-family: 'Archivo Black', sans-serif; font-size: 96px; line-height: 1.05; letter-spacing: -0.01em; color: #0B2A30; }
+    .s25-m { position: absolute; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 54px; line-height: 1.15; color: #2E6B63; }
+    .s25-acc { color: #E8490F; }
+    .s25-dim { color: #6A9188; }
+    .s25-cell { position: absolute; background: #fff; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; color: #0B2A30; }
+    .s25-cell.on { background: #FF5A1F; color: #fff; }
+    .s25-tile { position: absolute; background: #FF5A1F; color: #fff; border: 12px solid #0B2A30; box-shadow: 16px 16px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s25-card { position: absolute; background: #fff; color: #0B2A30; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s25-card.on { background: #FF5A1F; color: #fff; }
+    .s25-card.soft { background: #CFE9DF; }
+    .s25-bar { position: absolute; background: #0B2A30; }
+    .s25-shot { position: absolute; overflow: hidden; background: #fff; border: 8px solid #0B2A30; box-shadow: 12px 12px 0 #0B2A30; }
+    .s25-shot img, .s25-shot video { position: absolute; display: block; max-width: none; }
+    .s25-mark { position: absolute; border: 8px solid #FF5A1F; border-radius: 12px; box-shadow: 0 0 0 6px rgba(255, 90, 31, 0.28); }
+    .s25-tag { position: absolute; background: #FF5A1F; color: #fff; border: 6px solid #0B2A30; box-shadow: 8px 8px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; padding: 6px 22px; white-space: nowrap; }
+    .s25-term { position: absolute; background: #0B2A30; border: 8px solid #0B2A30; box-shadow: 12px 12px 0 #2E6B63; padding: 26px 34px;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 500; color: #E4F2EC; white-space: pre; }
+    .s25-term .hi { color: #FF9A6B; font-weight: 700; }
+    .s25-term .dimc { color: #7FB5A8; }
+    .s25-media { position: absolute; inset: 0; }
+  </style>
+  <div id="root" data-composition-id="incr" data-width="1920" data-height="1080">
+    <div id="s25-media" class="s25-media">
+      <div id="s25-k" class="s25-shot" style="left: 80px; top: 150px; width: 1040px; height: 109px"><video id="s25-k-v" class="clip" src="assets/clips/c4_con_fit0_149.mp4" muted playsinline data-start="0" data-duration="14.9" data-media-start="0" data-track-index="2" style="left: 0.0px; top: -158.0px; width: 1024.0px; height: 400.3px"></video></div>
+      <div id="s25-ce" class="s25-shot" style="left: 80px; top: 290px; width: 1040px; height: 558px"><video id="s25-ce-v" class="clip" src="assets/clips/c4_ce_fit0_149.mp4" muted playsinline data-start="0" data-duration="14.9" data-media-start="0" data-track-index="2" style="left: 0.0px; top: -121.1px; width: 1024.0px; height: 1074.7px"></video></div>
+    </div>
+    <div id="s25-stage" class="clip s25-stage" data-start="0" data-duration="14.9">
+      <div id="s25-t" class="s25-h" style="left: 80px; top: 50px; font-size: 72px">rest, then: Increased value</div>
+      <div id="s25-m1" class="s25-mark" style="left: 116px; top: 160px; width: 608px; height: 46px"></div>
+      <div id="s25-m3" class="s25-mark" style="left: 82px; top: 298px; width: 116px; height: 35px"></div>
+      <div id="s25-m4" class="s25-mark" style="left: 218px; top: 354px; width: 77px; height: 31px"></div>
+      <div id="s25-a" class="s25-card soft" style="left: 1160px; top: 300px; width: 700px; height: 120px; line-height: 104px; font-size: 50px">the bar grew</div>
+      <div id="s25-b" class="s25-card on" style="left: 1160px; top: 450px; width: 700px; height: 120px; line-height: 104px; font-size: 50px">Increased value</div>
+      <div id="s25-f" class="s25-tile" style="left: 1160px; top: 640px; width: 700px; height: 140px; line-height: 116px; font-size: 76px">Found: 1</div>
+      <div id="s25-d" class="s25-h" style="left: 80px; top: 880px; font-size: 64px">the number behind the bar: <span class="s25-acc">92.5</span></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const blurIn = (sel, t, d = 0.2) =>
+      tl.fromTo(sel, { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "power2.out" }, t);
+    const blurOut = (sel, t, d = 0.2) => tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d, ease: "power2.in" }, t);
+    const land = (sel, t, from = 1.3, d = 0.35) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
+    const each = (sel, t, gap = 0.12, from = 1.3) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out", stagger: gap }, t);
+    const wipe = (sel, t, d = 0.3) =>
+      tl.fromTo(sel, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: d, ease: "power2.out" }, t);
+    const dim = (sel, t, to = 0.3) => tl.to(sel, { opacity: to, duration: 0.3, ease: "power2.inOut" }, t);
+    blurIn("#s25-stage, #s25-media", 0, 0.25);
+
+    wipe("#s25-t", 0.3, 0.5);
+    land("#s25-m1", 2.87, 1.2); land("#s25-a", 1.0);
+    land("#s25-b", 4.18);
+    land("#s25-m3", 6.79, 1.4); land("#s25-f", 6.79);
+    land("#s25-m4", 10.21, 1.4); wipe("#s25-d", 10.21, 0.7);
+
+    blurOut("#s25-stage, #s25-media", 14.6, 0.25);
+    window.__timelines["incr"] = tl;
+  </script>
+</template>

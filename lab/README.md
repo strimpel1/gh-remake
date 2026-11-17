@@ -60,7 +60,7 @@ Verified with `dumpbin` (MSVC 14.51) on `ac_client.exe` 1.3.0.2, file not modifi
   KERNEL32, USER32 (only MessageBoxA), ADVAPI32, SHELL32.
 - `cheatengine-x86_64.exe` imports `OpenProcess`, `ReadProcessMemory` and `WriteProcessMemory` from kernel32.dll.
 - A 64-bit console EXE built with `build.bat` (static CRT): image base 140000000, Dynamic base, imports only KERNEL32.dll
-  (75 functions for `savegame.exe`, among them CreateFileW, ReadFile, WriteFile, CloseHandle); `e_lfanew` (offset 3C) = F8.
+  (74 functions for `savegame.exe`, counted by script from `savegame.imports.txt`, among them CreateFileW, ReadFile, WriteFile, CloseHandle); `e_lfanew` (offset 3C) = F8.
 
 ## Code: disassembler and debugger captures (episode 3)
 
@@ -139,3 +139,51 @@ Verified in AssaultCube 1.3.0.2 (32-bit, image base 00400000, code addresses are
   change (the value and its display copy; the copy snaps back within 0.1 s); health as Float, Unknown initial value
   59,392, Decreased 7, Unchanged 7, Increased 1 (value 92.5); energy 87 as 4 Bytes gives 0 after one change, Float with
   Value between finds it (84.04, then 80.74).
+
+## Pointers, pointer scans, tables and hotkeys (episode 6)
+
+| Script | What it does |
+|---|---|
+| `ep06_cap.py` | Drives *any* Cheat Engine form (not only the main one): `forms`, `comps "<caption or class>"`, `menu`, `lua`, `shot`; as a module `crect(form, control)`, `cclick`, `keys`, `Rec` (records a screen rectangle) |
+| `ep06_run.py <stage>` | The whole episode 6 session in stages: `game`, `ce [table.CT]`, `s1 menu writes hex1 pick access hex2 addptr`, restart, `proof psdlg psrun table hotkey hkclip save`, restart, `rescan loaded`, `stop` |
+| `ce/ep06.CT` | Empty table with the command channel; `ce/ep06_assaultcube.CT` is the table saved in the episode (pointers + one hotkey) |
+| `ce/ep06_watch.lua`, `ce/ep06_dump.lua` | Log which instructions *access* the magazine / health / current-weapon slot (`EP06_WHAT`), then print them |
+| `ce/ep06_holders.lua` | Which addresses hold the 4-byte value `EP06_VALUE`, and which of them are static |
+| `ce/ep06_vault.lua` | Checks the practice task of episode 6 on `vault.exe` |
+| `ptr/` | Pointer scan result files of the episode (`ep06_ammo.PTR`, `ep06_ammo_run3.PTR`) |
+
+How it works, learned the hard way:
+- On the primary monitor (125 % scaling) Cheat Engine's main window is 1129x1290 by default and hangs over the edge next to the game.
+  `getMainForm()` `.Left=1600 .Top=0 .Width=940 .Height=1000` gives a 942x1064 window beside the 1583 wide game.
+  New dialogs open on the second monitor: move each one with `.Left/.Top` before the screenshot.
+- Forms by class: `TFoundCodeDialog` (find what writes/accesses; `FoundCodeList`, `mInfo`, `btnExtraInfo`, `btnOK` = Stop, then Close),
+  `TFormFoundCodeListExtra` ("Extra info" = More information), `TformAddressChange` (Add/Change address; `cbPointer`, `editDescription`, `btnOk`),
+  `TfrmPointerScannerSettings` (`editMaxLevel`, `editStructsize` = maximum offset, `btnOk`), `Tfrmpointerscanner` (`Panel1.Caption` = "Pointer paths:N",
+  `lvResults`, menu item `Rescanmemory1`), `TfrmRescanPointer` (`edtAddress`, `Button1` = OK), `THotKeyForm` (`btnCreateHotkey`, `edtHotkey`,
+  `cbFreezedirection`, `edtFreezeValue`, `btnApply`, `btnOK`). Main form menu items: `Pointerscanforthisaddress1`, `SetHotkey1`, `Address1`.
+- A menu item that opens a modal dialog must be clicked from a timer (`createTimer(400, function() ... .doClick() end)`), or the command
+  channel never answers. The channel keeps working while the modal dialog is open.
+- In the Add address dialog with Pointer ticked (window 600 wide): base box at y=298 with one offset; each "Add Offset" adds a row and moves
+  the base down 30 px. Offset rows are 30 px apart; the bottom row is the one nearest the base.
+- The hotkey box records every key while it has the focus (a stray Alt from `capture.front` ends up in it): set the action and the value
+  first, then click Clear, click the box and press the key last.
+- Cheat Engine polls the keyboard for hotkeys: a synthetic key must be held about 0.4 s (`keybd_event` down, wait, up); `send_keys` is too short.
+- The file dialog of the pointer scan drops the first typed character if you type at once: wait about 1.5 s, Ctrl+A, then type the path.
+- `debug_setBreakpoint` callbacks and the real "Find out what ..." window both work after `debugProcess()`; restarting the game while the
+  debugger was attached gave no error, `openProcess("ac_client.exe")` simply attaches to the new process.
+
+Verified in AssaultCube 1.3.0.2 (three runs in one session: player at 009A62B8, 008D54F8, 00888140):
+- Nothing reads or writes the magazine through the player with a `+140` offset. Both readers (`ac_client.exe+C7254` `cmp dword ptr [eax],00`,
+  `ac_client.exe+C8E9B` `push [eax]`) and the writer (`dec [eax]` at `+C73EF`) get the address from the weapon: `mov eax,[esi+14]`.
+  So the path the code walks is `[[[ac_client.exe+17E0A8]+364]+14]+0`, and `weapon+14` points back into the player at `player+140`.
+- A hex scan for the weapon's address finds 8 addresses, none static: one on the stack and `player+354, +360, +364, +368, +36C, +370, +374`.
+- `player+364` (current weapon) is read on every frame by 15 instructions, all `mov reg,[reg+00000364]`; the first is
+  `ac_client.exe+7DFBF` = `8B 9E 64030000` = `mov ebx,[esi+00000364]` with ESI = the player. (A few more appear when firing or reloading.)
+- A hex scan for the player's address finds about 41 addresses (the count varies with the stack); three are static:
+  `ac_client.exe+17E0A8`, `+18AC00`, `+195404`. The weapon object holds the player too, at `weapon+8`.
+- Pointer scan for the magazine address, max level 5, maximum offset 4095, max 3 offsets per node: 4196 paths in about 2 seconds
+  (603 with max level 4 in an earlier run); after one restart and Rescan memory: 392. The first three rows both times are the three static
+  addresses above with the single offset 140.
+- A plain address from run 1 (009A63F8) read 65537 in run 2 and 11358 in run 3.
+- `vault.exe` (episode 6 practice, 64-bit, `/Od`): the coins are written by `mov [rcx+14],eax` with RCX = the player; an 8-byte scan for
+  the player finds 3 addresses, one static: `vault.exe+23B80`.
