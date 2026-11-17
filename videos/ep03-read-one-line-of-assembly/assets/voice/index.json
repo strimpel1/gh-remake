@@ -1,0 +1,181 @@
+{
+ "voice": "en-US-AvaMultilingualNeural",
+ "rate": "-4%",
+ "lines": [
+  {
+   "id": "01",
+   "duration": 9.849,
+   "text": "Every time I fire, this number drops by one. Somewhere in the game's code, one instruction does that. Today we find that instruction, and we read it."
+  },
+  {
+   "id": "02",
+   "duration": 9.948,
+   "text": "Last time, I left you with this line. By the end of this episode, you will read lines like it straight out of a running game, and you will know where a function keeps its arguments."
+  },
+  {
+   "id": "03",
+   "duration": 6.253,
+   "text": "This is Game Hacking from Scratch. Episode three: read one line of assembly."
+  },
+  {
+   "id": "04",
+   "duration": 12.022,
+   "text": "A game on your disk is not C plus plus anymore. The compiler turned it into machine code: bytes that the processor runs. Assembly is those same bytes, written as text."
+  },
+  {
+   "id": "05",
+   "duration": 11.75,
+   "text": "Let's start with code we wrote ourselves: calls dot C P P. A player, with an I D, health and ammo. And a function, hit, that subtracts damage from the health."
+  },
+  {
+   "id": "06",
+   "duration": 13.627,
+   "text": "I compile it with Microsoft's compiler, as thirty-two bit code, like our game, and ask for a listing with slash F A. For that one line, health equals health minus damage, the compiler wrote five instructions."
+  },
+  {
+   "id": "07",
+   "duration": 14.911,
+   "text": "First, the names. E A X, E C X, E D X. These are registers: small, very fast variables inside the processor itself. In thirty-two bit code, each one holds four bytes."
+  },
+  {
+   "id": "08",
+   "duration": 11.656,
+   "text": "Every line has the same shape: the instruction, then the destination, then the source. M O V, said move, copies the source into the destination."
+  },
+  {
+   "id": "09",
+   "duration": 13.85,
+   "text": "Square brackets mean memory, like last episode. E A X holds the address of the player. Four is the offset of health. So the line says: go to player plus four, and read the health into E C X."
+  },
+  {
+   "id": "10",
+   "duration": 12.827,
+   "text": "Now read all five. Get the player's address. Read the health. Subtract the damage. Get the address again. And write the result back into health. Read, change, write."
+  },
+  {
+   "id": "11",
+   "duration": 13.043,
+   "text": "Now the real game. I point Cheat Engine at the address of my magazine, and ask: find out what writes to this address. I had already fired twelve rounds when this recording starts, so the count says twelve."
+  },
+  {
+   "id": "12",
+   "duration": 14.418,
+   "text": "I fire two rounds. The count goes to fourteen, the magazine is empty, and the game reloads. Two more: sixteen. Every shot went through one single instruction. The second line is the reload."
+  },
+  {
+   "id": "13",
+   "duration": 20.943,
+   "text": "Here it is. Address zero zero four C, seven three E F. Two bytes: F F, zero eight. As text: D E C, short for decrement, brackets, E A X. So: subtract one from the number stored at the address in E A X."
+  },
+  {
+   "id": "14",
+   "duration": 14.448,
+   "text": "Cheat Engine also saved the registers. E A X held zero zero nine six, eight two eight eight. That is exactly my magazine in this run: the player's address, plus one four zero."
+  },
+  {
+   "id": "15",
+   "duration": 17.1,
+   "text": "Open that address in the disassembler: Cheat Engine's Memory Viewer. Address, bytes, text. Now look one line above ours. Move E A X, brackets, E S I plus one four. That is where E A X came from."
+  },
+  {
+   "id": "16",
+   "duration": 13.203,
+   "text": "Sound familiar? Last episode's chain said: the weapon, plus one four, holds the address of the ammo. This is the game's own code walking that chain. E S I is the weapon."
+  },
+  {
+   "id": "17",
+   "duration": 16.465,
+   "text": "Same question for the health: what reads it? Two instructions, hundreds of times each. Look at the first. Move E C X, brackets, E B X plus E C. E B X is the player. E C is the offset of health."
+  },
+  {
+   "id": "18",
+   "duration": 18.004,
+   "text": "Next line. C M P, E C X, one nine: compare the health with hex nineteen, twenty-five. Then J N G: jump if not greater. C M P sets flags, the jump reads them. That is what an if looks like in assembly."
+  },
+  {
+   "id": "19",
+   "duration": 13.745,
+   "text": "Our own program has the same pair: compare health with zero, then J G, jump if greater, right over the call to puts. The jump is the opposite of the if: the compiler skips the block when the condition is false."
+  },
+  {
+   "id": "20",
+   "duration": 8.547,
+   "text": "And the line from last time? Same parts, other direction. It writes E A X into the field at E B X plus E C."
+  },
+  {
+   "id": "21",
+   "duration": 15.039,
+   "text": "Second half: functions. Code needs scratch space in memory: the stack. Push puts a value on top. Pop takes the top value off. And one register, E S P, always holds the address of the top."
+  },
+  {
+   "id": "22",
+   "duration": 14.749,
+   "text": "Watch it in the game. I put a breakpoint just before two pushes, and fire. The game freezes on that line, and Cheat Engine shows every register. E S P is zero zero one A, F D three C."
+  },
+  {
+   "id": "23",
+   "duration": 13.72,
+   "text": "I let it run to the call. Two pushes later, E S P is zero zero one A, F D three four. Eight less. The stack grows downward: each push subtracts four from E S P."
+  },
+  {
+   "id": "24",
+   "duration": 19.586,
+   "text": "Now the call itself. One instruction later, we are inside the function. E S P dropped by four more, and on top of the stack sits zero zero four C, seven three F E: the line right after the call. The return address. Call pushes it. Ret pops it, and jumps back."
+  },
+  {
+   "id": "25",
+   "duration": 9.651,
+   "text": "And those pushes before the call? They are the function's arguments. In thirty-two bit code, arguments go on the stack, right above the return address."
+  },
+  {
+   "id": "26",
+   "duration": 17.275,
+   "text": "Our own program shows it cleanly. Add three, of one, two, three: push three, push two, push one, call. Last argument first. Then add E S P, twelve: the caller throws them away. That is C decl."
+  },
+  {
+   "id": "27",
+   "duration": 12.711,
+   "text": "Inside add three, the arguments are read at E B P plus eight, plus twelve, and plus sixteen. And the result is left in E A X: that is how a function returns a value."
+  },
+  {
+   "id": "28",
+   "duration": 14.821,
+   "text": "Methods get one twist. For P dot hit of thirty, the thirty is pushed, but the object's address goes into E C X. And hit ends with ret four: the function removes its own argument. That is this call."
+  },
+  {
+   "id": "29",
+   "duration": 15.874,
+   "text": "Now the game again. Push, push, move E C X, E S I, call. Arguments on the stack, the object in E C X. This call, in the real game. E C X loaded right before a call usually means: an object."
+  },
+  {
+   "id": "30",
+   "duration": 16.481,
+   "text": "And the top of the function. It pushes E B X, E S I and E D I to save them, and pops them back before it returns. In between: move E S I, E C X. That is why E S I was the weapon all along."
+  },
+  {
+   "id": "31",
+   "duration": 15.823,
+   "text": "One last thing. Build the same program as sixty-four bit, and the rules change. Register names start with R, and hold eight bytes. And the first four arguments skip the stack: R C X, R D X, R eight, R nine."
+  },
+  {
+   "id": "32",
+   "duration": 15.754,
+   "text": "So, two worlds. Thirty-two bit, like AssaultCube: arguments on the stack, the object in E C X. Sixty-four bit Windows: arguments in registers, and the object is simply the first one. Always check which world you are in."
+  },
+  {
+   "id": "33",
+   "duration": 20.416,
+   "text": "Let's recap. One line: instruction, destination, source. Brackets mean memory, so register plus offset is a field of an object. Compare plus jump is an if. The stack holds return addresses, and thirty-two bit arguments. Today, we changed nothing. We only read."
+  },
+  {
+   "id": "34",
+   "duration": 18.18,
+   "text": "Your practice. Compile calls dot C P P from the description with slash F A, and open calls dot A S M. Find the instruction that writes the health. Then add an int field above health, and predict the new offset. The last line the program prints is your answer key."
+  },
+  {
+   "id": "35",
+   "duration": 10.554,
+   "text": "Next time, we leave the running game and open the files on disk: changing a file byte by byte in a hex editor, and what is really inside an E X E. See you there."
+  }
+ ]
+}

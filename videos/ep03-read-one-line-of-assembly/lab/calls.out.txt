@@ -1,0 +1,2 @@
+sum 6  health 70
+offset of health: 4   offset of ammo: 8

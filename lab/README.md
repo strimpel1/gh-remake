@@ -11,6 +11,11 @@ captured window by window. Everything here targets our own offline AssaultCube p
 | `ce/start_ce.py <table.CT>` | Opens a table in Cheat Engine without elevation and accepts its Lua prompt |
 | `ce/ce.py "<lua>"` | Runs Lua inside that Cheat Engine (the table polls `ce/cmd.lua`): move windows, set the memory viewer address |
 | `rec_shoot.py out.mp4 3` | Records game + Cheat Engine side by side while firing, for "the value changes in both" clips |
+| `ep05_cap.py run/take "<actions>"` | Drives Cheat Engine's own window with real mouse and keyboard (control positions come from Lua), optionally while recording a screen rectangle |
+| `ep05_con.py` | Starts the episode 5 practice program `scanme.exe` in a classic console window with a large font |
+| `ep05_peek.py` | Prints this run's player, health, magazine and reserve addresses, to confirm what a scan found |
+| `ep05_events.py <recording>` | Prints when named regions of a raw recording change, to place narration against real events |
+| `ce/ep05.CT` | An empty table with only the Lua command channel (no process attached) |
 | `../videos/tools/capture.py` | `list`, `shot`, `rec`, `place`, `area`: window screenshots and recordings |
 
 Install the game with `winget install RabidViperProductions.AssaultCube`. AssaultCube 1.3.0.2 offsets used so far
@@ -103,3 +108,34 @@ Verified in AssaultCube 1.3.0.2 (32-bit, image base 00400000, code addresses are
   followed by `cmp ecx,19` / `jng` and `cmp ecx,32` / `jg`; and by `ac_client.exe+61628` = `push [edi+000000EC]`.
   Each was hit 763 times in about 4 seconds (the game ran at about 180 fps). No write to the health was captured (needs damage; `/kill` was not tried to the end).
 - MSVC x86 listings are made with `vcvarsamd64_x86.bat` (see `videos/ep03-*/lab/build_both.bat`).
+
+## Verified in episode 5 (Cheat Engine 7.7, driven through its window)
+
+- Main form control names usable from Lua (`getMainForm().<name>`, `clientToScreen(0,0)` gives screen pixels that match
+  `capture.rect`): `sbOpenProcess`, `scanvalue`, `scanvalue2` (second box of Value between), `scantype`, `VarType`,
+  `btnNewScan` (labelled First Scan, then New Scan), `btnNextScan`, `foundcountlabel`, `Foundlist3`.
+- With the window at 888x932 the two first address-list rows are at window y 656 and 680; the Value column is at x 685,
+  the Active checkbox at x 21. Double click on a Value opens "Change Value", which appears in the middle of the screen,
+  outside Cheat Engine's window.
+- Scan type list on a first scan: Exact Value, Bigger than, Smaller than, Value between, Unknown initial value (index 4).
+  On a next scan: Exact, Bigger, Smaller, Between, Increased value (4), Increased value by, Decreased value (6),
+  Decreased value by, Changed value (8), Unchanged value (9), Ignore value. Value type list: Binary, Byte, 2 Bytes,
+  4 Bytes (3), 8 Bytes, Float (5), Double, String, Array of byte, All, Grouped. A combo box opened with a click takes
+  Home, Down and Enter.
+- Process list: the filter is typed into the list itself and it survives closing the dialog (clear it with Backspace).
+  The Processes tab shows `ac_client.exe`; the Applications tab shows window titles. Indexing an empty list from Lua
+  opens the Lua Engine error window.
+- AssaultCube, one run: Exact Value / 4 Bytes scan for magazine 20 found 2,253; Next Scan 14 left 2; Next Scan 10 left
+  the same 2: `player+140` (the real magazine) and one more address outside the player (182C606C in that run). Writing to
+  the second one does not change the game, and the game overwrites it on the next shot. Under a freeze of the real one
+  the second keeps counting down.
+- One click of `fire` with a 0.05 s press spends two rounds (automatic fire).
+- After a restart the old magazine address still showed the frozen value, because the freeze was still ticked when the
+  game was closed: untick it before closing. The magazine address changed between two runs (00819370, then 00846288).
+- `run_ac.sh` did not start a bot match in these sessions (the game came up in an empty TDM map), and typing `/mode` and
+  `/map` through `ackeys.py cmd` walked the menu into "multiplayer" instead: do not use it. No way to make the health
+  drop was found; episode 5 uses `scanme.exe` for the value without a number.
+- `scanme.exe` (64-bit, `videos/ep05-your-first-memory-scan/lab`): gold 250 as 4 Bytes gives 2 addresses after one
+  change (the value and its display copy; the copy snaps back within 0.1 s); health as Float, Unknown initial value
+  59,392, Decreased 7, Unchanged 7, Increased 1 (value 92.5); energy 87 as 4 Bytes gives 0 after one change, Float with
+  Value between finds it (84.04, then 80.74).

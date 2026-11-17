@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="52">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"ammo: plain address from run 1"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>009A63F8</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>"Player"</Description>
+      <Options moAllowManualCollapseAndExpand="1"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>4</ID>
+          <Description>"ammo"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>"ac_client.exe"+17E0A8</Address>
+          <Offsets>
+            <Offset>140</Offset>
+          </Offsets>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Set Value</Action>
+              <Keys>
+                <Key>97</Key>
+              </Keys>
+              <Value>20</Value>
+              <ID>0</ID>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>5</ID>
+          <Description>"health"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>"ac_client.exe"+17E0A8</Address>
+          <Offsets>
+            <Offset>EC</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>6</ID>
+          <Description>"reserve ammo"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>"ac_client.exe"+17E0A8</Address>
+          <Offsets>
+            <Offset>11C</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>2</ID>
+          <Description>"ammo (through the weapon)"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>"ac_client.exe"+17E0A8</Address>
+          <Offsets>
+            <Offset>0</Offset>
+            <Offset>14</Offset>
+            <Offset>364</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+  <LuaScript>-- Episode 6: an empty table with the command channel (lab/ce/ce.py, lab/ep06_cap.py).
+local path = [[D:\AI\gh-remake\lab\ce\cmd.lua]]
+local t = createTimer(nil, false)
+t.Interval = 100
+t.OnTimer = function()
+  local f = io.open(path, "r")
+  if f then
+    local s = f:read("*a"); f:close(); os.remove(path)
+    local fn, err = load(s); local ok, res
+    if fn then ok, res = pcall(fn) else res = err end
+    local o = io.open(path .. ".out", "w"); o:write(tostring(ok) .. " " .. tostring(res)); o:close()
+  end
+end
+t.Enabled = true
+</LuaScript>
+</CheatTable>

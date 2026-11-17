@@ -1,0 +1,72 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background-color: #E4F2EC;
+      background-image:
+        linear-gradient(#9CCFC0 3px, transparent 3px), linear-gradient(90deg, #9CCFC0 3px, transparent 3px),
+        linear-gradient(#C4E3D9 1px, transparent 1px), linear-gradient(90deg, #C4E3D9 1px, transparent 1px);
+      background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px; }
+
+    .s23-stage { position: absolute; inset: 0; }
+    .s23-h { position: absolute; font-family: 'Archivo Black', sans-serif; font-size: 96px; line-height: 1.05; letter-spacing: -0.01em; color: #0B2A30; }
+    .s23-m { position: absolute; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 54px; line-height: 1.15; color: #2E6B63; }
+    .s23-acc { color: #E8490F; }
+    .s23-dim { color: #6A9188; }
+    .s23-cell { position: absolute; background: #fff; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; color: #0B2A30; }
+    .s23-cell.on { background: #FF5A1F; color: #fff; }
+    .s23-tile { position: absolute; background: #FF5A1F; color: #fff; border: 12px solid #0B2A30; box-shadow: 16px 16px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s23-card { position: absolute; background: #fff; color: #0B2A30; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s23-card.on { background: #FF5A1F; color: #fff; }
+    .s23-card.soft { background: #CFE9DF; }
+    .s23-bar { position: absolute; background: #0B2A30; }
+    .s23-shot { position: absolute; overflow: hidden; background: #fff; border: 8px solid #0B2A30; box-shadow: 12px 12px 0 #0B2A30; }
+    .s23-shot img, .s23-shot video { position: absolute; display: block; max-width: none; }
+    .s23-mark { position: absolute; border: 8px solid #FF5A1F; border-radius: 12px; box-shadow: 0 0 0 6px rgba(255, 90, 31, 0.28); }
+    .s23-tag { position: absolute; background: #FF5A1F; color: #fff; border: 6px solid #0B2A30; box-shadow: 8px 8px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; padding: 6px 22px; white-space: nowrap; }
+    .s23-term { position: absolute; background: #0B2A30; border: 8px solid #0B2A30; box-shadow: 12px 12px 0 #2E6B63; padding: 26px 34px;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 500; color: #E4F2EC; white-space: pre; }
+    .s23-term .hi { color: #FF9A6B; font-weight: 700; }
+    .s23-term .dimc { color: #7FB5A8; }
+    .s23-media { position: absolute; inset: 0; }
+  </style>
+  <div id="root" data-composition-id="brkb" data-width="1920" data-height="1080">
+    <div id="s23-stage" class="clip s23-stage" data-start="0" data-duration="14.8">
+      <div id="s23-t" class="s23-h" style="left: 120px; top: 80px; font-size: 76px">two pushes later</div>
+      <div id="s23-mv" class="s23-shot" style="left: 120px; top: 230px; width: 1150px; height: 555px"><img src="assets/shots/brk_b.png" style="left: 0.0px; top: -196.2px; width: 1474.2px; height: 1673.4px"></div>
+      <div id="s23-rg" class="s23-shot" style="left: 1310px; top: 230px; width: 490px; height: 474px"><img src="assets/shots/brk_b.png" style="left: -1676.9px; top: -134.2px; width: 2150.9px; height: 2441.5px"></div>
+      <div id="s23-m1" class="s23-mark" style="left: 128px; top: 572px; width: 1103px; height: 73px"></div>
+      <div id="s23-m2" class="s23-mark" style="left: 1324px; top: 597px; width: 341px; height: 48px"></div>
+      <div id="s23-a" class="s23-card soft" style="left: 120px; top: 880px; width: 420px; height: 130px; line-height: 114px; font-size: 60px">001AFD3C</div>
+      <div id="s23-mi" class="s23-h" style="left: 570px; top: 895px; font-size: 80px">- 8 =</div>
+      <div id="s23-b" class="s23-tile" style="left: 800px; top: 870px; width: 480px; height: 150px; line-height: 126px; font-size: 72px">001AFD34</div>
+      <div id="s23-d" class="s23-h" style="left: 1330px; top: 860px; font-size: 56px">push = <span class="s23-acc">esp - 4</span>,<br>then store</div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const blurIn = (sel, t, d = 0.2) =>
+      tl.fromTo(sel, { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "power2.out" }, t);
+    const blurOut = (sel, t, d = 0.2) => tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d, ease: "power2.in" }, t);
+    const land = (sel, t, from = 1.3, d = 0.35) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
+    const each = (sel, t, gap = 0.12, from = 1.3) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out", stagger: gap }, t);
+    const wipe = (sel, t, d = 0.3) =>
+      tl.fromTo(sel, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: d, ease: "power2.out" }, t);
+    const dim = (sel, t, to = 0.3) => tl.to(sel, { opacity: to, duration: 0.3, ease: "power2.inOut" }, t);
+    blurIn("#s23-stage", 0, 0.25);
+
+    wipe("#s23-t", 0.3, 0.6);
+    land("#s23-mv", 0.2, 1.03, 0.5); land("#s23-rg", 0.3, 1.03, 0.5);
+    land("#s23-m1", 2.02, 1.05);
+    land("#s23-m2", 4.3, 1.3); land("#s23-a", 4.5); land("#s23-b", 6.74);
+    blurIn("#s23-mi", 8.32);
+    wipe("#s23-d", 11.2, 0.7);
+
+    blurOut("#s23-stage", 14.5, 0.25);
+    window.__timelines["brkb"] = tl;
+  </script>
+</template>

@@ -1,0 +1,74 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background-color: #E4F2EC;
+      background-image:
+        linear-gradient(#9CCFC0 3px, transparent 3px), linear-gradient(90deg, #9CCFC0 3px, transparent 3px),
+        linear-gradient(#C4E3D9 1px, transparent 1px), linear-gradient(90deg, #C4E3D9 1px, transparent 1px);
+      background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px; }
+
+    .s14-stage { position: absolute; inset: 0; }
+    .s14-h { position: absolute; font-family: 'Archivo Black', sans-serif; font-size: 96px; line-height: 1.05; letter-spacing: -0.01em; color: #0B2A30; }
+    .s14-m { position: absolute; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 54px; line-height: 1.15; color: #2E6B63; }
+    .s14-acc { color: #E8490F; }
+    .s14-dim { color: #6A9188; }
+    .s14-cell { position: absolute; background: #fff; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; color: #0B2A30; }
+    .s14-cell.on { background: #FF5A1F; color: #fff; }
+    .s14-tile { position: absolute; background: #FF5A1F; color: #fff; border: 12px solid #0B2A30; box-shadow: 16px 16px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s14-card { position: absolute; background: #fff; color: #0B2A30; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s14-card.on { background: #FF5A1F; color: #fff; }
+    .s14-card.soft { background: #CFE9DF; }
+    .s14-bar { position: absolute; background: #0B2A30; }
+    .s14-shot { position: absolute; overflow: hidden; background: #fff; border: 8px solid #0B2A30; box-shadow: 12px 12px 0 #0B2A30; }
+    .s14-shot img, .s14-shot video { position: absolute; display: block; max-width: none; }
+    .s14-mark { position: absolute; border: 8px solid #FF5A1F; border-radius: 12px; box-shadow: 0 0 0 6px rgba(255, 90, 31, 0.28); }
+    .s14-tag { position: absolute; background: #FF5A1F; color: #fff; border: 6px solid #0B2A30; box-shadow: 8px 8px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; padding: 6px 22px; white-space: nowrap; }
+    .s14-term { position: absolute; background: #0B2A30; border: 8px solid #0B2A30; box-shadow: 12px 12px 0 #2E6B63; padding: 26px 34px;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 500; color: #E4F2EC; white-space: pre; }
+    .s14-term .hi { color: #FF9A6B; font-weight: 700; }
+    .s14-term .dimc { color: #7FB5A8; }
+    .s14-media { position: absolute; inset: 0; }
+  </style>
+  <div id="root" data-composition-id="regval" data-width="1920" data-height="1080">
+    <div id="s14-stage" class="clip s14-stage" data-start="0" data-duration="15.5">
+      <div id="s14-t" class="s14-h" style="left: 120px; top: 70px; font-size: 80px">what was in eax?</div>
+      <div id="s14-f" class="s14-shot" style="left: 120px; top: 210px; width: 760px; height: 737px"><img src="assets/shots/found_16.png" style="left: 0.0px; top: -491.5px; width: 1627.8px; height: 1555.6px"></div>
+      <div id="s14-m1" class="s14-mark" style="left: 138px; top: 539px; width: 261px; height: 53px"></div>
+      <div id="s14-m2" class="s14-mark" style="left: 138px; top: 764px; width: 261px; height: 53px"></div>
+      <div id="s14-al" class="s14-m" style="left: 960px; top: 230px; font-size: 56px">eax</div>
+      <div id="s14-a" class="s14-tile" style="left: 960px; top: 310px; width: 760px; height: 170px; line-height: 146px; font-size: 110px">00968288</div>
+      <div id="s14-eq" class="s14-h" style="left: 960px; top: 520px; font-size: 90px">=</div>
+      <div id="s14-b" class="s14-card " style="left: 1050px; top: 520px; width: 420px; height: 130px; line-height: 114px; font-size: 60px">00968148</div>
+      <div id="s14-p" class="s14-h" style="left: 1490px; top: 545px; font-size: 70px">+ 140</div>
+      <div id="s14-bl" class="s14-m" style="left: 1050px; top: 670px; font-size: 44px">the player (edi)</div>
+      <div id="s14-d" class="s14-h" style="left: 960px; top: 800px; font-size: 64px">player + 140<br>= <span class="s14-acc">the magazine</span></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const blurIn = (sel, t, d = 0.2) =>
+      tl.fromTo(sel, { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "power2.out" }, t);
+    const blurOut = (sel, t, d = 0.2) => tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d, ease: "power2.in" }, t);
+    const land = (sel, t, from = 1.3, d = 0.35) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
+    const each = (sel, t, gap = 0.12, from = 1.3) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out", stagger: gap }, t);
+    const wipe = (sel, t, d = 0.3) =>
+      tl.fromTo(sel, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: d, ease: "power2.out" }, t);
+    const dim = (sel, t, to = 0.3) => tl.to(sel, { opacity: to, duration: 0.3, ease: "power2.inOut" }, t);
+    blurIn("#s14-stage", 0, 0.25);
+
+    wipe("#s14-t", 0.3, 0.5);
+    land("#s14-f", 0.2, 1.03, 0.5);
+    land("#s14-m1", 3.87, 1.2); blurIn("#s14-al", 4.07); land("#s14-a", 4.47);
+    land("#s14-m2", 11.75, 1.2); blurIn("#s14-eq", 11.55); land("#s14-b", 11.95); blurIn("#s14-bl", 12.15);
+    blurIn("#s14-p", 13.02);
+    wipe("#s14-d", 13.62, 0.7);
+
+    blurOut("#s14-stage", 15.2, 0.25);
+    window.__timelines["regval"] = tl;
+  </script>
+</template>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+<CheatEntries>
+</CheatEntries>
+<LuaScript>-- Episode 5: an empty table. Only the command channel (lab/ce/ce.py); the process is attached by hand in the episode.
+local path = [[D:\AI\gh-remake\lab\ce\cmd.lua]]
+local t = createTimer(nil, false)
+t.Interval = 100
+t.OnTimer = function()
+  local f = io.open(path, "r")
+  if f then
+    local s = f:read("*a"); f:close(); os.remove(path)
+    local fn, err = load(s); local ok, res
+    if fn then ok, res = pcall(fn) else res = err end
+    local o = io.open(path .. ".out", "w"); o:write(tostring(ok) .. " " .. tostring(res)); o:close()
+  end
+end
+t.Enabled = true</LuaScript>
+</CheatTable>
