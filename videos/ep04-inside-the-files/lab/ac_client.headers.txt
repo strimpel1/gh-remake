@@ -1,0 +1,155 @@
+Microsoft (R) COFF/PE Dumper Version 14.51.36260.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+Dump of file C:\Program Files (x86)\AssaultCube 1.3.0.2\bin_win32\ac_client.exe
+
+PE signature found
+
+File Type: EXECUTABLE IMAGE
+
+FILE HEADER VALUES
+             14C machine (x86)
+               5 number of sections
+        623DA677 time date stamp Fri Mar 25 14:24:39 2022
+               0 file pointer to symbol table
+               0 number of symbols
+              E0 size of optional header
+             103 characteristics
+                   Relocations stripped
+                   Executable
+                   32 bit word machine
+
+OPTIONAL HEADER VALUES
+             10B magic # (PE32)
+           14.31 linker version
+          123800 size of code
+           92400 size of initialized data
+               0 size of uninitialized data
+           2E5F3 entry point (0042E5F3)
+            1000 base of code
+          125000 base of data
+          400000 image base (00400000 to 005B8FFF)
+            1000 section alignment
+             200 file alignment
+            6.00 operating system version
+            0.00 image version
+            6.00 subsystem version
+               0 Win32 version
+          1B9000 size of image
+             400 size of headers
+               0 checksum
+               2 subsystem (Windows GUI)
+            8100 DLL characteristics
+                   NX compatible
+                   Terminal Server Aware
+          100000 size of stack reserve
+            1000 size of stack commit
+          100000 size of heap reserve
+            1000 size of heap commit
+               0 loader flags
+              10 number of directories
+               0 [       0] RVA [size] of Export Directory
+          16852C [     118] RVA [size] of Import Directory
+          1A8000 [   10EA8] RVA [size] of Resource Directory
+               0 [       0] RVA [size] of Exception Directory
+               0 [       0] RVA [size] of Certificates Directory
+               0 [       0] RVA [size] of Base Relocation Directory
+          165930 [      70] RVA [size] of Debug Directory
+               0 [       0] RVA [size] of Architecture Directory
+               0 [       0] RVA [size] of Global Pointer Directory
+          1659C0 [      18] RVA [size] of Thread Storage Directory
+          165870 [      40] RVA [size] of Load Configuration Directory
+               0 [       0] RVA [size] of Bound Import Directory
+          125000 [     584] RVA [size] of Import Address Table Directory
+               0 [       0] RVA [size] of Delay Import Directory
+               0 [       0] RVA [size] of COM Descriptor Directory
+               0 [       0] RVA [size] of Reserved Directory
+
+
+SECTION HEADER #1
+   .text name
+  1237AE virtual size
+    1000 virtual address (00401000 to 005247AD)
+  123800 size of raw data
+     400 file pointer to raw data (00000400 to 00123BFF)
+       0 file pointer to relocation table
+       0 file pointer to line numbers
+       0 number of relocations
+       0 number of line numbers
+60000020 flags
+         Code
+         Execute Read
+
+SECTION HEADER #2
+  .rdata name
+   451FC virtual size
+  125000 virtual address (00525000 to 0056A1FB)
+   45200 size of raw data
+  123C00 file pointer to raw data (00123C00 to 00168DFF)
+       0 file pointer to relocation table
+       0 file pointer to line numbers
+       0 number of relocations
+       0 number of line numbers
+40000040 flags
+         Initialized Data
+         Read Only
+
+  Debug Directories
+
+        Time Type        Size      RVA  Pointer
+    -------- ------- -------- -------- --------
+    623DA677 cv            67 00167780   166380    Format: RSDS, {9CDB2D63-B521-40F6-BC46-1F1B6216A4F2}, 1, C:\Users\Flori\source\repos\AC\github-master\source\vcpp\Release\ac_client.pdb
+    623DA677 feat          14 001677E8   1663E8    Counts: Pre-VC++ 11.00=1, C/C++=340, /GS=287, /sdl=0, guardN=287
+    623DA677 coffgrp      3B8 001677FC   1663FC    4C544347 (LTCG)
+    623DA677 iltcg          0 00000000        0
+
+SECTION HEADER #3
+   .data name
+   399CC virtual size
+  16B000 virtual address (0056B000 to 005A49CB)
+   12000 size of raw data
+  168E00 file pointer to raw data (00168E00 to 0017ADFF)
+       0 file pointer to relocation table
+       0 file pointer to line numbers
+       0 number of relocations
+       0 number of line numbers
+C0000040 flags
+         Initialized Data
+         Read Write
+
+SECTION HEADER #4
+  _RDATA name
+    2608 virtual size
+  1A5000 virtual address (005A5000 to 005A7607)
+    2800 size of raw data
+  17AE00 file pointer to raw data (0017AE00 to 0017D5FF)
+       0 file pointer to relocation table
+       0 file pointer to line numbers
+       0 number of relocations
+       0 number of line numbers
+40000040 flags
+         Initialized Data
+         Read Only
+
+SECTION HEADER #5
+   .rsrc name
+   10EA8 virtual size
+  1A8000 virtual address (005A8000 to 005B8EA7)
+   11000 size of raw data
+  17D600 file pointer to raw data (0017D600 to 0018E5FF)
+       0 file pointer to relocation table
+       0 file pointer to line numbers
+       0 number of relocations
+       0 number of line numbers
+40000040 flags
+         Initialized Data
+         Read Only
+
+  Summary
+
+       3A000 .data
+       46000 .rdata
+       11000 .rsrc
+      124000 .text
+        3000 _RDATA

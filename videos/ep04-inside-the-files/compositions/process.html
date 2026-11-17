@@ -1,0 +1,78 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background-color: #E4F2EC;
+      background-image:
+        linear-gradient(#9CCFC0 3px, transparent 3px), linear-gradient(90deg, #9CCFC0 3px, transparent 3px),
+        linear-gradient(#C4E3D9 1px, transparent 1px), linear-gradient(90deg, #C4E3D9 1px, transparent 1px);
+      background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px; }
+
+    .s27-stage { position: absolute; inset: 0; }
+    .s27-h { position: absolute; font-family: 'Archivo Black', sans-serif; font-size: 96px; line-height: 1.05; letter-spacing: -0.01em; color: #0B2A30; }
+    .s27-m { position: absolute; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 54px; line-height: 1.15; color: #2E6B63; }
+    .s27-acc { color: #E8490F; }
+    .s27-dim { color: #6A9188; }
+    .s27-cell { position: absolute; background: #fff; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; color: #0B2A30; }
+    .s27-cell.on { background: #FF5A1F; color: #fff; }
+    .s27-tile { position: absolute; background: #FF5A1F; color: #fff; border: 12px solid #0B2A30; box-shadow: 16px 16px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s27-card { position: absolute; background: #fff; color: #0B2A30; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s27-card.on { background: #FF5A1F; color: #fff; }
+    .s27-card.soft { background: #CFE9DF; }
+    .s27-bar { position: absolute; background: #0B2A30; }
+    .s27-shot { position: absolute; overflow: hidden; background: #fff; border: 8px solid #0B2A30; box-shadow: 12px 12px 0 #0B2A30; }
+    .s27-shot img, .s27-shot video { position: absolute; display: block; max-width: none; }
+    .s27-mark { position: absolute; border: 8px solid #FF5A1F; border-radius: 12px; box-shadow: 0 0 0 6px rgba(255, 90, 31, 0.28); }
+    .s27-tag { position: absolute; background: #FF5A1F; color: #fff; border: 6px solid #0B2A30; box-shadow: 8px 8px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; padding: 6px 22px; white-space: nowrap; }
+    .s27-term { position: absolute; background: #0B2A30; border: 8px solid #0B2A30; box-shadow: 12px 12px 0 #2E6B63; padding: 26px 34px;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 500; color: #E4F2EC; white-space: pre; }
+    .s27-term .hi { color: #FF9A6B; font-weight: 700; }
+    .s27-term .dimc { color: #7FB5A8; }
+    .s27-media { position: absolute; inset: 0; }
+  </style>
+  <div id="root" data-composition-id="process" data-width="1920" data-height="1080">
+    <div id="s27-stage" class="clip s27-stage" data-start="0" data-duration="18.5">
+      <div id="s27-t" class="s27-h" style="left: 190px; top: 90px; font-size: 90px">from file to process</div>
+      <div id="s27-f" class="s27-card soft" style="left: 190px; top: 300px; width: 420px; height: 420px; line-height: 404px; font-size: 40px"></div>
+      <div id="s27-fl" class="s27-m" style="left: 190px; top: 740px; font-size: 44px">game.exe on disk</div>
+      <div id="s27-f1" class="s27-card " style="left: 230px; top: 340px; width: 340px; height: 100px; line-height: 84px; font-size: 44px">.text</div>
+      <div id="s27-f2" class="s27-card " style="left: 230px; top: 460px; width: 340px; height: 100px; line-height: 84px; font-size: 44px">.rdata</div>
+      <div id="s27-f3" class="s27-card " style="left: 230px; top: 580px; width: 340px; height: 100px; line-height: 84px; font-size: 44px">.data</div>
+      <div id="s27-b" class="s27-bar" style="left: 610px; top: 505px; width: 190px; height: 14px"></div>
+      <div id="s27-p" class="s27-card soft" style="left: 800px; top: 260px; width: 930px; height: 500px; line-height: 484px; font-size: 40px"></div>
+      <div id="s27-pl" class="s27-m" style="left: 800px; top: 780px; font-size: 44px">the process: a private address space</div>
+      <div id="s27-p1" class="s27-card " style="left: 850px; top: 310px; width: 380px; height: 100px; line-height: 84px; font-size: 44px">.text</div>
+      <div id="s27-p2" class="s27-card " style="left: 850px; top: 430px; width: 380px; height: 100px; line-height: 84px; font-size: 44px">.rdata</div>
+      <div id="s27-p3" class="s27-card " style="left: 850px; top: 550px; width: 380px; height: 100px; line-height: 84px; font-size: 44px">.data</div>
+      <div id="s27-th" class="s27-tile" style="left: 1300px; top: 300px; width: 370px; height: 130px; line-height: 106px; font-size: 54px">thread</div>
+      <div id="s27-tl" class="s27-m" style="left: 1300px; top: 460px; font-size: 40px">starts at the<br>entry point</div>
+      <div id="s27-c" class="s27-m" style="left: 190px; top: 900px; font-size: 56px">process = container &nbsp; <span class="s27-acc">thread = what runs</span></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const blurIn = (sel, t, d = 0.2) =>
+      tl.fromTo(sel, { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "power2.out" }, t);
+    const blurOut = (sel, t, d = 0.2) => tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d, ease: "power2.in" }, t);
+    const land = (sel, t, from = 1.3, d = 0.35) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
+    const each = (sel, t, gap = 0.12, from = 1.3) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out", stagger: gap }, t);
+    const wipe = (sel, t, d = 0.3) =>
+      tl.fromTo(sel, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: d, ease: "power2.out" }, t);
+    const dim = (sel, t, to = 0.3) => tl.to(sel, { opacity: to, duration: 0.3, ease: "power2.inOut" }, t);
+    blurIn("#s27-stage", 0, 0.25);
+
+    wipe("#s27-t", 0.3, 0.6);
+    land("#s27-f", 0.8, 1.03); blurIn("#s27-fl", 0.9); each(["#s27-f1", "#s27-f2", "#s27-f3"], 1.0, 0.1, 1.1);
+    wipe("#s27-b", 3.91, 0.4); land("#s27-p", 4.57, 1.03); blurIn("#s27-pl", 5.69);
+    each(["#s27-p1", "#s27-p2", "#s27-p3"], 7.8, 0.15, 1.1);
+    land("#s27-th", 11.22); blurIn("#s27-tl", 11.94);
+    blurIn("#s27-c", 13.9);
+
+    blurOut("#s27-stage", 18.2, 0.25);
+    window.__timelines["process"] = tl;
+  </script>
+</template>

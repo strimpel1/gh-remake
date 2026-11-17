@@ -1,0 +1,9 @@
+process id        47652
+thread id         36512
+loaded at         7FF7F5070000
+first bytes there 4D 5A  "MZ"
+modules in this process:
+  7FF7F5070000  loaded.exe
+  7FFD94360000  ntdll.dll
+  7FFD93AF0000  KERNEL32.DLL
+  7FFD919B0000  KERNELBASE.dll

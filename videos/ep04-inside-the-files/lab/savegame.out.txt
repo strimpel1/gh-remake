@@ -1,0 +1,24 @@
+> savegame new
+wrote save.dat (28 bytes)
+health  100
+gold    1000
+name    Hero
+
+> copy save.dat save.bak
+        1 file(s) copied.
+
+(save.dat opened in ImHex 1.38.1; the bytes at offset 08 typed over: E8 03 -> 0F 27; saved)
+
+> savegame
+loaded save.dat (28 bytes)
+health  100
+gold    9999
+name    Hero
+
+(in a copy: one 00 byte inserted at offset 08, so the file is 29 bytes and everything after it slides)
+
+> savegame
+loaded save.dat (28 bytes)
+health  100
+gold    256000
+name

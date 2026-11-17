@@ -1,0 +1,71 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background-color: #E4F2EC;
+      background-image:
+        linear-gradient(#9CCFC0 3px, transparent 3px), linear-gradient(90deg, #9CCFC0 3px, transparent 3px),
+        linear-gradient(#C4E3D9 1px, transparent 1px), linear-gradient(90deg, #C4E3D9 1px, transparent 1px);
+      background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px; }
+
+    .s30-stage { position: absolute; inset: 0; }
+    .s30-h { position: absolute; font-family: 'Archivo Black', sans-serif; font-size: 96px; line-height: 1.05; letter-spacing: -0.01em; color: #0B2A30; }
+    .s30-m { position: absolute; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 54px; line-height: 1.15; color: #2E6B63; }
+    .s30-acc { color: #E8490F; }
+    .s30-dim { color: #6A9188; }
+    .s30-cell { position: absolute; background: #fff; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; color: #0B2A30; }
+    .s30-cell.on { background: #FF5A1F; color: #fff; }
+    .s30-tile { position: absolute; background: #FF5A1F; color: #fff; border: 12px solid #0B2A30; box-shadow: 16px 16px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s30-card { position: absolute; background: #fff; color: #0B2A30; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s30-card.on { background: #FF5A1F; color: #fff; }
+    .s30-card.soft { background: #CFE9DF; }
+    .s30-bar { position: absolute; background: #0B2A30; }
+    .s30-shot { position: absolute; overflow: hidden; background: #fff; border: 8px solid #0B2A30; box-shadow: 12px 12px 0 #0B2A30; }
+    .s30-shot img, .s30-shot video { position: absolute; display: block; max-width: none; }
+    .s30-mark { position: absolute; border: 8px solid #FF5A1F; border-radius: 12px; box-shadow: 0 0 0 6px rgba(255, 90, 31, 0.28); }
+    .s30-tag { position: absolute; background: #FF5A1F; color: #fff; border: 6px solid #0B2A30; box-shadow: 8px 8px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; padding: 6px 22px; white-space: nowrap; }
+    .s30-term { position: absolute; background: #0B2A30; border: 8px solid #0B2A30; box-shadow: 12px 12px 0 #2E6B63; padding: 26px 34px;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 500; color: #E4F2EC; white-space: pre; }
+    .s30-term .hi { color: #FF9A6B; font-weight: 700; }
+    .s30-term .dimc { color: #7FB5A8; }
+    .s30-media { position: absolute; inset: 0; }
+  </style>
+  <div id="root" data-composition-id="imports" data-width="1920" data-height="1080">
+    <div id="s30-stage" class="clip s30-stage" data-start="0" data-duration="19.3">
+      <div id="s30-t" class="s30-h" style="left: 120px; top: 60px; font-size: 80px">the import table</div>
+      <div id="s30-o" class="s30-term" style="left: 120px; top: 190px; width: 1050px; font-size: 44px"><div id="s30-o-l0" style="height: 68px; line-height: 68px">&gt; dumpbin /imports savegame.exe</div><div id="s30-o-l1" style="height: 68px; line-height: 68px">    <span class="hi">KERNEL32.dll</span></div><div id="s30-o-l2" style="height: 68px; line-height: 68px">         E9 <span class="hi">CreateFileW</span></div><div id="s30-o-l3" style="height: 68px; line-height: 68px">        663 <span class="hi">WriteFile</span></div><div id="s30-o-l4" style="height: 68px; line-height: 68px">        4AC <span class="hi">ReadFile</span></div><div id="s30-o-l5" style="height: 68px; line-height: 68px">         A0 CloseHandle</div><div id="s30-o-l6" style="height: 68px; line-height: 68px"><span class="dimc">        ... 75 functions in all</span></div></div>
+      <div id="s30-a" class="s30-card soft" style="left: 1260px; top: 250px; width: 520px; height: 110px; line-height: 94px; font-size: 50px">fopen</div>
+      <div id="s30-b" class="s30-card soft" style="left: 1260px; top: 400px; width: 520px; height: 110px; line-height: 94px; font-size: 50px">fwrite</div>
+      <div id="s30-c" class="s30-card soft" style="left: 1260px; top: 550px; width: 520px; height: 110px; line-height: 94px; font-size: 50px">fread</div>
+      <div id="s30-al" class="s30-m" style="left: 1260px; top: 690px; font-size: 40px">what my code called</div>
+      <div id="s30-d" class="s30-m" style="left: 120px; top: 850px; font-size: 52px">import table = the functions this file needs<br>from other files</div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const blurIn = (sel, t, d = 0.2) =>
+      tl.fromTo(sel, { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "power2.out" }, t);
+    const blurOut = (sel, t, d = 0.2) => tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d, ease: "power2.in" }, t);
+    const land = (sel, t, from = 1.3, d = 0.35) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
+    const each = (sel, t, gap = 0.12, from = 1.3) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out", stagger: gap }, t);
+    const wipe = (sel, t, d = 0.3) =>
+      tl.fromTo(sel, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: d, ease: "power2.out" }, t);
+    const dim = (sel, t, to = 0.3) => tl.to(sel, { opacity: to, duration: 0.3, ease: "power2.inOut" }, t);
+    blurIn("#s30-stage", 0, 0.25);
+
+    wipe("#s30-t", 1.03, 0.6);
+    land("#s30-o", 0.3, 1.03, 0.5);
+    blurIn("#s30-d", 2.52);
+    land("#s30-a", 9.32); land("#s30-b", 10.45); land("#s30-c", 11.51); blurIn("#s30-al", 11.71);
+    tl.fromTo("#s30-o-l2", { scale: 1 }, { scale: 1.05, transformOrigin: "left center", duration: 0.25, yoyo: true, repeat: 1 }, 13.9);
+    tl.fromTo("#s30-o-l3", { scale: 1 }, { scale: 1.05, transformOrigin: "left center", duration: 0.25, yoyo: true, repeat: 1 }, 15.02);
+    tl.fromTo("#s30-o-l4", { scale: 1 }, { scale: 1.05, transformOrigin: "left center", duration: 0.25, yoyo: true, repeat: 1 }, 16.08);
+
+    blurOut("#s30-stage", 19.0, 0.25);
+    window.__timelines["imports"] = tl;
+  </script>
+</template>

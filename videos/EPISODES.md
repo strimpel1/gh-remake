@@ -87,6 +87,7 @@ example. If a lesson's source text goes beyond that, leave that part out.
 - A code card that shortens the real file says so.
 - **An element added in a fix gets an id nothing else in the scene uses** (helpers like `chain()` already take ids such as
   `@p-c2`). The kit now stops the build on duplicate ids. After any fix, look at frames of the scene you touched.
+- **Keep text out of the bottom 80 px** (nothing below y = 1000): YouTube's progress bar covers that strip.
 - Hex and addresses are spelled for the voice the way episodes 1 and 2 do it ("zero zero eight nine, seven eight six C").
 
 ## Before you call it done

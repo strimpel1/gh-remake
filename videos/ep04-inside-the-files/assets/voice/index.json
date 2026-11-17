@@ -1,0 +1,186 @@
+{
+ "voice": "en-US-AvaMultilingualNeural",
+ "rate": "-4%",
+ "lines": [
+  {
+   "id": "01",
+   "duration": 8.055,
+   "text": "This is the save file of a tiny game. Twenty-eight bytes. And these four bytes are my gold: one thousand."
+  },
+  {
+   "id": "02",
+   "duration": 8.126,
+   "text": "I type over two of them, load the save, and now I have nine thousand, nine hundred ninety-nine. The game was not even running."
+  },
+  {
+   "id": "03",
+   "duration": 9.74,
+   "text": "A file on disk is just bytes: the same bytes we have been reading in memory. Today we open two files: a save file, and an executable."
+  },
+  {
+   "id": "04",
+   "duration": 5.086,
+   "text": "This is Game Hacking from Scratch. Episode four: inside the files."
+  },
+  {
+   "id": "05",
+   "duration": 13.253,
+   "text": "Here is our game: one small C plus plus program. Its whole state is one structure: four letters, the health, the gold, and a name of up to sixteen characters. Twenty-eight bytes."
+  },
+  {
+   "id": "06",
+   "duration": 10.289,
+   "text": "Run it with the word new, and it writes those twenty-eight bytes into a file called save dot dat. Health, one hundred. Gold, one thousand. Name, Hero."
+  },
+  {
+   "id": "07",
+   "duration": 6.212,
+   "text": "Now I open that file in a hex editor. This one is Im Hex: free, and open source."
+  },
+  {
+   "id": "08",
+   "duration": 18.512,
+   "text": "It looks just like the memory viewer from episode one. On the left, the offset: the distance from the start of the file. The second row starts at offset ten in hex: sixteen bytes in. In the middle, the bytes, sixteen in a row. And on the right, the same bytes as text."
+  },
+  {
+   "id": "09",
+   "duration": 20.103,
+   "text": "Now read it. Five three, four one, five six, four five: the letters of the word SAVE. Six four, and three zeros: one hundred, the health. E eight, zero three, and two zeros: one thousand, the gold, lowest byte first. And then the name: Hero."
+  },
+  {
+   "id": "10",
+   "duration": 14.036,
+   "text": "So the file is the structure, byte for byte. The letters at offset zero. Health at offset four. Gold at offset eight. The name at offset C. No labels in there. Only the values, in order."
+  },
+  {
+   "id": "11",
+   "duration": 14.22,
+   "text": "I want nine thousand, nine hundred ninety-nine gold. In hex, that is two seven zero F. Stored little endian, in four bytes: zero F, two seven, zero zero, zero zero."
+  },
+  {
+   "id": "12",
+   "duration": 14.186,
+   "text": "First I copy the file: always keep a backup. Then, in the editor, I click the byte at offset eight, and type over it. E eight becomes zero F. Zero three becomes two seven. And I save the file."
+  },
+  {
+   "id": "13",
+   "duration": 11.844,
+   "text": "Now run the game again, without the word new, so it loads the file. Gold: nine thousand, nine hundred ninety-nine. The program simply believes the bytes it finds."
+  },
+  {
+   "id": "14",
+   "duration": 18.121,
+   "text": "One rule: type over bytes, never insert them. The program expects the gold at offset eight. In a copy, I inserted a single zero byte in front of it. Everything slid one place. The gold became two hundred fifty-six thousand, and the name is gone."
+  },
+  {
+   "id": "15",
+   "duration": 15.538,
+   "text": "Real games add obstacles. Many store a checksum: a number calculated from the whole file. Change one byte, and the game calls the save corrupted. Others compress or encrypt their saves: you see no readable text, only noise."
+  },
+  {
+   "id": "16",
+   "duration": 21.8,
+   "text": "The program is a file too. Here is savegame dot E X E, in the hex editor. The first two bytes: four D, five A. The letters M Z. Every E X E and every D L L on Windows starts with them. And just below, a message: this program cannot be run in DOS mode."
+  },
+  {
+   "id": "17",
+   "duration": 13.101,
+   "text": "The format is called P E: portable executable. Think of it as a table of contents. It tells Windows which parts of the file to load, where each part goes in memory, and where to start running."
+  },
+  {
+   "id": "18",
+   "duration": 11.921,
+   "text": "At offset three C, the file says where its real header begins: F eight. Go to offset F eight, and there it is. Five zero, four five. The letters P E."
+  },
+  {
+   "id": "19",
+   "duration": 10.329,
+   "text": "Nobody reads those headers by hand. Dump bin, a tool that comes with Visual Studio, prints them. Here it is on our practice game. We only read that file."
+  },
+  {
+   "id": "20",
+   "duration": 13.712,
+   "text": "Machine: x eighty-six, so a thirty-two bit program. Five sections. An entry point: the address of the first instruction that will run. And the image base: four hundred thousand, in hex."
+  },
+  {
+   "id": "21",
+   "duration": 11.506,
+   "text": "You have seen that number. In episode two, Cheat Engine's memory map showed the game's module starting exactly there. The image base is the address the file asks to be loaded at."
+  },
+  {
+   "id": "22",
+   "duration": 16.431,
+   "text": "Next, the section table. Dot text is the code: execute and read. Dot R data holds constants: read only. Dot data holds the global variables: read and write. Each has a virtual address: where it goes in memory."
+  },
+  {
+   "id": "23",
+   "duration": 17.01,
+   "text": "Now compare that with the memory map. Four zero one thousand: execute and read. Five two five thousand: read. Five six B thousand: read and write. The map from episode two is this table, loaded into memory."
+  },
+  {
+   "id": "24",
+   "duration": 10.856,
+   "text": "And remember the pointer to our player, at game plus one seven E zero A eight? That offset falls inside dot data. It is a global variable, exactly as we said."
+  },
+  {
+   "id": "25",
+   "duration": 12.213,
+   "text": "One trap. In the file, dot text begins at offset four hundred. In memory, one thousand past the base. So a byte's position in the file is not its address in memory."
+  },
+  {
+   "id": "26",
+   "duration": 19.382,
+   "text": "One more line. The game's header says: relocations stripped. It cannot be moved, so it loads at four hundred thousand every time. My own program says: dynamic base. Windows may move it. That is the A S L R from episode two, decided right here in the file."
+  },
+  {
+   "id": "27",
+   "duration": 17.414,
+   "text": "So what happens when you start an E X E? Windows creates a process: a private address space. It maps the sections of the file into it. And it starts a thread at the entry point. The process is the container. The thread is what actually runs."
+  },
+  {
+   "id": "28",
+   "duration": 15.607,
+   "text": "This small program prints its own process. A process I D. A thread I D. The address Windows loaded it at. And the first two bytes at that address, in memory: four D, five A. M Z. The file is in there."
+  },
+  {
+   "id": "29",
+   "duration": 12.118,
+   "text": "And it is not alone. The same process holds other modules: system D L Ls, which are P E files too. Kernel thirty-two is there because my program asked for it."
+  },
+  {
+   "id": "30",
+   "duration": 18.238,
+   "text": "It asked in its import table: a list, inside the E X E, of the functions it needs from other files. My code called F open, F write and F read. Underneath, those became Create File, Write File and Read File, from kernel thirty-two."
+  },
+  {
+   "id": "31",
+   "duration": 16.084,
+   "text": "This is the Windows A P I. A program cannot touch the disk, the screen or the keyboard by itself. It asks Windows. Kernel thirty-two: files, memory, processes. User thirty-two: windows and input."
+  },
+  {
+   "id": "32",
+   "duration": 15.996,
+   "text": "Now the game's import table. Open G L: that is how it draws. Open A L: sound. S D L: its window. Winsock: the network. An import table is a quick summary of what a program does."
+  },
+  {
+   "id": "33",
+   "duration": 12.597,
+   "text": "And Cheat Engine is a program too. Its own import table: Open Process. Read Process Memory. Write Process Memory. Reading a game's memory is a request to Windows."
+  },
+  {
+   "id": "34",
+   "duration": 18.239,
+   "text": "Let's recap. A file is bytes at offsets. A save file is often just a structure, written to disk. An E X E is a P E file: its image base and its sections become the memory map. And a program reaches Windows through its import table."
+  },
+  {
+   "id": "35",
+   "duration": 14.663,
+   "text": "Your practice. Compile savegame dot C P P from the description, and run it with new. Then, in a hex editor, set the health to two hundred fifty-five, and change the name to your own. Load it, and check."
+  },
+  {
+   "id": "36",
+   "duration": 10.424,
+   "text": "Next time, we attach Cheat Engine to the running game, and find a value while knowing nothing but the number on the screen. Your first memory scan. See you there."
+  }
+ ]
+}

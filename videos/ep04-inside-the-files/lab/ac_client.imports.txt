@@ -1,0 +1,448 @@
+Microsoft (R) COFF/PE Dumper Version 14.51.36260.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+Dump of file C:\Program Files (x86)\AssaultCube 1.3.0.2\bin_win32\ac_client.exe
+
+File Type: EXECUTABLE IMAGE
+
+  Section contains the following imports:
+
+    libvorbisfile.dll
+                525530 Import Address Table
+                568B74 Import Name Table
+                     0 time date stamp
+                     0 Index of first forwarder reference
+
+                   14 ov_read
+                    A ov_pcm_seek
+                   21 ov_time_total
+                    9 ov_open_callbacks
+                    7 ov_info
+                   1E ov_time_seek_page
+                    2 ov_clear
+
+    OpenAL32.dll
+                5252D0 Import Address Table
+                568914 Import Name Table
+                     0 time date stamp
+                     0 Index of first forwarder reference
+
+                   43 alSourceStop
+                   3E alSourcePlay
+                   2C alGetSourcefv
+                   3A alSource3f
+                   48 alSourcei
+                    A alDeleteSources
+                   11 alGenSources
+                   46 alSourcef
+                   33 alIsSource
+                   40 alSourceQueueBuffers
+                   45 alSourceUnqueueBuffers
+                   2D alGetSourcei
+                   5A alcIsExtensionPresent
+                    4 alBufferData
+                    9 alDeleteBuffers
+                   30 alIsBuffer
+                   10 alGenBuffers
+                   5D alcProcessContext
+                   37 alListenerfv
+                   5E alcSuspendContext
+                   36 alListenerf
+                   50 alcCloseDevice
+                   52 alcDestroyContext
+                   2F alGetString
+                    C alDistanceModel
+                   5B alcMakeContextCurrent
+                   51 alcCreateContext
+                   5C alcOpenDevice
+                   59 alcGetString
+                   1D alGetError
+
+    zlib1.dll
+                525550 Import Address Table
+                568B94 Import Name Table
+                     0 time date stamp
+                     0 Index of first forwarder reference
+
+                    3 compress2
+                   3D uncompress
+                   33 inflateInit2_
+                   2C inflate
+                    5 crc32
+                    C deflateInit_
+                    7 deflate
+                    A deflateEnd
+                    B deflateInit2_
+                   37 inflateReset
+                   3E zError
+                   31 inflateEnd
+
+    OPENGL32.dll
+                52519C Import Address Table
+                5687E0 Import Name Table
+                     0 time date stamp
+                     0 Index of first forwarder reference
+
+                   15 glClearStencil
+                   CF glPolygonMode
+                   31 glColor4ub
+                   41 glDeleteLists
+                    7 glAlphaFunc
+                    E glCallList
+                   4A glDrawElements
+                   B8 glNewList
+                   68 glGenLists
+                   52 glEndList
+                   B7 glMultMatrixf
+                   CA glPixelStorei
+                  114 glTexCoord2i
+                  148 glVertex3fv
+                  105 glStencilFunc
+                  107 glStencilOp
+                  134 glTexImage2D
+                  137 glTexParameteri
+                  12B glTexEnvi
+                  12A glTexEnvfv
+                  13D glVertex2d
+                   19 glColor3d
+                   82 glGetTexImage
+                  101 glScalef
+                   42 glDeleteTextures
+                   69 glGenTextures
+                  102 glScissor
+                   10 glClear
+                   C4 glOrtho
+                   32 glColor4ubv
+                   3E glCopyTexSubImage2D
+                   12 glClearColor
+                   6E glGetFloatv
+                   67 glFrustum
+                   D4 glPopMatrix
+                   FF glRotatef
+                  13C glTranslatef
+                   D9 glPushMatrix
+                   1B glColor3f
+                    D glBlendFunc
+                   F4 glReadPixels
+                   44 glDepthMask
+                  112 glTexCoord2f
+                   21 glColor3ub
+                   A2 glLineWidth
+                  13F glVertex2f
+                   2B glColor4f
+                   51 glEnd
+                  147 glVertex3f
+                    A glBegin
+                   C3 glNormalPointer
+                   A6 glLoadMatrixf
+                   B5 glMatrixMode
+                   D0 glPolygonOffset
+                   A4 glLoadIdentity
+                   3F glCullFace
+                   63 glFogfv
+                   50 glEnableClientState
+                  155 glVertexPointer
+                   39 glColorPointer
+                  128 glTexCoordPointer
+                   46 glDisable
+                   37 glColorMask
+                   48 glDrawArrays
+                   4F glEnable
+                    B glBindTexture
+                   47 glDisableClientState
+                   7C glGetString
+                   6F glGetIntegerv
+                  156 glViewport
+                   13 glClearDepth
+                   43 glDepthFunc
+                  104 glShadeModel
+                   64 glFogi
+                   62 glFogf
+                   87 glHint
+
+    SDL2.dll
+                52534C Import Address Table
+                568990 Import Name Table
+                     0 time date stamp
+                     0 Index of first forwarder reference
+
+                   1A SDL_ClearError
+                  17E SDL_LoadWAV_RW
+                  205 SDL_SemPost
+                  207 SDL_SemValue
+                  209 SDL_SemWaitTimeout
+                  208 SDL_SemWait
+                   45 SDL_DestroySemaphore
+                   31 SDL_CreateSemaphore
+                    5 SDL_AllocRW
+                   C1 SDL_GetKeyboardState
+                  23C SDL_SetWindowIcon
+                  13F SDL_InitSubSystem
+                   F6 SDL_GetVersion
+                  13E SDL_Init
+                  24C SDL_ShowWindow
+                  13D SDL_HideWindow
+                  271 SDL_WarpMouseInWindow
+                  24F SDL_StopTextInput
+                  24E SDL_StartTextInput
+                   40 SDL_Delay
+                   6A SDL_GL_SetSwapInterval
+                   5D SDL_GL_CreateContext
+                   39 SDL_CreateWindow
+                   69 SDL_GL_SetAttribute
+                   B0 SDL_GetDisplayBounds
+                   47 SDL_DestroyWindow
+                   5E SDL_GL_DeleteContext
+                   B2 SDL_GetDisplayMode
+                   C9 SDL_GetNumDisplayModes
+                  235 SDL_SetWindowBrightness
+                  107 SDL_GetWindowSize
+                  203 SDL_SaveBMP_RW
+                  242 SDL_SetWindowPosition
+                  245 SDL_SetWindowSize
+                  238 SDL_SetWindowFullscreen
+                   FD SDL_GetWindowFlags
+                  23A SDL_SetWindowGrab
+                   B6 SDL_GetError
+                   5B SDL_FreeWAV
+                  1BC SDL_Quit
+                  225 SDL_SetRelativeMouseMode
+                  249 SDL_ShowCursor
+                  295 SDL_free
+                   A6 SDL_GetClipboardText
+                   C3 SDL_GetModState
+                   E5 SDL_GetScancodeFromName
+                   E6 SDL_GetScancodeName
+                   43 SDL_DestroyMutex
+                  26F SDL_WaitThread
+                  1B7 SDL_PollEvent
+                   23 SDL_CondWaitTimeout
+                   F2 SDL_GetTicks
+                   48 SDL_DetachThread
+                   37 SDL_CreateThread
+                   29 SDL_CreateCond
+                   21 SDL_CondSignal
+                   22 SDL_CondWait
+                  253 SDL_ThreadID
+                   F0 SDL_GetThreadID
+                  25A SDL_UnlockMutex
+                  182 SDL_LockMutex
+                  219 SDL_SetClipboardText
+                   59 SDL_FreeRW
+                   A8 SDL_GetColorKey
+                  229 SDL_SetSurfaceAlphaMod
+                   5A SDL_FreeSurface
+                  263 SDL_UpperBlit
+                   2C SDL_CreateRGBSurface
+                   6B SDL_GL_SwapWindow
+                   64 SDL_GL_GetProcAddress
+                  206 SDL_SemTryWait
+                  24B SDL_ShowSimpleMessageBox
+                  220 SDL_SetMainReady
+                  29A SDL_iconv_string
+                  2DE SDL_wcslen
+                  285 SDL_calloc
+                   2B SDL_CreateMutex
+
+    SDL2_image.dll
+                525484 Import Address Table
+                568AC8 Import Name Table
+                     0 time date stamp
+                     0 Index of first forwarder reference
+
+                   17 IMG_Load_RW
+                    2 IMG_Load
+
+    WS2_32.dll
+                5254B0 Import Address Table
+                568AF4 Import Name Table
+                     0 time date stamp
+                     0 Index of first forwarder reference
+
+                      Ordinal    14
+                      Ordinal     8
+                      Ordinal    18
+                   46 WSARecvFrom
+                   4C WSASendTo
+                      Ordinal     3
+                      Ordinal    22
+                      Ordinal     1
+                      Ordinal   111
+                      Ordinal     4
+                      Ordinal    10
+                      Ordinal    21
+                      Ordinal    23
+                      Ordinal    13
+                      Ordinal     2
+                      Ordinal    51
+                      Ordinal    12
+                      Ordinal    11
+                      Ordinal    52
+                      Ordinal   116
+                      Ordinal   115
+                      Ordinal    15
+                      Ordinal     9
+                      Ordinal   151
+
+    WINMM.dll
+                5254A0 Import Address Table
+                568AE4 Import Name Table
+                     0 time date stamp
+                     0 Index of first forwarder reference
+
+                   90 timeBeginPeriod
+                   91 timeEndPeriod
+                   94 timeGetTime
+
+    dbghelp.dll
+                525514 Import Address Table
+                568B58 Import Name Table
+                     0 time date stamp
+                     0 Index of first forwarder reference
+
+                   A0 SymInitialize
+                   2B StackWalk
+                   7A SymGetModuleBase
+                   64 SymFunctionTableAccess
+                   91 SymGetSymFromAddr
+                   6C SymGetLineFromAddr
+
+    KERNEL32.dll
+                525010 Import Address Table
+                568654 Import Name Table
+                     0 time date stamp
+                     0 Index of first forwarder reference
+
+                  5A2 TlsAlloc
+                  534 SetLastError
+                  3D3 LocalFree
+                  615 WriteConsoleW
+                  264 GetLastError
+                  4D5 RtlUnwind
+                  464 RaiseException
+                  590 TerminateProcess
+                  366 InitializeSListHead
+                  2EC GetSystemTimeAsFileTime
+                  21F GetCurrentThreadId
+                  21B GetCurrentProcessId
+                  5A5 TlsSetValue
+                  2D3 GetStartupInfoW
+                  571 SetUnhandledExceptionFilter
+                  5B1 UnhandledExceptionFilter
+                  382 IsDebuggerPresent
+                  389 IsProcessorFeaturePresent
+                  2B1 GetProcAddress
+                  27B GetModuleHandleW
+                   C2 CreateEventW
+                  5DC WaitForSingleObjectEx
+                  4C8 ResetEvent
+                  518 SetEvent
+                  113 DeleteCriticalSection
+                  362 InitializeCriticalSectionAndSpinCount
+                  3C1 LeaveCriticalSection
+                  134 EnterCriticalSection
+                  5A4 TlsGetValue
+                  5A3 TlsFree
+                  44F QueryPerformanceCounter
+                  5D2 VirtualQuery
+                  3C7 LoadLibraryExW
+                  130 EncodePointer
+                  21E GetCurrentThread
+                  512 SetEndOfFile
+                  34F HeapReAlloc
+                  351 HeapSize
+                   CE CreateFileW
+                  2DA GetStringTypeW
+                  2B7 GetProcessHeap
+                  516 SetEnvironmentVariableW
+                  1AD FreeEnvironmentStringsW
+                  23A GetEnvironmentStringsW
+                  1DA GetCommandLineW
+                  1D9 GetCommandLineA
+                  1C4 GetCPInfo
+                  178 FindClose
+                  18D FindNextFileA
+                  17C FindFirstFileA
+                   B8 CreateDirectoryA
+                  243 GetFileAttributesA
+                  21A GetCurrentProcess
+                  53E SetPriorityClass
+                   89 CloseHandle
+                  42F Process32Next
+                  42D Process32First
+                   FF CreateToolhelp32Snapshot
+                  161 ExitProcess
+                  27A GetModuleHandleExW
+                  4EB SetConsoleCtrlHandler
+                   F6 CreateThread
+                  162 ExitThread
+                  1AF FreeLibraryAndExitThread
+                  475 ReadFile
+                  277 GetModuleFileNameW
+                  2D5 GetStdHandle
+                  616 WriteFile
+                  34C HeapFree
+                  348 HeapAlloc
+                  251 GetFileType
+                  224 GetDateFormatW
+                  30F GetTimeFormatW
+                   9E CompareStringW
+                  3B5 LCMapStringW
+                  268 GetLocaleInfoW
+                  391 IsValidLocale
+                  315 GetUserDefaultLCID
+                  157 EnumSystemLocalesW
+                  203 GetConsoleOutputCP
+                  1FF GetConsoleMode
+                  24F GetFileSizeEx
+                  525 SetFilePointerEx
+                  3F3 MultiByteToWideChar
+                  118 DeleteFileW
+                  10C DecodePointer
+                  3EC MoveFileExW
+                  472 ReadConsoleW
+                  1A2 FlushFileBuffers
+                  311 GetTimeZoneInformation
+                  602 WideCharToMultiByte
+                  54E SetStdHandle
+                  17E FindFirstFileExW
+                  18F FindNextFileW
+                  38F IsValidCodePage
+                  1B5 GetACP
+                  29A GetOEMCP
+                  1AE FreeLibrary
+
+    USER32.dll
+                525498 Import Address Table
+                568ADC Import Name Table
+                     0 time date stamp
+                     0 Index of first forwarder reference
+
+                  281 MessageBoxA
+
+    ADVAPI32.dll
+                525000 Import Address Table
+                568644 Import Name Table
+                     0 time date stamp
+                     0 Index of first forwarder reference
+
+                  28B RegOpenKeyExA
+                  25B RegCloseKey
+                  298 RegQueryValueExA
+
+    SHELL32.dll
+                525490 Import Address Table
+                568AD4 Import Name Table
+                     0 time date stamp
+                     0 Index of first forwarder reference
+
+                    8 CommandLineToArgvW
+
+  Summary
+
+       3A000 .data
+       46000 .rdata
+       11000 .rsrc
+      124000 .text
+        3000 _RDATA
