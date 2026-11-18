@@ -132,7 +132,7 @@ FOUND_CROP = (0, 0, 556, 462)        # ends under the ESI line, not through the 
 
 
 def live_game(still=False):
-    return Shot("@p-g", S("game_before") if still else A / "clips/fire_game.mp4", 110, 190, 900, size=None if still else GAME_SIZE)
+    return Shot("@p-g", S("game_before") if still else A / "clips/fire_game_clean.mp4", 110, 190, 900, size=None if still else GAME_SIZE)
 
 
 def live_found(still=False):
@@ -141,7 +141,7 @@ def live_found(still=False):
 
 def live_media(dur):
     g, c = live_game(), live_found()
-    g.path = fit_clip(A / "clips/fire_game.mp4", dur, CLIP_FROM)
+    g.path = fit_clip(A / "clips/fire_game_clean.mp4", dur, CLIP_FROM)
     c.path = fit_clip(A / "clips/fire_found.mp4", dur, CLIP_FROM)
     g.src, c.src = f"assets/clips/{g.path.name}", f"assets/clips/{c.path.name}"
     return g.video(0, dur) + c.video(0, dur)
@@ -153,11 +153,11 @@ def stack_row(i, y, addr, val, label, on=False):
             + txt(f"@p-sl{i}", 1000, y + 30, label, "m", fs=40))
 
 
-cold_game = Shot("@p-g", A / "clips/fire_game.mp4", 120, 200, 1100, size=GAME_SIZE)
+cold_game = Shot("@p-g", A / "clips/fire_game_clean.mp4", 120, 200, 1100, size=GAME_SIZE)
 
 
 def cold_media(dur):
-    cold_game.path = fit_clip(A / "clips/fire_game.mp4", dur, COLD_FROM)
+    cold_game.path = fit_clip(A / "clips/fire_game_clean.mp4", dur, COLD_FROM)
     cold_game.src = f"assets/clips/{cold_game.path.name}"
     return cold_game.video(0, dur)
 

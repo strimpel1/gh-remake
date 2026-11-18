@@ -95,6 +95,12 @@ example. If a lesson's source text goes beyond that, leave that part out.
 - **"The same bytes read as another type" is read from the running program**, never computed from a rounded printed value.
 - **Say only what the capture shows.** Call a second address "a copy" only after a capture where it held a different value
   and the game was seen to overwrite it.
+- **A highlight box is checked on a rendered frame at the moment its word is spoken** (two rows of a register block are
+  23 px apart).
+- **A recording that counts under narration ("two, four, six") is cut so each number is on screen when it is said**, and
+  ends before anything the narration does not mention.
+- **No chapter shorter than 10 s** (YouTube then drops all chapters): the title scene is never its own chapter. Round
+  chapter times down.
 - Hex and addresses are spelled for the voice the way episodes 1 and 2 do it ("zero zero eight nine, seven eight six C").
 
 ## Before you call it done
