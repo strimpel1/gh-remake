@@ -34,12 +34,13 @@
   </style>
   <div id="root" data-composition-id="refill" data-width="1920" data-height="1080">
     <div id="s30-media" class="s30-media">
-      <div id="s30-ce" class="s30-shot" style="left: 120px; top: 190px; width: 1500px; height: 309px"><video id="s30-ce-v" class="clip" src="assets/clips/hk_list_fit39_144.mp4" muted playsinline data-start="0" data-duration="14.4" data-media-start="0" data-track-index="2" style="left: 0.0px; top: 0.0px; width: 1484.0px; height: 330.8px"></video></div>
-      <div id="s30-g" class="s30-shot" style="left: 120px; top: 540px; width: 1200px; height: 248px"><video id="s30-g-v" class="clip" src="assets/clips/hk_game_fit39_144.mp4" muted playsinline data-start="0" data-duration="14.4" data-media-start="0" data-track-index="2" style="left: 0.0px; top: -464.0px; width: 1184.0px; height: 696.0px"></video></div>
+      <div id="s30-ce" class="s30-shot" style="left: 120px; top: 190px; width: 1500px; height: 309px"><video id="s30-ce-v" class="clip" src="assets/clips/hk_list_fit39_169.mp4" muted playsinline data-start="0" data-duration="16.9" data-media-start="0" data-track-index="2" style="left: 0.0px; top: 0.0px; width: 1484.0px; height: 330.8px"></video></div>
+      <div id="s30-g" class="s30-shot" style="left: 120px; top: 540px; width: 1200px; height: 248px"><video id="s30-g-v" class="clip" src="assets/clips/hk_game_fit39_169.mp4" muted playsinline data-start="0" data-duration="16.9" data-media-start="0" data-track-index="2" style="left: 0.0px; top: -464.0px; width: 1184.0px; height: 696.0px"></video></div>
     </div>
-    <div id="s30-stage" class="clip s30-stage" data-start="0" data-duration="14.4">
+    <div id="s30-stage" class="clip s30-stage" data-start="0" data-duration="16.9">
       <div id="s30-t" class="s30-h" style="left: 120px; top: 70px; font-size: 80px">one key: refill</div>
       <div id="s30-m1" class="s30-mark" style="left: 223px; top: 315px; width: 1140px; height: 41px"></div>
+      <div id="s30-m2" class="s30-mark" style="left: 223px; top: 428px; width: 1140px; height: 41px"></div>
       <div id="s30-g1" class="s30-tag" style="left: 1380px; top: 620px; font-size: 44px">numeric 1</div>
       <div id="s30-k" class="s30-tile" style="left: 1380px; top: 760px; width: 300px; height: 160px; line-height: 136px; font-size: 100px">20</div>
     </div>
@@ -59,10 +60,10 @@
     blurIn("#s30-stage, #s30-media", 0, 0.25);
 
     wipe("#s30-t", 0.3, 0.5);
-    land("#s30-g1", 5.73); land("#s30-k", 8.55);
-    land("#s30-m1", 11.47, 1.03);
+    land("#s30-g1", 5.7); land("#s30-k", 8.42);
+    land("#s30-m1", 10.75, 1.03); land("#s30-m2", 10.95, 1.03);
 
-    blurOut("#s30-stage, #s30-media", 14.1, 0.25);
+    blurOut("#s30-stage, #s30-media", 16.6, 0.25);
     window.__timelines["refill"] = tl;
   </script>
 </template>

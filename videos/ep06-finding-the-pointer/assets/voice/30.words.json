@@ -1,6 +1,6 @@
 {
- "key": "81930d589ed96f0b48514db3cb3c7e53cd0f02b5",
- "text": "Back in the game. I fire: fourteen, twelve, ten. Then one tap on the keypad, and the magazine is back at twenty. Cheat Engine wrote it through the pointer, and both ammo rows follow.",
+ "key": "588e161cc0fdc2be7ce195f28d3a4e4857922bdb",
+ "text": "Back in the game. I fire: fourteen, twelve, ten. Then one tap on the keypad, and the magazine is back at twenty. I fire again, and both ammo rows follow the game. Cheat Engine wrote that twenty through the pointer.",
  "words": [
   [
    "Back",
@@ -8,23 +8,23 @@
   ],
   [
    "in",
-   0.339
+   0.365
   ],
   [
    "the",
-   0.391
+   0.417
   ],
   [
    "game",
-   0.456
+   0.495
   ],
   [
    "I",
-   1.328
+   1.367
   ],
   [
    "fire",
-   1.484
+   1.523
   ],
   [
    "fourteen",
@@ -36,107 +36,131 @@
   ],
   [
    "ten",
-   4.258
+   4.297
   ],
   [
    "Then",
-   5.104
+   5.13
   ],
   [
    "one",
-   5.378
+   5.391
   ],
   [
    "tap",
-   5.625
+   5.599
   ],
   [
    "on",
-   5.938
+   5.911
   ],
   [
    "the",
-   6.029
+   6.016
   ],
   [
    "keypad",
-   6.107
+   6.094
   ],
   [
    "and",
-   6.992
+   6.888
   ],
   [
    "the",
-   7.188
+   7.057
   ],
   [
    "magazine",
-   7.266
+   7.135
   ],
   [
    "is",
-   7.865
+   7.708
   ],
   [
    "back",
-   7.995
+   7.839
   ],
   [
    "at",
-   8.242
+   8.112
   ],
   [
    "twenty",
-   8.346
+   8.216
   ],
   [
-   "Cheat",
-   9.219
+   "I",
+   9.102
   ],
   [
-   "Engine",
-   9.622
+   "fire",
+   9.284
   ],
   [
-   "wrote",
-   9.987
-  ],
-  [
-   "it",
-   10.169
-  ],
-  [
-   "through",
-   10.26
-  ],
-  [
-   "the",
-   10.391
-  ],
-  [
-   "pointer",
-   10.482
+   "again",
+   9.727
   ],
   [
    "and",
-   11.198
+   10.521
   ],
   [
    "both",
-   11.367
+   10.651
   ],
   [
    "ammo",
-   11.784
+   11.068
   ],
   [
    "rows",
-   12.148
+   11.406
   ],
   [
    "follow",
-   12.474
+   11.758
+  ],
+  [
+   "the",
+   12.018
+  ],
+  [
+   "game",
+   12.109
+  ],
+  [
+   "Cheat",
+   12.969
+  ],
+  [
+   "Engine",
+   13.372
+  ],
+  [
+   "wrote",
+   13.75
+  ],
+  [
+   "that",
+   14.128
+  ],
+  [
+   "twenty",
+   14.414
+  ],
+  [
+   "through",
+   14.74
+  ],
+  [
+   "the",
+   14.909
+  ],
+  [
+   "pointer",
+   15.0
   ]
  ]
 }

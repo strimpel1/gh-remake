@@ -69,8 +69,8 @@
   },
   {
    "id": "14",
-   "duration": 19.64,
-   "text": "More information on the first one. Move into E B X, what is stored at E S I plus three six four. And E S I is zero zero nine A, six two B eight. That is the next object up. It holds the weapon, and the ammo sits right inside it. This is the player."
+   "duration": 17.705,
+   "text": "More information on the first one. Move into E B X, what is stored at E S I plus three six four. And E S I is zero zero nine A, six two B eight. It holds the weapon, and the ammo sits right inside it. This is the player."
   },
   {
    "id": "15",
@@ -104,8 +104,8 @@
   },
   {
    "id": "21",
-   "duration": 20.571,
-   "text": "That was the manual way. Cheat Engine also has an automatic one. Right click the row: Pointer scan for this address. It searches for every chain of pointers that ends at our ammo. Two settings matter. Max level: how many pointers in a row. I use five. And the maximum offset."
+   "duration": 19.296,
+   "text": "That was the manual way. Now the automatic one. Right click the row: Pointer scan for this address. It searches for every chain of pointers that ends at our ammo. Two settings matter. Max level: how many pointers in a row. I use five. And the maximum offset."
   },
   {
    "id": "22",
@@ -119,8 +119,8 @@
   },
   {
    "id": "24",
-   "duration": 19.218,
-   "text": "Then choose: few offsets, small offsets, and a base inside the game's own module. Now look at the first row. Our static pointer, and a single offset: one four zero. The player holds the ammo itself, and the weapon only points back at it. Both paths are correct."
+   "duration": 18.716,
+   "text": "Then choose: few offsets, small offsets, and a base inside the game's own module. Look at the first row. Our static pointer, and a single offset: one four zero. The player holds the ammo itself, and the weapon only points back at it. Both paths are correct."
   },
   {
    "id": "25",
@@ -149,8 +149,8 @@
   },
   {
    "id": "30",
-   "duration": 13.314,
-   "text": "Back in the game. I fire: fourteen, twelve, ten. Then one tap on the keypad, and the magazine is back at twenty. Cheat Engine wrote it through the pointer, and both ammo rows follow."
+   "duration": 15.828,
+   "text": "Back in the game. I fire: fourteen, twelve, ten. Then one tap on the keypad, and the magazine is back at twenty. I fire again, and both ammo rows follow the game. Cheat Engine wrote that twenty through the pointer."
   },
   {
    "id": "31",

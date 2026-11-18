@@ -33,24 +33,23 @@ Everything in this series is practiced on open-source games, offline and single 
 
 ⏱️ CHAPTERS
 0:00 The address that dies
-0:38 Finding the Pointer
 0:44 Let the game's code show the way
 0:57 Find out what writes to this address
-1:25 More information: one line up
+1:24 More information: one line up
 2:02 Scan for the address itself
 2:32 One level up: what accesses it
-3:23 The green, static address
-3:50 The whole chain
-4:07 Add Address Manually: Pointer
-4:43 The test: restart the game
-5:02 The automatic way: Pointer scan
-5:35 Rescan memory after a restart
-6:15 Manual or automatic?
-6:31 Cheat tables and the .CT file
-7:08 Loading the table in a new run
-7:26 Hotkeys
-8:02 Recap and practice
-8:42 Next: Changing the Code
+3:20 The green, static address
+3:48 The whole chain
+4:04 Add Address Manually: Pointer
+4:41 The test: restart the game
+4:59 The automatic way: Pointer scan
+5:32 Rescan memory after a restart
+6:11 Manual or automatic?
+6:26 Cheat tables and the .CT file
+7:04 Loading the table in a new run
+7:22 Hotkeys
+8:00 Recap and practice
+8:41 Next: Changing the Code
 
 ▶️ Earlier episodes: #2 explains what a pointer is, #3 reads the instruction used here, #5 finds the address with a scan.
 🤖 Created with AI assistance.

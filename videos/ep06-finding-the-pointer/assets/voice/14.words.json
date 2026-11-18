@@ -1,230 +1,206 @@
 {
- "key": "5a24ad64b2a7642fd38537cd4d2c4efd8151b774",
- "text": "More information on the first one. Move into E B X, what is stored at E S I plus three six four. And E S I is zero zero nine A, six two B eight. That is the next object up. It holds the weapon, and the ammo sits right inside it. This is the player.",
+ "key": "3be14756474ae486ff0cfc4799a61aca95e4a4ea",
+ "text": "More information on the first one. Move into E B X, what is stored at E S I plus three six four. And E S I is zero zero nine A, six two B eight. It holds the weapon, and the ammo sits right inside it. This is the player.",
  "words": [
   [
    "More",
-   0.078
+   0.091
   ],
   [
    "information",
-   0.299
+   0.352
   ],
   [
    "on",
-   1.081
+   1.25
   ],
   [
    "the",
-   1.237
+   1.393
   ],
   [
    "first",
-   1.328
+   1.471
   ],
   [
    "one",
-   1.693
+   1.823
   ],
   [
    "Move",
-   2.383
+   2.539
   ],
   [
    "into",
-   2.695
+   2.852
   ],
   [
    "E",
-   2.956
+   3.125
   ],
   [
    "B",
-   3.138
+   3.307
   ],
   [
    "X",
-   3.333
+   3.464
   ],
   [
    "what",
-   4.154
+   4.245
   ],
   [
    "is",
-   4.297
+   4.375
   ],
   [
    "stored",
-   4.401
+   4.479
   ],
   [
    "at",
-   4.805
+   4.883
   ],
   [
    "E",
-   5.117
+   5.208
   ],
   [
    "S",
-   5.286
+   5.326
   ],
   [
    "I",
-   5.69
+   5.768
   ],
   [
    "plus",
-   5.938
+   6.029
   ],
   [
    "three",
-   6.419
+   6.484
   ],
   [
    "six",
-   6.784
+   6.862
   ],
   [
    "four",
-   7.109
+   7.188
   ],
   [
    "And",
-   7.956
+   8.008
   ],
   [
    "E",
-   8.294
+   8.411
   ],
   [
    "S",
-   8.385
+   8.529
   ],
   [
    "I",
-   8.672
+   8.802
   ],
   [
    "is",
-   9.036
+   9.167
   ],
   [
    "zero",
-   9.375
+   9.492
   ],
   [
    "zero",
-   9.961
+   10.104
   ],
   [
    "nine",
-   10.391
+   10.508
   ],
   [
    "A",
-   10.781
+   10.885
   ],
   [
    "six",
-   11.432
+   11.51
   ],
   [
    "two",
-   11.784
+   11.862
   ],
   [
    "B",
-   12.044
+   12.122
   ],
   [
    "eight",
-   12.24
-  ],
-  [
-   "That",
-   12.943
-  ],
-  [
-   "is",
-   13.138
-  ],
-  [
-   "the",
-   13.294
-  ],
-  [
-   "next",
-   13.398
-  ],
-  [
-   "object",
-   13.841
-  ],
-  [
-   "up",
-   14.271
+   12.383
   ],
   [
    "It",
-   14.961
+   13.086
   ],
   [
    "holds",
-   15.052
+   13.164
   ],
   [
    "the",
-   15.417
+   13.529
   ],
   [
    "weapon",
-   15.521
+   13.62
   ],
   [
    "and",
-   16.159
+   14.258
   ],
   [
    "the",
-   16.315
+   14.388
   ],
   [
    "ammo",
-   16.419
+   14.492
   ],
   [
    "sits",
-   16.758
+   14.818
   ],
   [
    "right",
-   17.109
+   15.182
   ],
   [
    "inside",
-   17.305
+   15.365
   ],
   [
    "it",
-   17.747
+   15.807
   ],
   [
    "This",
-   18.306
+   16.352
   ],
   [
    "is",
-   18.644
+   16.691
   ],
   [
    "the",
-   18.761
+   16.782
   ],
   [
    "player",
-   18.853
+   16.886
   ]
  ]
 }

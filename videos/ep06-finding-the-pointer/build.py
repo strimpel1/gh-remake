@@ -41,6 +41,23 @@ def clip(id, name, x, y, w, crop, size, start=0.0):
     return s, media
 
 
+def held(id, name, x, y, w, crop, size, start, hold):
+    """A recording that starts at `start`, holds that first frame for `hold` seconds, then plays (two clips cut alike stay in step)."""
+    import subprocess
+    s = Shot(id, A / f"clips/{name}.mp4", x, y, w, crop=crop, size=size)
+
+    def media(dur):
+        src = A / f"clips/{name}.mp4"
+        p = src.with_name(f"{name}_held{int(start * 10)}_{int(hold * 10)}_{int(round(dur * 10))}.mp4")
+        if not p.exists() or p.stat().st_mtime < src.stat().st_mtime:
+            subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", str(start), "-i", str(src), "-vf",
+                            f"tpad=start_mode=clone:start_duration={hold}:stop_mode=clone:stop_duration={dur}", "-t", str(dur), "-r", "30",
+                            "-c:v", "libx264", "-crf", "17", "-pix_fmt", "yuv420p", "-g", "30", "-an", str(p)], check=True)
+        s.path, s.src = p, f"assets/clips/{p.name}"
+        return s.video(0, dur)
+    return s, media
+
+
 def both(*media):
     return lambda dur: "".join(m(dur) for m in media)
 
@@ -60,29 +77,36 @@ cold = shot("@p-ce", "a0_ce", 120, 250, 1680, rows(1))
 dead = shot("@p-ce", "b0_ce", 120, 230, 1680, rows(1))
 dead_g = shot("@p-g", "b0_game", 120, 420, 1100, HUD)
 menu = shot("@p-ce", "a_menu_ce", 120, 200, 1100, (170, 612, 772, 452))
-fire_g, fire_gm = clip("@p-g", "fire_game", 100, 200, 960, None, GAME, 2.0)
-fire_f, fire_fm = clip("@p-f", "fire_found", 1100, 200, 720, (0, 0, 500, 330), (922, 872), 2.0)
+# The recording from its start: the found-code window opens (empty) at 1.5 s, the line appears at 2.0 s and its count reaches
+# 4, 6 and 8 at 4.4, 6.2 and 7.6 s. Held on the empty window for 2.2 s, so the line lands on "One line appears" and 8 on "eight".
+fire_g, fire_gm = held("@p-g", "fire_game", 100, 200, 960, None, GAME, 1.5, 2.2)
+fire_f, fire_fm = held("@p-f", "fire_found", 1100, 200, 720, (0, 0, 500, 330), (922, 872), 1.5, 2.2)
 extra_w = shot("@p-x", "a_w_extra", 120, 200, 1000, (0, 30, 537, 330))
-hex1 = shot("@p-ce", "a_hex1", 120, 200, 1150, SCAN)
+hex1 = shot("@p-ce", "a_hex1", 120, 190, 1680, (0, 105, 942, 217))
 hex1b = shot("@p-ce", "a_hex1", 120, 200, 800, (0, 105, 470, 250))
-added = shot("@p-ce", "a_hex1_added", 120, 190, 1000, (0, 105, 942, 600))
-acc = shot("@p-f", "a_a", 120, 200, 1100, (0, 0, 672, 440))
-extra_a = shot("@p-x", "a_a_extra", 120, 200, 1000, (0, 30, 539, 330))
-hex2 = shot("@p-ce", "a_hex2", 120, 190, 1150, SCAN)
+LIST = (0, 105, 470, 250)          # the result list alone: Found, the header, eight rows
+pick_a = shot("@p-ce", "a_hex1", 120, 180, 800, LIST)            # nothing selected yet
+pick_b = shot("@p-ce2", "a_hex1_sel", 120, 180, 800, LIST)       # the row I double click
+al_a = shot("@p-al", "a_hex1_sel", 120, 680, 1680, rows(2))      # the address list before the double click
+al_b = shot("@p-al2", "a_hex1_added", 120, 680, 1680, rows(2))   # and after it
+acc = shot("@p-f", "a_a", 120, 160, 1062, (0, 0, 560, 432))
+extra_a = shot("@p-x", "a_a_extra", 120, 200, 1150, (0, 30, 539, 330))
+hex2 = shot("@p-ce", "a_hex2", 120, 175, 800, (0, 105, 450, 452))
+hex2v = shot("@p-v", "a_hex2", 1000, 190, 720, (470, 170, 400, 48))
 hex2z = shot("@p-ce", "a_hex2", 120, 200, 1000, (0, 425, 470, 100))
-ptr = shot("@p-d", "a_ptr_final", 120, 190, 1060, (0, 36, 662, 421))
+ptr = shot("@p-d", "a_ptr_final", 120, 172, 1240, (0, 36, 662, 421))
 proof = shot("@p-ce", "b0_ce", 120, 200, 1680, rows(2))
 proof_g = shot("@p-g", "b0_game", 120, 460, 1100, HUD)
-psdlg = shot("@p-d", "b_psdlg", 120, 200, 1250)
+psdlg = shot("@p-d", "b_psdlg", 120, 190, 1440)
 PSR = (0, 62, 850, 276)
 psres = shot("@p-r", "b_psres", 120, 200, 1680, PSR)
-rsdlg = shot("@p-d", "c_rsdlg", 120, 200, 520, (0, 0, 416, 130))
-rescan = shot("@p-r", "c_rescan", 120, 420, 1680, (0, 62, 850, 180))
+rsdlg = shot("@p-d", "c_rsdlg", 120, 180, 620, (0, 0, 416, 130))
+rescan = shot("@p-r", "c_rescan", 120, 440, 1680, (0, 62, 850, 232))
 short = shot("@p-r", "c_rescan", 120, 200, 1680, (0, 62, 850, 132))
 table = shot("@p-ce", "c_loaded_ce", 120, 200, 1680, rows(6))
 loaded = shot("@p-ce", "c_loaded_ce", 120, 190, 1400, rows(6))
 loaded_g = shot("@p-g", "c_loaded_game", 120, 610, 1100, HUD)
-hk = shot("@p-d", "b_hk1", 120, 200, 1100, (0, 0, 700, 470))
+hk = shot("@p-d", "b_hk1", 120, 200, 1100, (0, 8, 700, 462))
 hk_l, hk_lm = clip("@p-ce", "hk_list", 120, 190, 1500, (0, 0, 942, 186), (942, 210), 3.9)
 hk_g, hk_gm = clip("@p-g", "hk_game", 120, 540, 1200, (0, 620, 1582, 310), GAME, 3.9)
 con = shot("@p-k", "v_con", 100, 230, 980, (0, 30, 560, 300))
@@ -197,7 +221,7 @@ scenes = [
           media=both(fire_gm, fire_fm),
           js="""
     wipe("#@p-t", 0.3, 0.5);
-    land("#@p-m2", <<line>>, 1.2); land("#@p-m1", <<burst>>, 1.2);
+    land("#@p-m2", <<appears+0.4>>, 1.2); land("#@p-m1", <<burst>>, 1.2);
     land("#@p-g1", <<instruction-0.3>>);
 """),
 
@@ -206,7 +230,7 @@ scenes = [
                   "fetched our address from memory.",
           body=txt("@p-t", 120, 80, "More information", "h", fs=80) + extra_w.html()
           + extra_w.mark("@p-m1", 8, 128, 262, 26, pad=3) + extra_w.mark("@p-m2", 28, 101, 334, 26, pad=3)
-          + extra_w.mark("@p-m3", 10, 280, 160, 26, pad=3)
+          + extra_w.mark("@p-m3", 8, 256, 164, 24, pad=3)
           + tag("@p-g1", 1170, 300, "EAX = our ammo address", 36)
           + term("@p-o", 1170, 480, 640, ['mov eax,[<span class="hi">esi+14</span>]', 'dec [eax]'], fs=50)
           + txt("@p-n", 1170, 740, "the address was read<br>from memory,<br>at ESI + 14", "m", fs=46),
@@ -238,9 +262,9 @@ scenes = [
                   "New scan. Tick Hex. Four bytes. Type the address. Eight results.",
           body=txt("@p-t", 120, 80, "scan for the address itself", "h", fs=80) + hex1.html()
           + hex1.mark("@p-m1", 490, 186, 448, 30, pad=4) + hex1.mark("@p-m2", 464, 262, 300, 28, pad=4)
-          + hex1.mark("@p-m3", 0, 110, 70, 22, pad=4) + hex1.mark("@p-m4", 4, 155, 440, 170, pad=4)
-          + tag("@p-g1", 1310, 240, "Hex + the address", 36) + tag("@p-g2", 1310, 400, "4 Bytes", 36)
-          + tile("@p-f", 1310, 560, 490, 140, "Found: 8", 70),
+          + hex1.mark("@p-m3", 0, 110, 70, 22, pad=4) + hex1.mark("@p-m4", 4, 155, 440, 166, pad=4)
+          + tile("@p-f", 120, 660, 490, 140, "Found: 8", 70)
+          + tag("@p-g1", 1000, 640, "Hex + the address", 44) + tag("@p-g2", 1000, 770, "4 Bytes", 44),
           js="""
     wipe("#@p-t", <<who-0.2>>, 0.5);
     land("#@p-ce", 0.2, 1.03, 0.5);
@@ -264,24 +288,26 @@ scenes = [
 
     Scene("pick", "So we climb again. Seven of the eight sit close together, right next to our ammo address. Probably one object. "
                   "I double click one of them to add it to the list, and this time I ask: find out what accesses this address.",
-          body=txt("@p-t", 120, 70, "one level up", "h", fs=80) + added.html()
-          + added.mark("@p-m1", 4, 176, 440, 148, pad=3) + added.mark("@p-m2", 4, 218, 440, 22, pad=3)
-          + added.mark("@p-m3", 4, 668, 760, 24, pad=3)
-          + tag("@p-g1", 1180, 280, "seven neighbours", 38)
-          + txt("@p-n", 1180, 400, "ammo:&nbsp; 009A63F8<br>these: 009A66..", "m", fs=44)
-          + tag("@p-g2", 1180, 700, "Find out what<br>accesses this address", 38),
+          body=txt("@p-t", 120, 70, "one level up", "h", fs=80) + pick_a.html() + pick_b.html() + al_a.html() + al_b.html()
+          + pick_a.mark("@p-m1", 4, 176, 440, 148, pad=3) + pick_a.mark("@p-m2", 4, 218, 440, 22, pad=3)
+          + al_b.mark("@p-m3", 4, 668, 760, 24, pad=3)
+          + tag("@p-g1", 1000, 220, "seven neighbours", 38)
+          + txt("@p-n", 1000, 330, "ammo:&nbsp; 009A63F8<br>these: 009A66..", "m", fs=44)
+          + tag("@p-g2", 1000, 480, "Find out what<br>accesses this address", 38),
           js="""
     wipe("#@p-t", <<climb-0.3>>, 0.5);
     land("#@p-ce", 0.2, 1.03, 0.5);
     land("#@p-m1", <<seven>>, 1.05); land("#@p-g1", <<seven+0.2>>); blurIn("#@p-n", <<next>>);
+    land("#@p-al", 0.3, 1.02, 0.5);
     tl.to("#@p-m1", { opacity: 0, duration: 0.3 }, <<double-0.2>>);
-    land("#@p-m2", <<double>>, 1.1); land("#@p-m3", <<list>>, 1.05);
+    blurIn("#@p-ce2", <<double>>, 0.15); land("#@p-m2", <<double+0.1>>, 1.1);
+    blurIn("#@p-al2", <<add>>, 0.15); land("#@p-m3", <<list>>, 1.05);
     land("#@p-g2", <<find-0.2>>);
 """),
 
     Scene("access", "No need to fire. The window fills at once, because the game reads this value on every frame. "
                     "Fifteen instructions, and every one of them has the same offset in its brackets: three six four.",
-          body=txt("@p-t", 120, 80, "who reads it? everyone", "h", fs=80) + acc.html()
+          body=txt("@p-t", 120, 60, "who reads it? everyone", "h", fs=80) + acc.html()
           + acc.mark("@p-m1", 334, 66, 104, 364, pad=3)
           + tile("@p-k", 1280, 260, 520, 170, "+364", 110)
           + txt("@p-n", 1280, 480, "15 instructions,<br>one offset", "m", fs=50)
@@ -294,13 +320,13 @@ scenes = [
 """),
 
     Scene("player", "More information on the first one. Move into E B X, what is stored at E S I plus three six four. And E S I is zero zero nine A, "
-                    "six two B eight. That is the next object up. It holds the weapon, and the ammo sits right inside it. This is the player.",
+                    "six two B eight. It holds the weapon, and the ammo sits right inside it. This is the player.",
           body=txt("@p-t", 120, 80, "the next object up", "h", fs=80) + extra_a.html()
           + extra_a.mark("@p-m1", 8, 128, 440, 26, pad=3) + extra_a.mark("@p-m2", 176, 280, 164, 26, pad=3)
-          + tile("@p-k", 1170, 220, 640, 150, "009A62B8", 90)
-          + card("@p-w", 1170, 440, 640, 130, "the player", 56, "on")
-          + txt("@p-n", 1170, 610, "+364 holds 00994BA8", "m", fs=46)
-          + txt("@p-n2", 1170, 690, "the weapon", "m", fs=46, color=ACC),
+          + tile("@p-k", 1320, 220, 490, 150, "009A62B8", 76)
+          + card("@p-w", 1320, 440, 490, 130, "the player", 54, "on")
+          + txt("@p-n", 1320, 610, "+364 holds<br>00994BA8", "m", fs=46)
+          + txt("@p-n2", 1320, 740, "the weapon", "m", fs=46, color=ACC),
           js="""
     wipe("#@p-t", <<more-0.3>>, 0.5);
     land("#@p-x", 0.2, 1.03, 0.5);
@@ -312,15 +338,16 @@ scenes = [
 
     Scene("hex2", "Third scan: who holds the player's address? Forty-one results. The red ones are leftovers on the stack, "
                   "already overwritten. But in the middle of the list: three green addresses.",
-          body=txt("@p-t", 120, 80, "who holds the player?", "h", fs=80) + hex2.html()
-          + hex2.mark("@p-m1", 0, 110, 76, 22, pad=4) + hex2.mark("@p-m2", 212, 155, 220, 292, pad=3)
+          body=txt("@p-t", 120, 66, "who holds the player?", "h", fs=80) + hex2.html() + hex2v.html()
+          + hex2.mark("@p-m1", 0, 110, 76, 22, pad=4) + hex2.mark("@p-m2", 212, 155, 220, 293, pad=7)
           + hex2.mark("@p-m3", 4, 449, 440, 64, pad=3)
-          + tile("@p-f", 1310, 220, 490, 140, "Found: 41", 66)
-          + tag("@p-g1", 1310, 440, "red: stack leftovers", 34)
-          + tag("@p-g2", 1310, 640, "three green", 44),
+          + tile("@p-f", 1000, 340, 490, 140, "Found: 41", 66)
+          + tag("@p-g1", 1000, 570, "red: stack leftovers", 40)
+          + tag("@p-g2", 1000, 800, "three green", 48),
           js="""
     wipe("#@p-t", <<who-0.2>>, 0.5);
     land("#@p-ce", 0.2, 1.03, 0.5);
+    land("#@p-v", <<holds>>, 1.03, 0.4);
     land("#@p-m1", <<forty-one-0.2>>, 1.3); land("#@p-f", <<forty-one>>);
     land("#@p-m2", <<red>>, 1.03); land("#@p-g1", <<leftovers-0.3>>);
     tl.to("#@p-m2", { opacity: 0, duration: 0.3 }, <<but>>);
@@ -344,6 +371,7 @@ scenes = [
     Scene("chain", "So here is the whole path, as the game walks it. The static pointer gives the player. Player plus three six four gives the weapon. "
                    "Weapon plus one four gives the address of the ammo. And there: twelve, what my shots left in the magazine.",
           body=txt("@p-t", 120, 110, "the path we found, in run 1", "h", fs=84) + chain()
+          + txt("@p-v4", 1530, 580, "one last read", "m", fs=34, color=ACC)
           + txt("@p-c", 120, 760, "read, add, read, add, read", "h", fs=80, color=ACC),
           js="""
     wipe("#@p-t", <<whole-0.3>>, 0.6);
@@ -351,7 +379,7 @@ scenes = [
     wipe("#@p-b0", <<gives>>, 0.3); land("#@p-c1", <<player>>);
     blurIn("#@p-v1", <<three>>); wipe("#@p-b1", <<gives#2>>, 0.3); land("#@p-c2", <<weapon>>);
     blurIn("#@p-v2", <<one>>); wipe("#@p-b2", <<gives#3>>, 0.3);
-    land("#@p-c3", <<twelve>>); blurIn("#@p-v3", <<twelve+0.2>>);
+    land("#@p-c3", <<twelve>>); blurIn("#@p-v3", <<twelve+0.2>>); blurIn("#@p-v4", <<shots>>);
     wipe("#@p-c", <<magazine-0.6>>, 1.0);
 """),
 
@@ -361,8 +389,8 @@ scenes = [
           body=txt("@p-t", 120, 70, "Add Address Manually: Pointer", "h", fs=76) + ptr.html()
           + ptr.mark("@p-m0", 12, 230, 72, 24, pad=3) + ptr.mark("@p-m1", 12, 343, 436, 28, pad=3)
           + ptr.mark("@p-m2", 40, 313, 380, 26, pad=2) + ptr.mark("@p-m3", 40, 283, 380, 26, pad=2) + ptr.mark("@p-m4", 40, 253, 380, 26, pad=2)
-          + tag("@p-g1", 1230, 250, "base: at the bottom", 36)
-          + txt("@p-n", 1230, 400, "offsets go<br>bottom-up:<br>364, 14, 0", "m", fs=50),
+          + tag("@p-g1", 1400, 250, "base: at the bottom", 32)
+          + txt("@p-n", 1410, 400, "offsets go<br>bottom-up:<br>364, 14, 0", "m", fs=50),
           js="""
     wipe("#@p-t", <<add-0.2>>, 0.5);
     land("#@p-d", 0.2, 1.03, 0.5);
@@ -378,8 +406,8 @@ scenes = [
           body=txt("@p-t", 120, 70, "Cheat Engine walks the chain live", "h", fs=76) + ptr.html()
           + ptr.mark("@p-m1", 450, 344, 90, 26, pad=3) + ptr.mark("@p-m2", 450, 314, 208, 26, pad=3)
           + ptr.mark("@p-m3", 450, 254, 170, 26, pad=3) + ptr.mark("@p-m4", 14, 60, 316, 28, pad=3)
-          + tag("@p-g1", 1230, 250, "= 009A63F8", 44) + tile("@p-k", 1230, 420, 300, 170, "12", 110)
-          + txt("@p-n", 1230, 640, "the chain is right", "m", fs=50),
+          + tag("@p-g1", 1410, 250, "= 009A63F8", 44) + tile("@p-k", 1410, 420, 300, 170, "12", 110)
+          + txt("@p-n", 1410, 640, "the chain<br>is right", "m", fs=50),
           js="""
     wipe("#@p-t", 0.3, 0.5);
     land("#@p-m1", <<player>>, 1.1); land("#@p-m2", <<weapon>>, 1.05);
@@ -406,17 +434,17 @@ scenes = [
 """),
 
     # ------------------------------------------------------------------ the automatic way
-    Scene("auto", "That was the manual way. Cheat Engine also has an automatic one. Right click the row: Pointer scan for this "
+    Scene("auto", "That was the manual way. Now the automatic one. Right click the row: Pointer scan for this "
                   "address. It searches for every chain of pointers that ends at our ammo. Two settings matter. Max level: how "
                   "many pointers in a row. I use five. And the maximum offset.",
           body=txt("@p-t", 120, 80, "the automatic way: Pointer scan", "h", fs=76) + psdlg.html()
           + psdlg.mark("@p-m0", 14, 88, 816, 28, pad=3) + psdlg.mark("@p-m1", 425, 302, 212, 30, pad=3) + psdlg.mark("@p-m2", 172, 302, 242, 30, pad=3)
-          + tag("@p-g0", 1420, 290, "this run's<br>ammo address", 34)
-          + tag("@p-g1", 1000, 800, "Max level: 5", 40) + tag("@p-g2", 380, 800, "Maximum offset", 40),
+          + tag("@p-g0", 1600, 300, "this run's<br>ammo address", 30)
+          + tag("@p-g1", 880, 880, "Max level: 5", 40) + tag("@p-g2", 400, 880, "Maximum offset", 40),
           js="""
     wipe("#@p-t", <<automatic-0.3>>, 0.5);
     land("#@p-d", <<right-0.3>>, 1.03, 0.5);
-    land("#@p-m0", <<ends-0.3>>, 1.03); land("#@p-g0", <<ammo>>);
+    land("#@p-m0", <<address-0.3>>, 1.03); land("#@p-g0", <<ammo>>);
     land("#@p-m1", <<max>>, 1.1); land("#@p-g1", <<five-0.3>>);
     land("#@p-m2", <<maximum>>, 1.1); land("#@p-g2", <<maximum+0.2>>);
 """),
@@ -439,8 +467,8 @@ scenes = [
           body=txt("@p-t", 120, 70, "run 3: Rescan memory", "h", fs=80) + rsdlg.html() + rescan.html()
           + rsdlg.mark("@p-m0", 8, 56, 320, 30, pad=3)
           + rescan.mark("@p-m1", 535, 70, 130, 22, pad=4)
-          + card("@p-a", 720, 220, 380, 150, "4196", 80, "soft") + txt("@p-ar", 1130, 235, "&rarr;", "h", fs=100)
-          + tile("@p-b", 1280, 210, 420, 170, "392", 110),
+          + card("@p-a", 820, 210, 380, 150, "4196", 80, "soft") + txt("@p-ar", 1230, 225, "&rarr;", "h", fs=100)
+          + tile("@p-b", 1380, 200, 420, 170, "392", 110),
           js="""
     wipe("#@p-t", <<filter-0.3>>, 0.5);
     land("#@p-d", 0.2, 1.03, 0.5);
@@ -450,7 +478,7 @@ scenes = [
     blurIn("#@p-ar", <<becomes>>); land("#@p-b", <<three>>); land("#@p-m1", <<three>>, 1.3);
 """),
 
-    Scene("short", "Then choose: few offsets, small offsets, and a base inside the game's own module. Now look at the first row. "
+    Scene("short", "Then choose: few offsets, small offsets, and a base inside the game's own module. Look at the first row. "
                   "Our static pointer, and a single offset: one four zero. The player holds the ammo itself, and the weapon only "
                   "points back at it. Both paths are correct.",
           body=txt("@p-t", 120, 80, "which path do you keep?", "h", fs=80) + short.html()
@@ -547,15 +575,15 @@ scenes = [
 """),
 
     Scene("refill", "Back in the game. I fire: fourteen, twelve, ten. Then one tap on the keypad, and the magazine is back at twenty. "
-                    "Cheat Engine wrote it through the pointer, and both ammo rows follow.",
+                    "I fire again, and both ammo rows follow the game. Cheat Engine wrote that twenty through the pointer.",
           body=txt("@p-t", 120, 70, "one key: refill", "h", fs=80)
-          + hk_l.mark("@p-m1", 62, 76, 720, 22, pad=3)
+          + hk_l.mark("@p-m1", 62, 76, 720, 22, pad=3) + hk_l.mark("@p-m2", 62, 148, 720, 22, pad=3)
           + tag("@p-g1", 1380, 620, "numeric 1", 44) + tile("@p-k", 1380, 760, 300, 160, "20", 100),
           media=both(hk_lm, hk_gm),
           js="""
     wipe("#@p-t", 0.3, 0.5);
     land("#@p-g1", <<tap-0.3>>); land("#@p-k", <<twenty-0.2>>);
-    land("#@p-m1", <<both-0.3>>, 1.03);
+    land("#@p-m1", <<both-0.3>>, 1.03); land("#@p-m2", <<both-0.1>>, 1.03);
 """, early=False),
 
     # ------------------------------------------------------------------ recap, practice, next

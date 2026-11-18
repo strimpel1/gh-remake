@@ -1,210 +1,198 @@
 {
- "key": "11fc64847442685e2a65b443584643b8560a4498",
- "text": "That was the manual way. Cheat Engine also has an automatic one. Right click the row: Pointer scan for this address. It searches for every chain of pointers that ends at our ammo. Two settings matter. Max level: how many pointers in a row. I use five. And the maximum offset.",
+ "key": "ca9c5073f034549f5e963d534895661db46f4d68",
+ "text": "That was the manual way. Now the automatic one. Right click the row: Pointer scan for this address. It searches for every chain of pointers that ends at our ammo. Two settings matter. Max level: how many pointers in a row. I use five. And the maximum offset.",
  "words": [
   [
    "That",
-   0.078
+   0.052
   ],
   [
    "was",
-   0.273
+   0.39
   ],
   [
    "the",
-   0.456
+   0.585
   ],
   [
    "manual",
-   0.573
+   0.69
   ],
   [
    "way",
-   1.133
+   1.276
   ],
   [
-   "Cheat",
-   1.888
+   "Now",
+   2.044
   ],
   [
-   "Engine",
-   2.227
-  ],
-  [
-   "also",
-   2.747
-  ],
-  [
-   "has",
-   3.294
-  ],
-  [
-   "an",
-   3.568
+   "the",
+   2.37
   ],
   [
    "automatic",
-   3.789
+   2.565
   ],
   [
    "one",
-   4.349
+   3.242
   ],
   [
    "Right",
-   5.065
+   4.089
   ],
   [
    "click",
-   5.299
+   4.349
   ],
   [
    "the",
-   5.482
+   4.557
   ],
   [
    "row",
-   5.56
+   4.648
   ],
   [
    "Pointer",
-   6.354
+   5.43
   ],
   [
    "scan",
-   6.745
+   5.833
   ],
   [
    "for",
-   7.096
+   6.172
   ],
   [
    "this",
-   7.214
+   6.289
   ],
   [
    "address",
-   7.383
+   6.471
   ],
   [
    "It",
-   8.372
+   7.461
   ],
   [
    "searches",
-   8.49
+   7.565
   ],
   [
    "for",
-   9.102
+   8.125
   ],
   [
    "every",
-   9.44
+   8.451
   ],
   [
    "chain",
-   9.766
+   8.75
   ],
   [
    "of",
-   10.065
+   9.023
   ],
   [
    "pointers",
-   10.143
+   9.102
   ],
   [
    "that",
-   10.651
+   9.583
   ],
   [
    "ends",
-   10.924
+   9.831
   ],
   [
    "at",
-   11.146
+   10.039
   ],
   [
    "our",
-   11.224
+   10.117
   ],
   [
    "ammo",
-   11.367
+   10.286
   ],
   [
    "Two",
-   12.279
+   11.159
   ],
   [
    "settings",
-   12.565
+   11.471
   ],
   [
    "matter",
-   13.034
+   11.979
   ],
   [
    "Max",
-   13.828
+   12.798
   ],
   [
    "level",
-   14.257
+   13.228
   ],
   [
    "how",
-   15.078
+   13.97
   ],
   [
    "many",
-   15.234
+   14.101
   ],
   [
    "pointers",
-   15.533
+   14.426
   ],
   [
    "in",
-   16.132
+   14.986
   ],
   [
    "a",
-   16.223
+   15.064
   ],
   [
    "row",
-   16.276
+   15.129
   ],
   [
    "I",
-   17.148
+   15.951
   ],
   [
    "use",
-   17.292
+   16.029
   ],
   [
    "five",
-   17.656
+   16.354
   ],
   [
    "And",
-   18.581
+   17.24
   ],
   [
    "the",
-   19.01
+   17.76
   ],
   [
    "maximum",
-   19.089
+   17.852
   ],
   [
    "offset",
-   19.661
+   18.385
   ]
  ]
 }
