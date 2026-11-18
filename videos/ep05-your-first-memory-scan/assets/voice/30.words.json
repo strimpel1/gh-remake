@@ -1,6 +1,6 @@
 {
- "key": "03156940530737cc4fc5a0809bf482c9bd78f96d",
- "text": "So: value type float. And because a float is rarely a round number, the scan type is Value between: eighty-four and eighty-five. One result. I use some energy again, scan between eighty and eighty-one, and here it is in the address list: eighty point seven four.",
+ "key": "da98390d90c3ed7324c74c96553ddae5e5051dcb",
+ "text": "So: value type float. And because a float is rarely a round number, the scan type is Value between: eighty-four and eighty-five. One result. I use some energy again, scan between eighty and eighty-one, and here it is in the address list: about eighty point seven four.",
  "words": [
   [
    "So",
@@ -8,183 +8,187 @@
   ],
   [
    "value",
-   1.107
+   0.872
   ],
   [
    "type",
-   1.471
+   1.237
   ],
   [
    "float",
-   1.758
+   1.51
   ],
   [
    "And",
-   2.63
+   2.344
   ],
   [
    "because",
-   2.904
+   2.669
   ],
   [
    "a",
-   3.203
+   2.956
   ],
   [
    "float",
-   3.268
+   3.034
   ],
   [
    "is",
-   3.724
+   3.503
   ],
   [
    "rarely",
-   4.01
+   3.763
   ],
   [
    "a",
-   4.401
+   4.141
   ],
   [
    "round",
-   4.466
+   4.206
   ],
   [
    "number",
-   4.74
+   4.479
   ],
   [
    "the",
-   5.339
+   5.078
   ],
   [
    "scan",
-   5.43
+   5.182
   ],
   [
    "type",
-   5.794
+   5.547
   ],
   [
    "is",
-   6.068
+   5.82
   ],
   [
    "Value",
-   6.211
+   5.951
   ],
   [
    "between",
-   6.562
+   6.302
   ],
   [
    "eighty-four",
-   7.63
+   7.383
   ],
   [
    "and",
-   8.398
+   8.138
   ],
   [
    "eighty-five",
-   8.698
+   8.398
   ],
   [
    "One",
-   9.792
+   9.492
   ],
   [
    "result",
-   10.078
+   9.779
   ],
   [
    "I",
-   11.029
+   10.703
   ],
   [
    "use",
-   11.159
+   10.781
   ],
   [
    "some",
-   11.419
+   11.042
   ],
   [
    "energy",
-   11.693
+   11.315
   ],
   [
    "again",
-   12.031
+   11.654
   ],
   [
    "scan",
-   12.708
+   12.331
   ],
   [
    "between",
-   12.982
+   12.591
   ],
   [
    "eighty",
-   13.411
+   13.034
   ],
   [
    "and",
-   13.776
+   13.424
   ],
   [
    "eighty-one",
-   13.984
+   13.633
   ],
   [
    "and",
-   14.948
+   14.557
   ],
   [
    "here",
-   15.156
+   14.74
   ],
   [
    "it",
-   15.495
+   15.065
   ],
   [
    "is",
-   15.742
+   15.156
   ],
   [
    "in",
-   15.872
+   15.286
   ],
   [
    "the",
-   15.938
+   15.352
   ],
   [
    "address",
-   16.016
+   15.43
   ],
   [
    "list",
-   16.458
+   15.859
+  ],
+  [
+   "about",
+   16.602
   ],
   [
    "eighty",
-   17.526
+   17.018
   ],
   [
    "point",
-   17.721
+   17.24
   ],
   [
    "seven",
-   18.034
+   17.565
   ],
   [
    "four",
-   18.333
+   17.865
   ]
  ]
 }

@@ -1,6 +1,6 @@
 {
- "key": "720c60cbb76596dda79699c13b76163df53a82c2",
- "text": "The value is there. I asked with the wrong type. This program keeps energy as a float, eighty-four point zero four, and prints only the whole part. As four bytes, those same bytes are a completely different number.",
+ "key": "26ad6d796a7a3355056e37dd0e524aa53934d2dd",
+ "text": "The value is there. I asked with the wrong type. This program keeps energy as a float, about eighty-four point zero four, and prints only the whole part. As four bytes, those same bytes are a completely different number.",
  "words": [
   [
    "The",
@@ -8,151 +8,155 @@
   ],
   [
    "value",
-   0.169
+   0.156
   ],
   [
    "is",
-   0.781
+   0.729
   ],
   [
    "there",
-   0.938
+   0.898
   ],
   [
    "I",
-   1.784
+   1.693
   ],
   [
    "asked",
-   1.992
+   1.901
   ],
   [
    "with",
-   2.383
+   2.331
   ],
   [
    "the",
-   2.513
+   2.435
   ],
   [
    "wrong",
-   2.617
+   2.539
   ],
   [
    "type",
-   2.969
+   2.917
   ],
   [
    "This",
-   3.854
+   3.815
   ],
   [
    "program",
-   4.062
+   4.01
   ],
   [
    "keeps",
-   4.648
+   4.596
   ],
   [
    "energy",
-   5.0
+   4.948
   ],
   [
    "as",
-   5.391
+   5.365
   ],
   [
    "a",
-   5.508
+   5.482
   ],
   [
    "float",
-   5.573
+   5.547
+  ],
+  [
+   "about",
+   6.315
   ],
   [
    "eighty-four",
-   6.471
+   6.719
   ],
   [
    "point",
-   6.953
+   7.201
   ],
   [
    "zero",
-   7.214
+   7.487
   ],
   [
    "four",
-   7.565
+   7.799
   ],
   [
    "and",
-   8.216
+   8.581
   ],
   [
    "prints",
-   8.451
+   8.815
   ],
   [
    "only",
-   8.906
+   9.284
   ],
   [
    "the",
-   9.18
+   9.557
   ],
   [
    "whole",
-   9.271
+   9.648
   ],
   [
    "part",
-   9.544
+   9.896
   ],
   [
    "As",
-   10.339
+   10.703
   ],
   [
    "four",
-   10.612
+   10.99
   ],
   [
    "bytes",
-   10.951
+   11.341
   ],
   [
    "those",
-   11.823
+   12.253
   ],
   [
    "same",
-   12.083
+   12.513
   ],
   [
    "bytes",
-   12.448
+   12.904
   ],
   [
    "are",
-   12.93
+   13.385
   ],
   [
    "a",
-   13.177
+   13.633
   ],
   [
    "completely",
-   13.242
+   13.685
   ],
   [
    "different",
-   13.867
+   14.31
   ],
   [
    "number",
-   14.141
+   14.57
   ]
  ]
 }

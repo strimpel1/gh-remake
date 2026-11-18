@@ -126,9 +126,12 @@ Verified in AssaultCube 1.3.0.2 (32-bit, image base 00400000, code addresses are
   The Processes tab shows `ac_client.exe`; the Applications tab shows window titles. Indexing an empty list from Lua
   opens the Lua Engine error window.
 - AssaultCube, one run: Exact Value / 4 Bytes scan for magazine 20 found 2,253; Next Scan 14 left 2; Next Scan 10 left
-  the same 2: `player+140` (the real magazine) and one more address outside the player (182C606C in that run). Writing to
-  the second one does not change the game, and the game overwrites it on the next shot. Under a freeze of the real one
-  the second keeps counting down.
+  the same 2: `player+140` (the magazine the game shows) and one more address outside the player (182C606C in that run).
+  Writing 99 to the second one does not change the counter on screen. Written to 99 while the first also held 99, both
+  went 99, 97, 95 with the shots, so the game subtracts from the second one too. Under a freeze of the first at 95 the
+  second kept counting down on its own (95, 93, 91, 90, 89, 87): it is a second counter the picture does not use, not a
+  mirror of the first. What it is has not been identified; do not call it "a copy" (no capture shows the game
+  overwriting it with the first one's value).
 - One click of `fire` with a 0.05 s press spends two rounds (automatic fire).
 - After a restart the old magazine address still showed the frozen value, because the freeze was still ticked when the
   game was closed: untick it before closing. The magazine address changed between two runs (00819370, then 00846288).
@@ -138,7 +141,8 @@ Verified in AssaultCube 1.3.0.2 (32-bit, image base 00400000, code addresses are
 - `scanme.exe` (64-bit, `videos/ep05-your-first-memory-scan/lab`): gold 250 as 4 Bytes gives 2 addresses after one
   change (the value and its display copy; the copy snaps back within 0.1 s); health as Float, Unknown initial value
   59,392, Decreased 7, Unchanged 7, Increased 1 (value 92.5); energy 87 as 4 Bytes gives 0 after one change, Float with
-  Value between finds it (84.04, then 80.74).
+  Value between finds it (84.03999..., then 80.73999023; as 4 Bytes the first is 1118311546, read from the running
+  program).
 
 ## Pointers, pointer scans, tables and hotkeys (episode 6)
 
@@ -187,3 +191,64 @@ Verified in AssaultCube 1.3.0.2 (three runs in one session: player at 009A62B8, 
 - A plain address from run 1 (009A63F8) read 65537 in run 2 and 11358 in run 3.
 - `vault.exe` (episode 6 practice, 64-bit, `/Od`): the coins are written by `mov [rcx+14],eax` with RCX = the player; an 8-byte scan for
   the player finds 3 addresses, one static: `vault.exe+23B80`.
+
+## Changing code: NOP, Auto Assemble scripts, shared code, structures (episode 7)
+
+| Script | What it does |
+|---|---|
+| `ep07_run_ac.sh` | Starts the game the default way (an empty map, no bots); the command-line bot variants in it did not work |
+| `ep07_cmd.py "<cubescript>"` | Types a console command into the game with real scan codes (opens the console with `/`, no ESC) |
+| `ep07_key.py "ESC DOWN ENTER t:text w:2" name` | Sends menu keys with scan codes, then screenshots the game |
+| `ep07_cap.py lua/forms/comps/menu/shot/game/ce/truth/bytes/restore/stop` | Episode 7 layer over `ep06_cap.py`; `restore` writes the original bytes back at `+C73EF` |
+| `ep07_run.py <stage> ...` | The capture session in stages: `setup nop1 nop2 nopclip rest1 rest2 restclip aa1 aa2 v1 assign jmp off toggle dis_open dis_scroll bots chg v1test edit_v2 v2save v2on v2proof` |
+| `ep07_practice.py` | Does the whole practice task of episode 7 on `patchme.exe` through Lua and prints the ammo after each step |
+| `ce/ep07.CT`, `ce/ep07_assaultcube.CT` | The empty command-channel table; the table saved at the end of the session (ammo pointer + the script, version 2) |
+
+How it works:
+- **Bots work** when the commands are typed into the game's own console after it has started: `mode 7`, then `map ac_desert`
+  (wait about 6 s), then `addnbot 3 RVSF good` and `addnbot 4 CLA good`. That is a bot team deathmatch in the same process (the
+  player address and Cheat Engine's attachment survive). `pywinauto.send_keys` does not reach the game (SDL2 wants scan codes):
+  use `keybd_event(vk, MapVirtualKey(vk, 0))` as `ep07_cmd.py` does. `tmp_mode = 8; ...; startbotmap` on the command line
+  (`run_ac.sh`) starts an empty map, and adding bots there by hand makes the game answer that the current game mode does not
+  support bots: set `mode 7` and load the map first. Bots of skill "good" were firing within seconds.
+- The view is turned with relative mouse moves (`mouse_event(MOUSEEVENTF_MOVE, dx, dy)`); the default start looks at a dark wall.
+- Memory Viewer menu items by name (Lua): `miReplacewithnops` (asks for a name in a small "Code:" dialog whose OK needs a real
+  click or Enter), `AutoInject1` = Tools, Auto Assemble, `Findoutwhataddressesthisinstructionaccesses1`, `miDissectData2`.
+  Set `DisassemblerView.TopAddress` first and `SelectedAddress` second, or the selection follows the top line.
+- The NOP entry lands in the Advanced Options form (class `TAdvancedOptions`, list `lvCodelist`); `miRestoreWithOriginal.doClick()`
+  with the entry selected puts the bytes back.
+- Auto Assemble window: class `TfrmAutoInject`, editor `Assemblescreen` (`.Lines.Text` reads and sets the script), template items
+  `CheatTablecompliantcodee1` and `Codeinjection1` (its "Code inject template" dialog needs a real click on OK),
+  `Assigntocurrentcheattable1`. The main form's `Changescript1` reopens a table row's script; the editor's OK is `btnExecute`.
+- "Accessed addresses" window: class `TfrmChangedAddresses`, list `Changedlist` (address, value, count), `Showregisterstates1`
+  opens a `TRegisters` window for the selected row, `OKButton` stops. New windows open on the second monitor: move them
+  (`.Left/.Top`) below the game before a screenshot, and never over the game.
+- Structure dissect: class `TfrmStructures2`; `Column[0].AddressText = '008D6B08'` sets the address (typing into its edit box
+  did not), `Definenewstructure1` opens the name dialog (`edtStructName`, `btnOk`), `MainStruct.Element[i].Offset/.Name`,
+  `addColumn()` adds a second address, `HeaderControl1.Sections[i].Width` widens the columns. Scroll with Down keys in the tree.
+- A Lua breakpoint callback (`debug_setBreakpoint(addr, 1, bptExecute, function() ... debug_continueFromBreakpoint(co_run) return 1 end)`)
+  logs registers for every hit without stopping the game.
+
+Verified in AssaultCube 1.3.0.2 (two sessions):
+- Bytes at `ac_client.exe+C73EC`: `8B 46 14` mov eax,[esi+14] / `FF 08` dec [eax] / `8D 44 24 1C` lea eax,[esp+1C] / `50` push eax /
+  `51` push ecx / `8B CE` mov ecx,esi / `E8 42 1D 00 00` call +C9140 / `5F 5E` pop edi, pop esi.
+- "Replace with code that does nothing" on `+C73EF` writes `90 90`; five clicks of fire left the magazine at 20; restoring gives
+  `FF 08` back and the count drops again (two rounds per click).
+- Cheat Engine's Code injection template on `+C73EF` relocates `dec [eax]` and `lea eax,[esp+1C]` (6 bytes), writes
+  `jmp newmem` (E9 + 4 bytes) + one `nop`, `returnhere` = `+C73F5`, and its [DISABLE] is `dealloc(newmem)` + `db FF 08 8D 44 24 1C`.
+  The allocation landed at 00A70000, 00A80000, 00E20000, 008A0000 in different enables (the jump's bytes differ each time).
+- The same instruction serves every player: with 7 bots, "Find out what addresses this instruction accesses" listed 13
+  addresses after about 30 s (one of them the local magazine). A bot uses several weapons, so one bot shows up with several
+  addresses (owner+12C, +130, +134, +138, +140, +148 were seen: the magazine array, one slot per weapon).
+- At `+C73EF`, EDI = the owner of the gun for bots too (EDI + 205 is that bot's name); for the local player
+  EDI = `[ac_client.exe+17E0A8]`. `cmp edi,[ac_client.exe+17E0A8]` assembles to `3B 3D A8 E0 57 00`.
+- Script version 1 (the `dec` left out of the relocated code): bots keep their rounds too (logged at the new memory: a bot
+  with 4 hits, magazine 20 before and after). Version 2 (`cmp edi,[ac_client.exe+17E0A8]` / `je originalcode` / `dec [eax]`):
+  the local magazine stayed at 10 through 5 clicks while 7 bot addresses went through the `dec` and counted down.
+  `cmp` changes the flags, but the instructions after the hook (`lea`, `push`, `push`, `mov`, `call`) do not read them.
+- In the structure view of the player: +EC = 100 (health, 4 Bytes), +140 = the magazine, +11C = reserve ammo, +0 is a pointer
+  (0054D0A4 for the local player, 0054D07C for a bot: different classes), +205 the name.
+- `patchme.exe` (64-bit, `videos/ep07-changing-the-code/lab`): the ammo is written by `89 41 08` mov [rcx+08],eax at
+  `patchme.exe+1022`, followed by `48 8B 44 24 08`; RCX is the player; the pointer to the local player is at `patchme.exe+25B50`.
+  NOP: nobody pays. A script with `cmp rcx,[patchme.exe+25B50]` / `je exit` leaves "you" alone while both bots count down
+  (needs `alloc(newmem,2048,"patchme.exe"+1022)` so the 5-byte jump reaches; Cheat Engine's template adds that by itself).

@@ -1,130 +1,138 @@
 {
- "key": "37825426fe0c7c9509eeeac7dd4201bffb695a9f",
- "text": "And it is not just a picture. I fire, and the game counts down from my number: ninety-seven, ninety-five. And the copy? On the first shot, the game overwrote my ninety-nine.",
+ "key": "eafe9bdc20880c974e438419e43f809b022736d7",
+ "text": "And it is not just a picture. I fire, and the game counts down from my number: ninety-seven, ninety-five. And the second address? It counted down too: the game still writes to it.",
  "words": [
   [
    "And",
-   0.052
+   0.065
   ],
   [
    "it",
-   0.82
+   0.599
   ],
   [
    "is",
-   0.911
+   0.69
   ],
   [
    "not",
-   1.041
+   0.807
   ],
   [
    "just",
-   1.367
+   1.081
   ],
   [
    "a",
-   1.614
+   1.315
   ],
   [
    "picture",
-   1.666
+   1.367
   ],
   [
    "I",
-   2.643
+   2.331
   ],
   [
    "fire",
-   2.799
+   2.487
   ],
   [
    "and",
-   3.594
+   3.281
   ],
   [
    "the",
-   3.698
+   3.372
   ],
   [
    "game",
-   3.776
+   3.464
   ],
   [
    "counts",
-   4.089
+   3.776
   ],
   [
    "down",
-   4.401
+   4.089
   ],
   [
    "from",
-   4.661
+   4.362
   ],
   [
    "my",
-   4.792
+   4.505
   ],
   [
    "number",
-   4.909
+   4.622
   ],
   [
    "ninety-seven",
-   5.859
+   5.612
   ],
   [
    "ninety-five",
-   6.992
+   6.719
   ],
   [
    "And",
-   8.164
+   7.839
   ],
   [
    "the",
-   8.333
+   7.982
   ],
   [
-   "copy",
-   8.424
+   "second",
+   8.073
   ],
   [
-   "On",
-   9.362
+   "address",
+   8.464
+  ],
+  [
+   "It",
+   9.414
+  ],
+  [
+   "counted",
+   9.518
+  ],
+  [
+   "down",
+   9.844
+  ],
+  [
+   "too",
+   10.104
   ],
   [
    "the",
-   9.492
-  ],
-  [
-   "first",
-   9.57
-  ],
-  [
-   "shot",
-   9.896
-  ],
-  [
-   "the",
-   10.547
+   10.872
   ],
   [
    "game",
-   10.664
+   11.003
   ],
   [
-   "overwrote",
-   11.198
+   "still",
+   11.315
   ],
   [
-   "my",
-   11.706
+   "writes",
+   11.641
   ],
   [
-   "ninety-nine",
-   11.797
+   "to",
+   11.927
+  ],
+  [
+   "it",
+   12.083
   ]
  ]
 }

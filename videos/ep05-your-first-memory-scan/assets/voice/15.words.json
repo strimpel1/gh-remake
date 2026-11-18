@@ -1,62 +1,62 @@
 {
- "key": "211f5fbb75220be56220f28e7ad2d06b0eb16285",
- "text": "Which one is the real magazine? Write to each of them, and see which one the game follows. First, the second address: I type ninety-nine. Cheat Engine shows ninety-nine. The game still shows ten. So this one is only a copy.",
+ "key": "03db3b4ff87d96804f4a5945027fca39040bc2aa",
+ "text": "Which one is the real magazine? Write to each of them, and see which one the game follows. First, the second address: I type ninety-nine. Cheat Engine shows ninety-nine. The game still shows ten. So this is not the number the game shows.",
  "words": [
   [
    "Which",
-   0.078
+   0.091
   ],
   [
    "one",
-   0.312
+   0.404
   ],
   [
    "is",
-   0.534
+   0.638
   ],
   [
    "the",
-   0.664
-  ],
-  [
-   "real",
    0.781
   ],
   [
+   "real",
+   0.898
+  ],
+  [
    "magazine",
-   1.12
+   1.276
   ],
   [
    "Write",
-   2.214
+   2.305
   ],
   [
    "to",
-   2.448
+   2.526
   ],
   [
    "each",
-   2.539
+   2.604
   ],
   [
    "of",
-   2.734
-  ],
-  [
-   "them",
    2.812
   ],
   [
+   "them",
+   2.878
+  ],
+  [
    "and",
-   3.151
+   3.19
   ],
   [
    "see",
-   3.424
+   3.451
   ],
   [
    "which",
-   3.828
+   3.802
   ],
   [
    "one",
@@ -64,107 +64,115 @@
   ],
   [
    "the",
-   4.206
+   4.193
   ],
   [
    "game",
-   4.297
+   4.284
   ],
   [
    "follows",
-   4.596
+   4.583
   ],
   [
    "First",
-   5.729
+   5.768
   ],
   [
    "the",
-   6.276
+   6.406
   ],
   [
    "second",
-   6.393
+   6.497
   ],
   [
    "address",
-   6.758
+   6.836
   ],
   [
    "I",
-   7.539
+   7.812
   ],
   [
    "type",
-   7.656
+   7.917
   ],
   [
    "ninety-nine",
-   8.008
+   8.294
   ],
   [
    "Cheat",
-   9.219
-  ],
-  [
-   "Engine",
    9.583
   ],
   [
+   "Engine",
+   9.974
+  ],
+  [
    "shows",
-   10.026
+   10.456
   ],
   [
    "ninety-nine",
-   10.482
+   10.911
   ],
   [
    "The",
-   11.758
+   12.188
   ],
   [
    "game",
-   11.875
+   12.318
   ],
   [
    "still",
-   12.253
+   12.682
   ],
   [
    "shows",
-   12.565
+   13.06
   ],
   [
    "ten",
-   12.891
+   13.411
   ],
   [
    "So",
-   13.685
+   14.18
   ],
   [
    "this",
-   14.01
-  ],
-  [
-   "one",
-   14.245
+   14.505
   ],
   [
    "is",
-   14.44
+   14.753
   ],
   [
-   "only",
-   14.766
+   "not",
+   14.87
   ],
   [
-   "a",
-   15.052
+   "the",
+   15.169
   ],
   [
-   "copy",
-   15.104
+   "number",
+   15.247
+  ],
+  [
+   "the",
+   15.521
+  ],
+  [
+   "game",
+   15.625
+  ],
+  [
+   "shows",
+   15.898
   ]
  ]
 }

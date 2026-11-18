@@ -74,8 +74,8 @@
   },
   {
    "id": "15",
-   "duration": 15.929,
-   "text": "Which one is the real magazine? Write to each of them, and see which one the game follows. First, the second address: I type ninety-nine. Cheat Engine shows ninety-nine. The game still shows ten. So this one is only a copy."
+   "duration": 16.844,
+   "text": "Which one is the real magazine? Write to each of them, and see which one the game follows. First, the second address: I type ninety-nine. Cheat Engine shows ninety-nine. The game still shows ten. So this is not the number the game shows."
   },
   {
    "id": "16",
@@ -84,8 +84,8 @@
   },
   {
    "id": "17",
-   "duration": 12.988,
-   "text": "And it is not just a picture. I fire, and the game counts down from my number: ninety-seven, ninety-five. And the copy? On the first shot, the game overwrote my ninety-nine."
+   "duration": 12.607,
+   "text": "And it is not just a picture. I fire, and the game counts down from my number: ninety-seven, ninety-five. And the second address? It counted down too: the game still writes to it."
   },
   {
    "id": "18",
@@ -94,8 +94,8 @@
   },
   {
    "id": "19",
-   "duration": 17.301,
-   "text": "But a freeze does not stop the game's code. The game still subtracts. Cheat Engine only puts the old number back afterwards. The copy shows it: it kept counting, down to eighty-seven. The real fix is to change the code. That is episode seven."
+   "duration": 18.319,
+   "text": "But a freeze does not stop the game's code. The game still subtracts. Cheat Engine only puts the old number back afterwards. The second address shows it: the game kept subtracting there, down to eighty-seven. The real fix is to change the code. That is episode seven."
   },
   {
    "id": "20",
@@ -144,13 +144,13 @@
   },
   {
    "id": "29",
-   "duration": 14.833,
-   "text": "The value is there. I asked with the wrong type. This program keeps energy as a float, eighty-four point zero four, and prints only the whole part. As four bytes, those same bytes are a completely different number."
+   "duration": 15.293,
+   "text": "The value is there. I asked with the wrong type. This program keeps energy as a float, about eighty-four point zero four, and prints only the whole part. As four bytes, those same bytes are a completely different number."
   },
   {
    "id": "30",
-   "duration": 19.073,
-   "text": "So: value type float. And because a float is rarely a round number, the scan type is Value between: eighty-four and eighty-five. One result. I use some energy again, scan between eighty and eighty-one, and here it is in the address list: eighty point seven four."
+   "duration": 18.589,
+   "text": "So: value type float. And because a float is rarely a round number, the scan type is Value between: eighty-four and eighty-five. One result. I use some energy again, scan between eighty and eighty-one, and here it is in the address list: about eighty point seven four."
   },
   {
    "id": "31",
@@ -159,8 +159,8 @@
   },
   {
    "id": "32",
-   "duration": 18.558,
-   "text": "One last thing: the bad news. I close the game, and start it again. The game says twenty. My saved address shows ninety-five, only because the freeze left it there. And the magazine now lives somewhere else: zero zero eight four, six two eight eight."
+   "duration": 19.078,
+   "text": "Now the bad news. I restart the game, and attach Cheat Engine again. The game says twenty. My saved address shows ninety-five, only because the freeze left it there. And the magazine now lives somewhere else: zero zero eight four, six two eight eight."
   },
   {
    "id": "33",

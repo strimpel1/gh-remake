@@ -1,9 +1,10 @@
 """Cut the raw screen recordings of the capture sessions (lab/shots/ep05, one wide rectangle holding the target window and
 Cheat Engine) into per-window clips and stills for build.py. Every crop is exactly one window's own rectangle.
-Segments only remove waiting time, and a clip may hold its first frame while the narration sets it up; nothing is sped up.   Run: python prep_clips.py
+Segments only remove waiting time, and a clip may hold its first frame while the narration sets it up; nothing is sped up.   Run: python prep_clips.py   (or: python prep_clips.py a1c_ce   to cut only the named clips)
 """
 import shutil
 import subprocess
+import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -13,6 +14,7 @@ WIN = {"ce": (1618, 0, 888, 932), "game": (9, 0, 1584, 930), "con": (8, 0, 972, 
 
 CUTS = {  # out name: (raw recording, window, [(from, to), ...], seconds to hold the first frame before it starts)
     "a1_ce": ("a1_first", "ce", [(1.0, 11.5)], 0),
+    "a1c_ce": ("a1_first", "ce", [(1.0, 11.5)], 4.6),      # cold open: the result appears as the voice says "it answers"
     "a2f_game": ("a2_fire", "game", [(0.0, 8.5)], 0),
     "a2n_ce": ("a2_next", "ce", [(1.0, 11.0)], 0),
     "a3n_ce": ("a3_next", "ce", [(0.8, 9.5)], 0),
@@ -38,7 +40,10 @@ COPY = ["a_ce_empty", "a_proclist", "a_ce_attached", "a_scan1", "a_scan2", "a_sc
 
 CLIPS.mkdir(parents=True, exist_ok=True)
 SHOTS.mkdir(parents=True, exist_ok=True)
+ONLY = sys.argv[1:]
 for name, (raw, wins, segs, lead) in CUTS.items():
+    if ONLY and name not in ONLY:
+        continue
     for win in wins.split("+"):
         out = name if "+" not in wins else f"{name}_{win}"
         x, y, w, h = WIN[win]
@@ -47,6 +52,8 @@ for name, (raw, wins, segs, lead) in CUTS.items():
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(RAW / f"{raw}.mp4"), "-filter_complex", graph, "-map", "[o]", "-r", "30",
                         "-c:v", "libx264", "-crf", "16", "-pix_fmt", "yuv420p", "-g", "30", "-an", str(CLIPS / f"{out}.mp4")], check=True)
         print(out, lead + sum(b - a for a, b in segs))
+if ONLY:
+    sys.exit(0)
 for out, (raw, win, t) in FRAMES.items():
     x, y, w, h = WIN[win]
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", str(t), "-i", str(RAW / f"{raw}.mp4"), "-vf", f"crop={w}:{h}:{x}:{y}", "-frames:v", "1",

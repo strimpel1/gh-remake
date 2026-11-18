@@ -1,6 +1,6 @@
 {
- "key": "1f5aae410db275392d57773c5a10e42b5c96648a",
- "text": "But a freeze does not stop the game's code. The game still subtracts. Cheat Engine only puts the old number back afterwards. The copy shows it: it kept counting, down to eighty-seven. The real fix is to change the code. That is episode seven.",
+ "key": "6e94aa911456a0db4ef1716111f391fd8bc911de",
+ "text": "But a freeze does not stop the game's code. The game still subtracts. Cheat Engine only puts the old number back afterwards. The second address shows it: the game kept subtracting there, down to eighty-seven. The real fix is to change the code. That is episode seven.",
  "words": [
   [
    "But",
@@ -8,175 +8,187 @@
   ],
   [
    "a",
-   0.339
-  ],
-  [
-   "freeze",
    0.404
   ],
   [
+   "freeze",
+   0.456
+  ],
+  [
    "does",
-   0.951
+   1.055
   ],
   [
    "not",
-   1.133
+   1.224
   ],
   [
    "stop",
-   1.419
+   1.497
   ],
   [
    "the",
-   1.719
-  ],
-  [
-   "game's",
    1.81
   ],
   [
+   "game's",
+   1.875
+  ],
+  [
    "code",
-   2.174
+   2.253
   ],
   [
    "The",
-   3.021
-  ],
-  [
-   "game",
    3.125
   ],
   [
+   "game",
+   3.203
+  ],
+  [
    "still",
-   3.464
+   3.555
   ],
   [
    "subtracts",
-   3.802
+   3.906
   ],
   [
    "Cheat",
-   4.896
+   4.987
   ],
   [
    "Engine",
-   5.312
+   5.417
   ],
   [
    "only",
-   5.82
+   5.951
   ],
   [
    "puts",
-   6.172
+   6.289
   ],
   [
    "the",
-   6.471
+   6.589
   ],
   [
    "old",
-   6.615
+   6.771
   ],
   [
    "number",
-   6.849
+   7.018
   ],
   [
    "back",
-   7.096
+   7.266
   ],
   [
    "afterwards",
-   7.344
+   7.487
   ],
   [
    "The",
-   8.438
+   8.594
   ],
   [
-   "copy",
-   8.516
+   "second",
+   8.672
+  ],
+  [
+   "address",
+   9.089
   ],
   [
    "shows",
-   8.932
+   9.505
   ],
   [
    "it",
-   9.31
-  ],
-  [
-   "it",
-   10.039
-  ],
-  [
-   "kept",
-   10.117
-  ],
-  [
-   "counting",
-   10.391
-  ],
-  [
-   "down",
-   11.328
-  ],
-  [
-   "to",
-   11.576
-  ],
-  [
-   "eighty-seven",
-   11.706
-  ],
-  [
-   "The",
-   12.852
-  ],
-  [
-   "real",
-   12.943
-  ],
-  [
-   "fix",
-   13.255
-  ],
-  [
-   "is",
-   13.711
-  ],
-  [
-   "to",
-   14.115
-  ],
-  [
-   "change",
-   14.193
+   9.831
   ],
   [
    "the",
-   14.596
+   10.326
   ],
   [
-   "code",
-   14.688
+   "game",
+   10.43
   ],
   [
-   "That",
-   15.521
+   "kept",
+   10.781
+  ],
+  [
+   "subtracting",
+   11.055
+  ],
+  [
+   "there",
+   11.654
+  ],
+  [
+   "down",
+   12.318
+  ],
+  [
+   "to",
+   12.578
+  ],
+  [
+   "eighty-seven",
+   12.721
+  ],
+  [
+   "The",
+   13.88
+  ],
+  [
+   "real",
+   13.984
+  ],
+  [
+   "fix",
+   14.297
   ],
   [
    "is",
-   15.69
+   14.766
+  ],
+  [
+   "to",
+   15.13
+  ],
+  [
+   "change",
+   15.208
+  ],
+  [
+   "the",
+   15.573
+  ],
+  [
+   "code",
+   15.651
+  ],
+  [
+   "That",
+   16.484
+  ],
+  [
+   "is",
+   16.706
   ],
   [
    "episode",
-   15.99
+   16.979
   ],
   [
    "seven",
-   16.497
+   17.5
   ]
  ]
 }

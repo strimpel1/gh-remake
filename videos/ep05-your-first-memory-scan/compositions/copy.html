@@ -34,15 +34,17 @@
   </style>
   <div id="root" data-composition-id="copy" data-width="1920" data-height="1080">
     <div id="s15-media" class="s15-media">
-      <div id="s15-ce" class="s15-shot" style="left: 80px; top: 150px; width: 1760px; height: 197px"><video id="s15-ce-v" class="clip" src="assets/clips/a4_ce_fit0_170.mp4" muted playsinline data-start="0" data-duration="17.0" data-media-start="0" data-track-index="2" style="left: 0.0px; top: -1201.9px; width: 1744.0px; height: 1830.4px"></video></div>
-      <div id="s15-g" class="s15-shot" style="left: 80px; top: 390px; width: 1760px; height: 423px"><video id="s15-g-v" class="clip" src="assets/clips/a4_game_fit0_170.mp4" muted playsinline data-start="0" data-duration="17.0" data-media-start="0" data-track-index="2" style="left: 0.0px; top: -616.6px; width: 1744.0px; height: 1023.9px"></video></div>
+      <div id="s15-ce" class="s15-shot" style="left: 80px; top: 150px; width: 1760px; height: 197px"><video id="s15-ce-v" class="clip" src="assets/clips/a4_ce_fit0_179.mp4" muted playsinline data-start="0" data-duration="17.9" data-media-start="0" data-track-index="2" style="left: 0.0px; top: -1201.9px; width: 1744.0px; height: 1830.4px"></video></div>
+      <div id="s15-g" class="s15-shot" style="left: 80px; top: 390px; width: 1760px; height: 423px"><video id="s15-g-v" class="clip" src="assets/clips/a4_game_fit0_179.mp4" muted playsinline data-start="0" data-duration="17.9" data-media-start="0" data-track-index="2" style="left: 0.0px; top: -616.6px; width: 1744.0px; height: 1023.9px"></video></div>
     </div>
-    <div id="s15-stage" class="clip s15-stage" data-start="0" data-duration="17.0">
+    <div id="s15-stage" class="clip s15-stage" data-start="0" data-duration="17.9">
       <div id="s15-m1" class="s15-mark" style="left: 1404px; top: 266px; width: 126px; height: 51px"></div>
       <div id="s15-m2" class="s15-mark" style="left: 606px; top: 715px; width: 231px; height: 88px"></div>
       <div id="s15-g1" class="s15-tag" style="left: 1180px; top: 60px; font-size: 36px">Cheat Engine: the address list</div>
       <div id="s15-g2" class="s15-tag" style="left: 80px; top: 840px; font-size: 36px">the game</div>
-      <div id="s15-c" class="s15-h" style="left: 420px; top: 850px; font-size: 60px">second address = 99, game = 10: <span class="s15-acc">a copy</span></div>
+      <div id="s15-g3" class="s15-tag" style="left: 80px; top: 60px; font-size: 36px">double click the value, type 99, OK</div>
+      <div id="s15-c" class="s15-h" style="left: 420px; top: 835px; font-size: 56px">second address = 99, game = 10:</div>
+      <div id="s15-c2" class="s15-h" style="left: 420px; top: 910px; font-size: 56px"><span class="s15-acc">not the one the game shows</span></div>
     </div>
   </div>
   <script>
@@ -60,11 +62,12 @@
     blurIn("#s15-stage, #s15-media", 0, 0.25);
 
     land("#s15-g1", 0.4); land("#s15-g2", 0.6);
-    land("#s15-m1", 10.43, 1.4);
-    land("#s15-m2", 12.65, 1.4);
-    wipe("#s15-c", 13.89, 0.8);
+    land("#s15-g3", 8.02);
+    land("#s15-m1", 10.86, 1.4);
+    land("#s15-m2", 13.08, 1.4);
+    wipe("#s15-c", 12.88, 0.8); wipe("#s15-c2", 14.38, 0.8);
 
-    blurOut("#s15-stage, #s15-media", 16.7, 0.25);
+    blurOut("#s15-stage, #s15-media", 17.6, 0.25);
     window.__timelines["copy"] = tl;
   </script>
 </template>

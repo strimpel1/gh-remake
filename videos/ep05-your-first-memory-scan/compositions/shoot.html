@@ -34,15 +34,16 @@
   </style>
   <div id="root" data-composition-id="shoot" data-width="1920" data-height="1080">
     <div id="s17-media" class="s17-media">
-      <div id="s17-ce" class="s17-shot" style="left: 80px; top: 150px; width: 1760px; height: 197px"><video id="s17-ce-v" class="clip" src="assets/clips/a6_ce_fit0_141.mp4" muted playsinline data-start="0" data-duration="14.1" data-media-start="0" data-track-index="2" style="left: 0.0px; top: -1201.9px; width: 1744.0px; height: 1830.4px"></video></div>
-      <div id="s17-g" class="s17-shot" style="left: 80px; top: 390px; width: 1760px; height: 423px"><video id="s17-g-v" class="clip" src="assets/clips/a6_game_fit0_141.mp4" muted playsinline data-start="0" data-duration="14.1" data-media-start="0" data-track-index="2" style="left: 0.0px; top: -616.6px; width: 1744.0px; height: 1023.9px"></video></div>
+      <div id="s17-ce" class="s17-shot" style="left: 80px; top: 150px; width: 1760px; height: 197px"><video id="s17-ce-v" class="clip" src="assets/clips/a6_ce_fit0_137.mp4" muted playsinline data-start="0" data-duration="13.7" data-media-start="0" data-track-index="2" style="left: 0.0px; top: -1201.9px; width: 1744.0px; height: 1830.4px"></video></div>
+      <div id="s17-g" class="s17-shot" style="left: 80px; top: 390px; width: 1760px; height: 423px"><video id="s17-g-v" class="clip" src="assets/clips/a6_game_fit0_137.mp4" muted playsinline data-start="0" data-duration="13.7" data-media-start="0" data-track-index="2" style="left: 0.0px; top: -616.6px; width: 1744.0px; height: 1023.9px"></video></div>
     </div>
-    <div id="s17-stage" class="clip s17-stage" data-start="0" data-duration="14.1">
+    <div id="s17-stage" class="clip s17-stage" data-start="0" data-duration="13.7">
       <div id="s17-m1" class="s17-mark" style="left: 1404px; top: 266px; width: 126px; height: 51px"></div>
       <div id="s17-m2" class="s17-mark" style="left: 606px; top: 715px; width: 231px; height: 88px"></div>
       <div id="s17-g1" class="s17-tag" style="left: 1180px; top: 60px; font-size: 36px">Cheat Engine: the address list</div>
       <div id="s17-g2" class="s17-tag" style="left: 80px; top: 840px; font-size: 36px">the game</div>
-      <div id="s17-c" class="s17-h" style="left: 420px; top: 850px; font-size: 60px">the game uses my number: 99, 97, 95</div>
+      <div id="s17-c" class="s17-h" style="left: 420px; top: 835px; font-size: 56px">the game uses my number: 99, 97, 95</div>
+      <div id="s17-c2" class="s17-h" style="left: 420px; top: 910px; font-size: 56px">the second address counted down too</div>
     </div>
   </div>
   <script>
@@ -60,11 +61,11 @@
     blurIn("#s17-stage, #s17-media", 0, 0.25);
 
     land("#s17-g1", 0.4); land("#s17-g2", 0.6);
-    land("#s17-m2", 4.49, 1.4);
-    wipe("#s17-c", 5.96, 0.8);
-    land("#s17-m1", 8.82, 1.4);
+    land("#s17-m2", 4.18, 1.4);
+    wipe("#s17-c", 5.71, 0.8);
+    land("#s17-m1", 8.47, 1.4); wipe("#s17-c2", 9.72, 0.8);
 
-    blurOut("#s17-stage, #s17-media", 13.8, 0.25);
+    blurOut("#s17-stage, #s17-media", 13.4, 0.25);
     window.__timelines["shoot"] = tl;
   </script>
 </template>

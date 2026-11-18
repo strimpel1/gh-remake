@@ -67,14 +67,14 @@ g20 = shot("@p-g", "game20", 1160, 180, 700, GH)
 g14 = shot("@p-g", "game14", 1160, 180, 700, GH)
 g10 = shot("@p-g", "game10", 1160, 180, 700, GH)
 
-cold_ce, cold_m = clip("@p-ce", "a1_ce", 80, 110, 1100, SCANC, CE)
+cold_ce, cold_m = clip("@p-ce", "a1c_ce", 80, 110, 1100, SCANC, CE)   # a1_ce with its first frame held, so the scan lands on "it answers"
 cold_g = shot("@p-g", "game20", 1220, 110, 620, GH)
 first_ce, first_m = scan_scene("a1_ce", 1.3)
 fire_g, fire_m = clip("@p-g", "a2f_game", 80, 180, 1000, GH, GAME)
 next_ce, next_m = scan_scene("a2n_ce")
 again_ce, again_m = scan_scene("a3n_ce")
 add_ce, add_m = clip("@p-ce", "a3add_ce", 80, 150, 900, BOTH, CE)
-copy_c, copy_g, copy_m = list_game("a4_ce", "a4_game")
+sec_c, sec_g, sec_m = list_game("a4_ce", "a4_game")
 real_c, real_g, real_m = list_game("a5_ce", "a5_game")
 shoot_c, shoot_g, shoot_m = list_game("a6_ce", "a6_game")
 frz_c, frz_g, frz_m = list_game("a7_ce", "a7_game")
@@ -177,7 +177,7 @@ scenes = [
 
     Scene("tour", "The window has three parts. On the right, the question: a value, a scan type, and a value type. On the left, the answers: every address that matched. At the bottom, the address list: the ones you decide to keep.",
           body=txt("@p-t", 80, 50, "three parts", "h", fs=76) + tour.html()
-          + tour.mark("@p-m1", 398, 172, 486, 122, pad=2) + tour.mark("@p-m2", 2, 110, 390, 462, pad=2) + tour.mark("@p-m3", 2, 616, 884, 284, pad=2)
+          + tour.mark("@p-m1", 398, 172, 486, 122, pad=2) + tour.mark("@p-m2", -10, 98, 402, 474, pad=2) + tour.mark("@p-m3", 2, 616, 884, 284, pad=2)
           + card("@p-a", 900, 180, 940, 130, "the question", 60, "on") + txt("@p-al", 900, 330, "value, scan type, value type", "m", fs=46)
           + card("@p-b", 900, 450, 940, 130, "the answers", 60, "on") + txt("@p-bl", 900, 600, "every address that matched", "m", fs=46)
           + card("@p-c", 900, 720, 940, 130, "the address list", 60, "on") + txt("@p-cl", 900, 870, "the ones you decide to keep", "m", fs=46),
@@ -306,40 +306,46 @@ scenes = [
     blurIn("#@p-d", <<seven>>);
 """),
 
-    Scene("copy", "Which one is the real magazine? Write to each of them, and see which one the game follows. First, the second address: I type ninety-nine. Cheat Engine shows ninety-nine. The game still shows ten. So this one is only a copy.",
-          media=copy_m, early=False,
-          body=copy_c.mark("@p-m1", 672, 669, 60, 22, pad=4) + copy_g.mark("@p-m2", *AMMO)
+    Scene("copy", "Which one is the real magazine? Write to each of them, and see which one the game follows. First, the second address: I type ninety-nine. Cheat Engine shows ninety-nine. The game still shows ten. So this is not the number the game shows.",
+          media=sec_m, early=False,
+          body=sec_c.mark("@p-m1", 672, 669, 60, 22, pad=4) + sec_g.mark("@p-m2", *AMMO)
           + tag("@p-g1", 1180, 60, "Cheat Engine: the address list", 36) + tag("@p-g2", 80, 840, "the game", 36)
-          + txt("@p-c", 420, 850, 'second address = 99, game = 10: <span class="@p-acc">a copy</span>', "h", fs=60),
+          + tag("@p-g3", 80, 60, "double click the value, type 99, OK", 36)
+          + txt("@p-c", 420, 835, 'second address = 99, game = 10:', "h", fs=56)
+          + txt("@p-c2", 420, 910, '<span class="@p-acc">not the one the game shows</span>', "h", fs=56),
           js="""
     land("#@p-g1", 0.4); land("#@p-g2", 0.6);
+    land("#@p-g3", <<type-0.3>>);
     land("#@p-m1", <<shows>>, 1.4);
     land("#@p-m2", <<still>>, 1.4);
-    wipe("#@p-c", <<so-0.2>>, 0.8);
+    wipe("#@p-c", <<still-0.2>>, 0.8); wipe("#@p-c2", <<so-0.2>>, 0.8);
 """),
 
     Scene("real", "Now the first address. Ninety-nine again. And this time, the counter in the game jumps to ninety-nine. This is the real one.",
           media=real_m, early=False,
           body=real_c.mark("@p-m1", 672, 645, 60, 22, pad=4) + real_g.mark("@p-m2", *AMMO)
           + tag("@p-g1", 1180, 60, "Cheat Engine: the address list", 36) + tag("@p-g2", 80, 840, "the game", 36)
+          + tag("@p-g3", 80, 60, "double click the value, type 99, OK", 36)
           + txt("@p-c", 420, 850, 'first address = 99, game = 99: <span class="@p-acc">the real one</span>', "h", fs=56),
           js="""
     land("#@p-g1", 0.4); land("#@p-g2", 0.6);
+    land("#@p-g3", <<ninety-nine-0.3>>);
     land("#@p-m1", <<again>>, 1.4);
     land("#@p-m2", <<jumps>>, 1.4);
     wipe("#@p-c", <<jumps+0.5>>, 0.8);
 """),
 
-    Scene("shoot", "And it is not just a picture. I fire, and the game counts down from my number: ninety-seven, ninety-five. And the copy? On the first shot, the game overwrote my ninety-nine.",
+    Scene("shoot", "And it is not just a picture. I fire, and the game counts down from my number: ninety-seven, ninety-five. And the second address? It counted down too: the game still writes to it.",
           media=shoot_m, early=False,
           body=shoot_c.mark("@p-m1", 672, 669, 60, 22, pad=4) + shoot_g.mark("@p-m2", *AMMO)
           + tag("@p-g1", 1180, 60, "Cheat Engine: the address list", 36) + tag("@p-g2", 80, 840, "the game", 36)
-          + txt("@p-c", 420, 850, 'the game uses my number: 99, 97, 95', "h", fs=60),
+          + txt("@p-c", 420, 835, 'the game uses my number: 99, 97, 95', "h", fs=56)
+          + txt("@p-c2", 420, 910, 'the second address counted down too', "h", fs=56),
           js="""
     land("#@p-g1", 0.4); land("#@p-g2", 0.6);
     land("#@p-m2", <<counts>>, 1.4);
     wipe("#@p-c", <<ninety-seven-0.3>>, 0.8);
-    land("#@p-m1", <<copy>>, 1.4);
+    land("#@p-m1", <<second>>, 1.4); wipe("#@p-c2", <<counted-0.2>>, 0.8);
 """),
 
     Scene("freeze", "One more thing the address list can do. Tick the box in the Active column, and keep firing. The counter flickers, but it returns to ninety-five. Cheat Engine has frozen the value: it writes ninety-five back, again and again, several times a second.",
@@ -354,20 +360,20 @@ scenes = [
     land("#@p-m2", <<counter>>, 1.4);
 """),
 
-    Scene("truth", "But a freeze does not stop the game's code. The game still subtracts. Cheat Engine only puts the old number back afterwards. The copy shows it: it kept counting, down to eighty-seven. The real fix is to change the code. That is episode seven.",
+    Scene("truth", "But a freeze does not stop the game's code. The game still subtracts. Cheat Engine only puts the old number back afterwards. The second address shows it: the game kept subtracting there, down to eighty-seven. The real fix is to change the code. That is episode seven.",
           body=frozen.html() + frozen.mark("@p-m1", 672, 669, 60, 22, pad=4) + frozen.mark("@p-m0", 672, 645, 60, 22, pad=4)
           + txt("@p-t", 80, 400, "a freeze does not stop the game's code", "h", fs=76)
           + card("@p-a", 80, 560, 520, 130, "game: 95 - 1", 50) + bar("@p-b1", 600, 618, 80, 14)
           + card("@p-b", 680, 560, 520, 130, "Cheat Engine: 95", 46, "on") + bar("@p-b2", 1200, 618, 80, 14)
           + card("@p-c", 1280, 560, 520, 130, "game: 95 - 1 ...", 46)
-          + txt("@p-d", 80, 760, "the copy kept counting: 87", "m", fs=54)
+          + txt("@p-d", 80, 760, "the second address kept counting: 87", "m", fs=54)
           + txt("@p-e", 80, 860, 'the real fix: <span class="@p-acc">change the code</span> (episode 7)', "m", fs=54),
           js="""
     land("#@p-ce", 0.2, 1.02, 0.4);
     wipe("#@p-t", <<freeze-0.3>>, 0.7);
     land("#@p-a", <<still>>); wipe("#@p-b1", <<only-0.3>>, 0.2); land("#@p-b", <<only>>); land("#@p-m0", <<old>>, 1.4);
     wipe("#@p-b2", <<afterwards-0.2>>, 0.2); land("#@p-c", <<afterwards>>);
-    land("#@p-m1", <<copy>>, 1.4); blurIn("#@p-d", <<eighty-seven-0.4>>);
+    land("#@p-m1", <<second>>, 1.4); blurIn("#@p-d", <<second+0.3>>);
     blurIn("#@p-e", <<change>>);
 """),
 
@@ -384,7 +390,7 @@ scenes = [
     land("#@p-k", 0.2, 1.03, 0.5);
     blurIn("#@p-c", <<practice>>); blurIn("#@p-e", <<scan-0.2>>);
     land("#@p-m1", <<gold>>, 1.2); land("#@p-g1", <<gold+0.2>>);
-    land("#@p-m2", <<health#3>>, 1.2); land("#@p-g2", <<bar#2>>);
+    land("#@p-m2", <<bar>>, 1.2); land("#@p-g2", <<no-0.1>>);
     blurIn("#@p-d", <<nothing>>);
 """),
 
@@ -416,7 +422,7 @@ scenes = [
           + card("@p-a", 1160, 190, 700, 120, "Value Type: Float", 46, "on")
           + card("@p-b", 1160, 340, 700, 120, "Unknown initial value", 44, "on")
           + found("Found: 59,392", 500)
-          + txt("@p-d", 1160, 690, "no list is shown:<br>too many to draw", "m", fs=44, color="#6A9188")
+          + txt("@p-d", 1160, 690, "no list yet: every address<br>is still a candidate", "m", fs=44, color="#6A9188")
           + txt("@p-c", 80, 800, "it remembers every value, to compare later", "m", fs=56)
           + txt("@p-e", 80, 890, "float found nothing useful? repeat with 4 Bytes", "m", fs=42, color="#6A9188"),
           js="""
@@ -516,27 +522,27 @@ scenes = [
     land("#@p-m3", <<zero+0.6>>, 1.4); land("#@p-f", <<zero+0.8>>); wipe("#@p-d", <<empty-0.5>>, 0.6);
 """),
 
-    Scene("wrongtype", "The value is there. I asked with the wrong type. This program keeps energy as a float, eighty-four point zero four, and prints only the whole part. As four bytes, those same bytes are a completely different number.",
+    Scene("wrongtype", "The value is there. I asked with the wrong type. This program keeps energy as a float, about eighty-four point zero four, and prints only the whole part. As four bytes, those same bytes are a completely different number.",
           body=txt("@p-t", 190, 90, "the value is there: wrong type", "h", fs=84)
           + card("@p-a", 190, 290, 520, 150, "on screen", 54, "soft") + tile("@p-a1", 790, 280, 420, 170, "84", 110)
-          + card("@p-b", 190, 510, 520, 150, "in memory (Float)", 42, "soft") + tile("@p-b1", 790, 500, 620, 170, "84.04", 110)
-          + card("@p-c", 190, 730, 520, 150, "read as 4 Bytes", 44, "soft") + card("@p-c1", 790, 730, 900, 150, "1118311547", 90)
+          + card("@p-b", 190, 510, 520, 150, "in memory (Float)", 42, "soft") + tile("@p-b1", 790, 500, 620, 170, "84.0399...", 84)
+          + card("@p-c", 190, 730, 520, 150, "read as 4 Bytes", 44, "soft") + card("@p-c1", 790, 730, 900, 150, "1118311546", 90)
           + txt("@p-d", 1260, 320, "only the whole part", "m", fs=44),
           js="""
     wipe("#@p-t", <<there-0.3>>, 0.6);
     land("#@p-b", <<float-0.3>>); land("#@p-b1", <<eighty-four>>);
     land("#@p-a", <<prints-0.2>>); land("#@p-a1", <<prints>>); blurIn("#@p-d", <<whole>>);
-    land("#@p-c", <<four>>); land("#@p-c1", <<completely-0.3>>);
+    land("#@p-c", <<as-0.2>>); land("#@p-c1", <<four#2>>);
 """),
 
     Scene("between", "So: value type float. And because a float is rarely a round number, the scan type is Value between: eighty-four and eighty-five. "
-                     "One result. I use some energy again, scan between eighty and eighty-one, and here it is in the address list: eighty point seven four.",
+                     "One result. I use some energy again, scan between eighty and eighty-one, and here it is in the address list: about eighty point seven four.",
           media=flt_m,
           body=txt("@p-t", 80, 50, "Float + Value between", "h", fs=72)
           + flt_k.mark("@p-m1", 30, 195, 250, 36, pad=4) + flt_c.mark("@p-m2", 672, 645, 110, 22, pad=4)
           + card("@p-a", 1040, 300, 800, 120, "between 84 and 85", 50, "on")
           + card("@p-b", 1040, 450, 800, 120, "between 80 and 81", 50, "on")
-          + tile("@p-c", 1040, 620, 800, 170, "80.74", 110)
+          + tile("@p-c", 1040, 620, 800, 170, "80.73999023", 90)
           + txt("@p-d", 1040, 830, "the screen says 80", "m", fs=48, color="#6A9188"),
           js="""
     wipe("#@p-t", 0.3, 0.5);
@@ -562,10 +568,10 @@ scenes = [
 """),
 
     # ------------------------------------------------------------------ the restart
-    Scene("restart", "One last thing: the bad news. I close the game, and start it again. The game says twenty. My saved address shows ninety-five, only because the freeze left it there. And the magazine now lives somewhere else: zero zero eight four, six two eight eight.",
+    Scene("restart", "Now the bad news. I restart the game, and attach Cheat Engine again. The game says twenty. My saved address shows ninety-five, only because the freeze left it there. And the magazine now lives somewhere else: zero zero eight four, six two eight eight.",
           body=dead_c.html() + dead_g.html()
           + dead_c.mark("@p-m1", 672, 645, 60, 22, pad=4) + dead_c.mark("@p-m2", 672, 669, 60, 22, pad=4) + dead_g.mark("@p-m3", *AMMO)
-          + tag("@p-g1", 1180, 60, "after a restart: the same list", 36) + tag("@p-g2", 80, 840, "the game", 36)
+          + tag("@p-g1", 1010, 60, "restart, attach again: the same list", 36) + tag("@p-g2", 80, 840, "the game", 36)
           + tile("@p-k", 1100, 850, 520, 120, "00846288", 70) + txt("@p-kl", 420, 870, "the magazine, this run:", "h", fs=54),
           js="""
     land("#@p-ce", 0.2, 1.02, 0.4); land("#@p-g", 0.3, 1.02, 0.4); land("#@p-g1", 0.5); land("#@p-g2", 0.7);

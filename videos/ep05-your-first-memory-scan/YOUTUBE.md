@@ -6,12 +6,12 @@
 
 **Description:**
 
-Game Hacking from Scratch, Episode 5. Until now every address in this series was handed to you. This is the episode where you find one yourself. A first scan for the ammo counter returns 2,253 addresses; two scans later there are 2, and one write tells you which is real. Then the harder case: a health bar with no number at all, found with an unknown initial value scan. Everything is done for real in Cheat Engine, on an open-source game running offline and on a small practice program you can compile yourself.
+Game Hacking from Scratch, Episode 5. Until now every address in this series was handed to you. This is the episode where you find one yourself. A first scan for the ammo counter returns 2,253 addresses; one scan later there are 2, and writing to each tells you which one the game uses. Then the harder case: a health bar with no number at all, found with an unknown initial value scan. Everything is done for real in Cheat Engine, on an open-source game running offline and on a small practice program you can compile yourself.
 
 📚 IN THIS EPISODE
 ✅ Attaching Cheat Engine to a process, and what the three parts of its window are for
 ✅ First Scan and Next Scan: 2,253 results, then 2
-✅ Telling the real address from a copy by writing to each one
+✅ Telling the address the game uses from one it does not, by writing to each
 ✅ Changing a value and freezing it, and what a freeze really does
 ✅ Unknown initial value, then Decreased, Unchanged and Increased: finding a bar with no number
 ✅ Why a scan finds nothing: 4 Bytes against Float, and Value between
@@ -40,14 +40,14 @@ Everything in this series is practiced on open-source games, offline, and on pro
 2:56 The address list
 3:09 Which address is real? Write to it
 3:51 Freezing a value
-4:28 A bar with no number
-5:06 Unknown initial value
-6:22 Two rules for unknown values
-6:40 When a scan finds nothing
-7:32 Which type to try first
-7:50 After a restart
-8:09 Recap
-8:26 Practice
+4:29 A bar with no number
+5:08 Unknown initial value
+6:24 Two rules for unknown values
+6:41 When a scan finds nothing
+7:34 Which type to try first
+7:51 After a restart
+8:11 Recap
+8:28 Practice
 
 ▶️ New to C++? Start with the full C++ course on this channel.
 🤖 Created with AI assistance.

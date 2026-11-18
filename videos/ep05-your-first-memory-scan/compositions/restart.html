@@ -33,13 +33,13 @@
     .s32-media { position: absolute; inset: 0; }
   </style>
   <div id="root" data-composition-id="restart" data-width="1920" data-height="1080">
-    <div id="s32-stage" class="clip s32-stage" data-start="0" data-duration="19.7">
+    <div id="s32-stage" class="clip s32-stage" data-start="0" data-duration="20.2">
       <div id="s32-ce" class="s32-shot" style="left: 80px; top: 150px; width: 1760px; height: 197px"><img src="assets/shots/a_restart2.png" style="left: 0.0px; top: -1201.9px; width: 1744.0px; height: 1830.4px"></div>
       <div id="s32-g" class="s32-shot" style="left: 80px; top: 390px; width: 1760px; height: 424px"><img src="assets/shots/a_restart_game.png" style="left: 0.0px; top: -616.2px; width: 1744.0px; height: 1024.4px"></div>
       <div id="s32-m1" class="s32-mark" style="left: 1404px; top: 219px; width: 126px; height: 51px"></div>
       <div id="s32-m2" class="s32-mark" style="left: 1404px; top: 266px; width: 126px; height: 51px"></div>
       <div id="s32-m3" class="s32-mark" style="left: 606px; top: 715px; width: 231px; height: 88px"></div>
-      <div id="s32-g1" class="s32-tag" style="left: 1180px; top: 60px; font-size: 36px">after a restart: the same list</div>
+      <div id="s32-g1" class="s32-tag" style="left: 1010px; top: 60px; font-size: 36px">restart, attach again: the same list</div>
       <div id="s32-g2" class="s32-tag" style="left: 80px; top: 840px; font-size: 36px">the game</div>
       <div id="s32-k" class="s32-tile" style="left: 1100px; top: 850px; width: 520px; height: 120px; line-height: 96px; font-size: 70px">00846288</div>
       <div id="s32-kl" class="s32-h" style="left: 420px; top: 870px; font-size: 54px">the magazine, this run:</div>
@@ -60,12 +60,12 @@
     blurIn("#s32-stage", 0, 0.25);
 
     land("#s32-ce", 0.2, 1.02, 0.4); land("#s32-g", 0.3, 1.02, 0.4); land("#s32-g1", 0.5); land("#s32-g2", 0.7);
-    land("#s32-m3", 6.48, 1.4);
-    land("#s32-m1", 8.92, 1.4);
-    land("#s32-m2", 14.32, 1.4);
-    blurIn("#s32-kl", 12.84); land("#s32-k", 15.5);
+    land("#s32-m3", 6.95, 1.4);
+    land("#s32-m1", 9.53, 1.4);
+    land("#s32-m2", 14.89, 1.4);
+    blurIn("#s32-kl", 13.48); land("#s32-k", 16.19);
 
-    blurOut("#s32-stage", 19.4, 0.25);
+    blurOut("#s32-stage", 19.9, 0.25);
     window.__timelines["restart"] = tl;
   </script>
 </template>

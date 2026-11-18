@@ -33,14 +33,14 @@
     .s29-media { position: absolute; inset: 0; }
   </style>
   <div id="root" data-composition-id="wrongtype" data-width="1920" data-height="1080">
-    <div id="s29-stage" class="clip s29-stage" data-start="0" data-duration="15.9">
+    <div id="s29-stage" class="clip s29-stage" data-start="0" data-duration="16.4">
       <div id="s29-t" class="s29-h" style="left: 190px; top: 90px; font-size: 84px">the value is there: wrong type</div>
       <div id="s29-a" class="s29-card soft" style="left: 190px; top: 290px; width: 520px; height: 150px; line-height: 134px; font-size: 54px">on screen</div>
       <div id="s29-a1" class="s29-tile" style="left: 790px; top: 280px; width: 420px; height: 170px; line-height: 146px; font-size: 110px">84</div>
       <div id="s29-b" class="s29-card soft" style="left: 190px; top: 510px; width: 520px; height: 150px; line-height: 134px; font-size: 42px">in memory (Float)</div>
-      <div id="s29-b1" class="s29-tile" style="left: 790px; top: 500px; width: 620px; height: 170px; line-height: 146px; font-size: 110px">84.04</div>
+      <div id="s29-b1" class="s29-tile" style="left: 790px; top: 500px; width: 620px; height: 170px; line-height: 146px; font-size: 84px">84.0399...</div>
       <div id="s29-c" class="s29-card soft" style="left: 190px; top: 730px; width: 520px; height: 150px; line-height: 134px; font-size: 44px">read as 4 Bytes</div>
-      <div id="s29-c1" class="s29-card " style="left: 790px; top: 730px; width: 900px; height: 150px; line-height: 134px; font-size: 90px">1118311547</div>
+      <div id="s29-c1" class="s29-card " style="left: 790px; top: 730px; width: 900px; height: 150px; line-height: 134px; font-size: 90px">1118311546</div>
       <div id="s29-d" class="s29-m" style="left: 1260px; top: 320px; font-size: 44px">only the whole part</div>
     </div>
   </div>
@@ -59,11 +59,11 @@
     blurIn("#s29-stage", 0, 0.25);
 
     wipe("#s29-t", 0.3, 0.6);
-    land("#s29-b", 1.0); land("#s29-b1", 6.87);
-    land("#s29-a", 8.65); land("#s29-a1", 8.85); blurIn("#s29-d", 9.67);
-    land("#s29-c", 7.97); land("#s29-c1", 13.34);
+    land("#s29-b", 5.65); land("#s29-b1", 7.12);
+    land("#s29-a", 9.02); land("#s29-a1", 9.21); blurIn("#s29-d", 10.05);
+    land("#s29-c", 1.0); land("#s29-c1", 11.39);
 
-    blurOut("#s29-stage", 15.6, 0.25);
+    blurOut("#s29-stage", 16.1, 0.25);
     window.__timelines["wrongtype"] = tl;
   </script>
 </template>
