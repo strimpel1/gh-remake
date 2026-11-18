@@ -1,0 +1,71 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background-color: #E4F2EC;
+      background-image:
+        linear-gradient(#9CCFC0 3px, transparent 3px), linear-gradient(90deg, #9CCFC0 3px, transparent 3px),
+        linear-gradient(#C4E3D9 1px, transparent 1px), linear-gradient(90deg, #C4E3D9 1px, transparent 1px);
+      background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px; }
+
+    .s28-stage { position: absolute; inset: 0; }
+    .s28-h { position: absolute; font-family: 'Archivo Black', sans-serif; font-size: 96px; line-height: 1.05; letter-spacing: -0.01em; color: #0B2A30; }
+    .s28-m { position: absolute; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 54px; line-height: 1.15; color: #2E6B63; }
+    .s28-acc { color: #E8490F; }
+    .s28-dim { color: #6A9188; }
+    .s28-cell { position: absolute; background: #fff; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; color: #0B2A30; }
+    .s28-cell.on { background: #FF5A1F; color: #fff; }
+    .s28-tile { position: absolute; background: #FF5A1F; color: #fff; border: 12px solid #0B2A30; box-shadow: 16px 16px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s28-card { position: absolute; background: #fff; color: #0B2A30; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s28-card.on { background: #FF5A1F; color: #fff; }
+    .s28-card.soft { background: #CFE9DF; }
+    .s28-bar { position: absolute; background: #0B2A30; }
+    .s28-shot { position: absolute; overflow: hidden; background: #fff; border: 8px solid #0B2A30; box-shadow: 12px 12px 0 #0B2A30; }
+    .s28-shot img, .s28-shot video { position: absolute; display: block; max-width: none; }
+    .s28-mark { position: absolute; border: 8px solid #FF5A1F; border-radius: 12px; box-shadow: 0 0 0 6px rgba(255, 90, 31, 0.28); }
+    .s28-tag { position: absolute; background: #FF5A1F; color: #fff; border: 6px solid #0B2A30; box-shadow: 8px 8px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; padding: 6px 22px; white-space: nowrap; }
+    .s28-term { position: absolute; background: #0B2A30; border: 8px solid #0B2A30; box-shadow: 12px 12px 0 #2E6B63; padding: 26px 34px;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 500; color: #E4F2EC; white-space: pre; }
+    .s28-term .hi { color: #FF9A6B; font-weight: 700; }
+    .s28-term .dimc { color: #7FB5A8; }
+    .s28-media { position: absolute; inset: 0; }
+  </style>
+  <div id="root" data-composition-id="load" data-width="1920" data-height="1080">
+    <div id="s28-stage" class="clip s28-stage" data-start="0" data-duration="18.2">
+      <div id="s28-t" class="s28-h" style="left: 120px; top: 70px; font-size: 76px">run 3: the saved table, loaded</div>
+      <div id="s28-ce" class="s28-shot" style="left: 120px; top: 190px; width: 1400px; height: 266px"><img src="assets/shots/c_loaded_ce.png" style="left: 0.0px; top: -910.9px; width: 1384.0px; height: 1563.2px"></div>
+      <div id="s28-m1" class="s28-mark" style="left: 216px; top: 302px; width: 1034px; height: 144px"></div>
+      <div id="s28-m2" class="s28-mark" style="left: 190px; top: 232px; width: 1064px; height: 38px"></div>
+      <div id="s28-g" class="s28-shot" style="left: 120px; top: 610px; width: 1100px; height: 113px"><img src="assets/shots/c_loaded_game.png" style="left: 0.0px; top: -541.0px; width: 1084.0px; height: 637.5px"></div>
+      <div id="s28-g1" class="s28-tag" style="left: 1260px; top: 640px; font-size: 40px">pointers: alive</div>
+      <div id="s28-g2" class="s28-tag" style="left: 1260px; top: 770px; font-size: 34px">plain address: garbage</div>
+      <div id="s28-c" class="s28-h" style="left: 120px; top: 870px; font-size: 72px">only pointer rows <span class="s28-acc">survive</span></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const blurIn = (sel, t, d = 0.2) =>
+      tl.fromTo(sel, { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "power2.out" }, t);
+    const blurOut = (sel, t, d = 0.2) => tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d, ease: "power2.in" }, t);
+    const land = (sel, t, from = 1.3, d = 0.35) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
+    const each = (sel, t, gap = 0.12, from = 1.3) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out", stagger: gap }, t);
+    const wipe = (sel, t, d = 0.3) =>
+      tl.fromTo(sel, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: d, ease: "power2.out" }, t);
+    const dim = (sel, t, to = 0.3) => tl.to(sel, { opacity: to, duration: 0.3, ease: "power2.inOut" }, t);
+    blurIn("#s28-stage", 0, 0.25);
+
+    wipe("#s28-t", 0.27, 0.5);
+    land("#s28-ce", 0.2, 1.03, 0.5);
+    land("#s28-g", 1.44, 1.03);
+    land("#s28-m1", 6.95, 1.03); land("#s28-g1", 7.35);
+    land("#s28-m2", 11.0, 1.03); land("#s28-g2", 11.85);
+    wipe("#s28-c", 15.27, 0.7);
+
+    blurOut("#s28-stage", 17.9, 0.25);
+    window.__timelines["load"] = tl;
+  </script>
+</template>

@@ -1,0 +1,75 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background-color: #E4F2EC;
+      background-image:
+        linear-gradient(#9CCFC0 3px, transparent 3px), linear-gradient(90deg, #9CCFC0 3px, transparent 3px),
+        linear-gradient(#C4E3D9 1px, transparent 1px), linear-gradient(90deg, #C4E3D9 1px, transparent 1px);
+      background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px; }
+
+    .s26-stage { position: absolute; inset: 0; }
+    .s26-h { position: absolute; font-family: 'Archivo Black', sans-serif; font-size: 96px; line-height: 1.05; letter-spacing: -0.01em; color: #0B2A30; }
+    .s26-m { position: absolute; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 54px; line-height: 1.15; color: #2E6B63; }
+    .s26-acc { color: #E8490F; }
+    .s26-dim { color: #6A9188; }
+    .s26-cell { position: absolute; background: #fff; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; color: #0B2A30; }
+    .s26-cell.on { background: #FF5A1F; color: #fff; }
+    .s26-tile { position: absolute; background: #FF5A1F; color: #fff; border: 12px solid #0B2A30; box-shadow: 16px 16px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s26-card { position: absolute; background: #fff; color: #0B2A30; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s26-card.on { background: #FF5A1F; color: #fff; }
+    .s26-card.soft { background: #CFE9DF; }
+    .s26-bar { position: absolute; background: #0B2A30; }
+    .s26-shot { position: absolute; overflow: hidden; background: #fff; border: 8px solid #0B2A30; box-shadow: 12px 12px 0 #0B2A30; }
+    .s26-shot img, .s26-shot video { position: absolute; display: block; max-width: none; }
+    .s26-mark { position: absolute; border: 8px solid #FF5A1F; border-radius: 12px; box-shadow: 0 0 0 6px rgba(255, 90, 31, 0.28); }
+    .s26-tag { position: absolute; background: #FF5A1F; color: #fff; border: 6px solid #0B2A30; box-shadow: 8px 8px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; padding: 6px 22px; white-space: nowrap; }
+    .s26-term { position: absolute; background: #0B2A30; border: 8px solid #0B2A30; box-shadow: 12px 12px 0 #2E6B63; padding: 26px 34px;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 500; color: #E4F2EC; white-space: pre; }
+    .s26-term .hi { color: #FF9A6B; font-weight: 700; }
+    .s26-term .dimc { color: #7FB5A8; }
+    .s26-media { position: absolute; inset: 0; }
+  </style>
+  <div id="root" data-composition-id="table" data-width="1920" data-height="1080">
+    <div id="s26-stage" class="clip s26-stage" data-start="0" data-duration="21.4">
+      <div id="s26-t" class="s26-h" style="left: 120px; top: 80px; font-size: 80px">a table you can read</div>
+      <div id="s26-ce" class="s26-shot" style="left: 120px; top: 200px; width: 1680px; height: 316px"><img src="assets/shots/c_loaded_ce.png" style="left: 0.0px; top: -1095.2px; width: 1664.0px; height: 1879.5px"></div>
+      <div id="s26-m1" class="s26-mark" style="left: 203px; top: 292px; width: 218px; height: 45px"></div>
+      <div id="s26-m2" class="s26-mark" style="left: 235px; top: 376px; width: 1243px; height: 45px"></div>
+      <div id="s26-m3" class="s26-mark" style="left: 235px; top: 419px; width: 1243px; height: 45px"></div>
+      <div id="s26-g1" class="s26-tag" style="left: 120px; top: 600px; font-size: 40px">names</div>
+      <div id="s26-g2" class="s26-tag" style="left: 420px; top: 600px; font-size: 40px">a header groups rows</div>
+      <div id="s26-n" class="s26-m" style="left: 120px; top: 740px; font-size: 48px">same base, last offset changed:</div>
+      <div id="s26-a" class="s26-card soft" style="left: 120px; top: 830px; width: 400px; height: 120px; line-height: 104px; font-size: 44px">+140 ammo</div>
+      <div id="s26-b" class="s26-card on" style="left: 560px; top: 830px; width: 400px; height: 120px; line-height: 104px; font-size: 44px">+EC health</div>
+      <div id="s26-c" class="s26-card on" style="left: 1000px; top: 830px; width: 480px; height: 120px; line-height: 104px; font-size: 44px">+11C reserve</div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const blurIn = (sel, t, d = 0.2) =>
+      tl.fromTo(sel, { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "power2.out" }, t);
+    const blurOut = (sel, t, d = 0.2) => tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d, ease: "power2.in" }, t);
+    const land = (sel, t, from = 1.3, d = 0.35) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
+    const each = (sel, t, gap = 0.12, from = 1.3) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out", stagger: gap }, t);
+    const wipe = (sel, t, d = 0.3) =>
+      tl.fromTo(sel, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: d, ease: "power2.out" }, t);
+    const dim = (sel, t, to = 0.3) => tl.to(sel, { opacity: to, duration: 0.3, ease: "power2.inOut" }, t);
+    blurIn("#s26-stage", 0, 0.25);
+
+    wipe("#s26-t", 0.58, 0.5);
+    land("#s26-ce", 0.2, 1.03, 0.5);
+    land("#s26-g1", 3.04);
+    land("#s26-m1", 5.43, 1.1); land("#s26-g2", 5.73);
+    blurIn("#s26-n", 11.86); land("#s26-a", 12.06);
+    land("#s26-m2", 15.63, 1.03); land("#s26-b", 16.75);
+    land("#s26-m3", 18.16, 1.03); land("#s26-c", 19.22);
+
+    blurOut("#s26-stage", 21.1, 0.25);
+    window.__timelines["table"] = tl;
+  </script>
+</template>

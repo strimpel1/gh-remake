@@ -1,0 +1,42 @@
+--- run 1
+=== Vault: practice target for episode 6 ===
+[s] spend 7 coins   [t] tell the truth   [q] quit
+
+coins: 500
+> coins: 493
+> coins: 486
+>   module base     7FF7E8010000
+  &g_player       7FF7E8033B80  = vault.exe+23B80
+  player (heap)   02A95AA67C60
+  &player->coins  02A95AA67C74  = player+14
+  pointer to save: [vault.exe+23B80]+14
+coins: 486
+> 
+--- run 2
+=== Vault: practice target for episode 6 ===
+[s] spend 7 coins   [t] tell the truth   [q] quit
+
+coins: 500
+> coins: 493
+> coins: 486
+>   module base     7FF7E8010000
+  &g_player       7FF7E8033B80  = vault.exe+23B80
+  player (heap)   01B281A7E240
+  &player->coins  01B281A7E254  = player+14
+  pointer to save: [vault.exe+23B80]+14
+coins: 486
+> 
+--- run 3
+=== Vault: practice target for episode 6 ===
+[s] spend 7 coins   [t] tell the truth   [q] quit
+
+coins: 500
+> coins: 493
+> coins: 486
+>   module base     7FF7E8010000
+  &g_player       7FF7E8033B80  = vault.exe+23B80
+  player (heap)   0204722EE330
+  &player->coins  0204722EE344  = player+14
+  pointer to save: [vault.exe+23B80]+14
+coins: 486
+> 

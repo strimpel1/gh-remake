@@ -1,0 +1,71 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background-color: #E4F2EC;
+      background-image:
+        linear-gradient(#9CCFC0 3px, transparent 3px), linear-gradient(90deg, #9CCFC0 3px, transparent 3px),
+        linear-gradient(#C4E3D9 1px, transparent 1px), linear-gradient(90deg, #C4E3D9 1px, transparent 1px);
+      background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px; }
+
+    .s32-stage { position: absolute; inset: 0; }
+    .s32-h { position: absolute; font-family: 'Archivo Black', sans-serif; font-size: 96px; line-height: 1.05; letter-spacing: -0.01em; color: #0B2A30; }
+    .s32-m { position: absolute; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 54px; line-height: 1.15; color: #2E6B63; }
+    .s32-acc { color: #E8490F; }
+    .s32-dim { color: #6A9188; }
+    .s32-cell { position: absolute; background: #fff; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; color: #0B2A30; }
+    .s32-cell.on { background: #FF5A1F; color: #fff; }
+    .s32-tile { position: absolute; background: #FF5A1F; color: #fff; border: 12px solid #0B2A30; box-shadow: 16px 16px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s32-card { position: absolute; background: #fff; color: #0B2A30; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s32-card.on { background: #FF5A1F; color: #fff; }
+    .s32-card.soft { background: #CFE9DF; }
+    .s32-bar { position: absolute; background: #0B2A30; }
+    .s32-shot { position: absolute; overflow: hidden; background: #fff; border: 8px solid #0B2A30; box-shadow: 12px 12px 0 #0B2A30; }
+    .s32-shot img, .s32-shot video { position: absolute; display: block; max-width: none; }
+    .s32-mark { position: absolute; border: 8px solid #FF5A1F; border-radius: 12px; box-shadow: 0 0 0 6px rgba(255, 90, 31, 0.28); }
+    .s32-tag { position: absolute; background: #FF5A1F; color: #fff; border: 6px solid #0B2A30; box-shadow: 8px 8px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; padding: 6px 22px; white-space: nowrap; }
+    .s32-term { position: absolute; background: #0B2A30; border: 8px solid #0B2A30; box-shadow: 12px 12px 0 #2E6B63; padding: 26px 34px;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 500; color: #E4F2EC; white-space: pre; }
+    .s32-term .hi { color: #FF9A6B; font-weight: 700; }
+    .s32-term .dimc { color: #7FB5A8; }
+    .s32-media { position: absolute; inset: 0; }
+  </style>
+  <div id="root" data-composition-id="practice" data-width="1920" data-height="1080">
+    <div id="s32-stage" class="clip s32-stage" data-start="0" data-duration="21.0">
+      <div id="s32-t" class="s32-h" style="left: 100px; top: 60px; font-size: 100px">practice</div>
+      <div id="s32-g" class="s32-tag" style="left: 700px; top: 90px; font-size: 36px">vault.cpp: link in the description</div>
+      <div id="s32-k" class="s32-shot" style="left: 100px; top: 230px; width: 980px; height: 532px"><img src="assets/shots/v_con.png" style="left: 0.0px; top: -51.6px; width: 1898.7px; height: 1100.0px"></div>
+      <div id="s32-a" class="s32-m" style="left: 1140px; top: 240px; font-size: 46px">1. find the coins</div>
+      <div id="s32-b" class="s32-m" style="left: 1140px; top: 330px; font-size: 46px">2. what writes to them?</div>
+      <div id="s32-c" class="s32-m" style="left: 1140px; top: 420px; font-size: 46px">3. scan the register:<br>&nbsp;&nbsp; Hex, 8 Bytes</div>
+      <div id="s32-d" class="s32-m" style="left: 1140px; top: 570px; font-size: 46px">4. add the pointer</div>
+      <div id="s32-e" class="s32-m" style="left: 100px; top: 810px; font-size: 46px">5. save the table, restart vault.exe, load it: still the coins?</div>
+      <div id="s32-f" class="s32-m" style="left: 100px; top: 890px; font-size: 46px; color: #E8490F">press t: the program tells you the right answer</div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const blurIn = (sel, t, d = 0.2) =>
+      tl.fromTo(sel, { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "power2.out" }, t);
+    const blurOut = (sel, t, d = 0.2) => tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d, ease: "power2.in" }, t);
+    const land = (sel, t, from = 1.3, d = 0.35) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
+    const each = (sel, t, gap = 0.12, from = 1.3) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out", stagger: gap }, t);
+    const wipe = (sel, t, d = 0.3) =>
+      tl.fromTo(sel, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: d, ease: "power2.out" }, t);
+    const dim = (sel, t, to = 0.3) => tl.to(sel, { opacity: to, duration: 0.3, ease: "power2.inOut" }, t);
+    blurIn("#s32-stage", 0, 0.25);
+
+    wipe("#s32-t", 0.3, 0.5);
+    land("#s32-g", 3.98);
+    land("#s32-k", 1.56, 1.03, 0.4);
+    blurIn("#s32-a", 5.5); blurIn("#s32-b", 7.18); blurIn("#s32-c", 9.2);
+    blurIn("#s32-d", 13.17); blurIn("#s32-e", 14.44); blurIn("#s32-f", 17.27);
+
+    blurOut("#s32-stage", 20.7, 0.25);
+    window.__timelines["practice"] = tl;
+  </script>
+</template>

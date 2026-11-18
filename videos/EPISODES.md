@@ -23,7 +23,7 @@ read `ep01-bytes-behind-the-health-bar/build.py` and `ep02-why-the-address-chang
 | 3 | `ep03-read-one-line-of-assembly` | The One Line of Assembly That Takes Your Ammo | 1.5 reading assembly, 1.7 stack and calling conventions | Inside the Files |
 | 4 | `ep04-inside-the-files` | 9999 Gold With a Hex Editor, and What Is Inside an EXE | 1.6 hex editing files, 1.8 PE, processes and WinAPI | Your First Memory Scan |
 | 5 | `ep05-your-first-memory-scan` | How to Find a Value in a Game's Memory with Cheat Engine | 2.1 first scan, 2.2 scan types and unknown values | Finding the Pointer |
-| 6 | `ep06-finding-the-pointer` | (write it) | 2.3 finding pointers, 2.4 cheat tables and hotkeys | Changing the Code |
+| 6 | `ep06-finding-the-pointer` | How to Find a Pointer in a Game You Have Never Seen | 2.3 finding pointers, 2.4 cheat tables and hotkeys | Changing the Code |
 | 7 | `ep07-changing-the-code` | (write it) | 2.5 code injection and scripts, 2.6 shared code and structures | Scripts That Survive an Update |
 | 8 | `ep08-scripts-that-survive-an-update` | (write it) | 2.7 floats and multipliers, 2.8 AOB and updating scripts | (end of the Cheat Engine track: tease external trainers in general terms) |
 

@@ -1,0 +1,77 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background-color: #E4F2EC;
+      background-image:
+        linear-gradient(#9CCFC0 3px, transparent 3px), linear-gradient(90deg, #9CCFC0 3px, transparent 3px),
+        linear-gradient(#C4E3D9 1px, transparent 1px), linear-gradient(90deg, #C4E3D9 1px, transparent 1px);
+      background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px; }
+
+    .s17-stage { position: absolute; inset: 0; }
+    .s17-h { position: absolute; font-family: 'Archivo Black', sans-serif; font-size: 96px; line-height: 1.05; letter-spacing: -0.01em; color: #0B2A30; }
+    .s17-m { position: absolute; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 54px; line-height: 1.15; color: #2E6B63; }
+    .s17-acc { color: #E8490F; }
+    .s17-dim { color: #6A9188; }
+    .s17-cell { position: absolute; background: #fff; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; color: #0B2A30; }
+    .s17-cell.on { background: #FF5A1F; color: #fff; }
+    .s17-tile { position: absolute; background: #FF5A1F; color: #fff; border: 12px solid #0B2A30; box-shadow: 16px 16px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s17-card { position: absolute; background: #fff; color: #0B2A30; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s17-card.on { background: #FF5A1F; color: #fff; }
+    .s17-card.soft { background: #CFE9DF; }
+    .s17-bar { position: absolute; background: #0B2A30; }
+    .s17-shot { position: absolute; overflow: hidden; background: #fff; border: 8px solid #0B2A30; box-shadow: 12px 12px 0 #0B2A30; }
+    .s17-shot img, .s17-shot video { position: absolute; display: block; max-width: none; }
+    .s17-mark { position: absolute; border: 8px solid #FF5A1F; border-radius: 12px; box-shadow: 0 0 0 6px rgba(255, 90, 31, 0.28); }
+    .s17-tag { position: absolute; background: #FF5A1F; color: #fff; border: 6px solid #0B2A30; box-shadow: 8px 8px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; padding: 6px 22px; white-space: nowrap; }
+    .s17-term { position: absolute; background: #0B2A30; border: 8px solid #0B2A30; box-shadow: 12px 12px 0 #2E6B63; padding: 26px 34px;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 500; color: #E4F2EC; white-space: pre; }
+    .s17-term .hi { color: #FF9A6B; font-weight: 700; }
+    .s17-term .dimc { color: #7FB5A8; }
+    .s17-media { position: absolute; inset: 0; }
+  </style>
+  <div id="root" data-composition-id="chain" data-width="1920" data-height="1080">
+    <div id="s17-stage" class="clip s17-stage" data-start="0" data-duration="16.6">
+      <div id="s17-t" class="s17-h" style="left: 120px; top: 110px; font-size: 84px">the path we found, in run 1</div>
+      <div id="s17-c0" class="s17-card on" style="left: 120px; top: 330px; width: 470px; height: 150px; line-height: 134px; font-size: 46px">game+17E0A8</div>
+      <div id="s17-v0" class="s17-m" style="left: 120px; top: 500px; font-size: 40px">holds<br>009A62B8</div>
+      <div id="s17-b0" class="s17-bar" style="left: 590px; top: 398px; width: 60px; height: 14px"></div>
+      <div id="s17-c1" class="s17-card " style="left: 650px; top: 330px; width: 380px; height: 150px; line-height: 134px; font-size: 54px">player</div>
+      <div id="s17-v1" class="s17-m" style="left: 650px; top: 500px; font-size: 40px">+364 holds<br>00994BA8</div>
+      <div id="s17-b1" class="s17-bar" style="left: 1030px; top: 398px; width: 60px; height: 14px"></div>
+      <div id="s17-c2" class="s17-card " style="left: 1090px; top: 330px; width: 380px; height: 150px; line-height: 134px; font-size: 54px">weapon</div>
+      <div id="s17-v2" class="s17-m" style="left: 1090px; top: 500px; font-size: 40px">+14 holds<br>009A63F8</div>
+      <div id="s17-b2" class="s17-bar" style="left: 1470px; top: 398px; width: 60px; height: 14px"></div>
+      <div id="s17-c3" class="s17-tile" style="left: 1530px; top: 320px; width: 270px; height: 170px; line-height: 146px; font-size: 110px">12</div>
+      <div id="s17-v3" class="s17-m" style="left: 1530px; top: 520px; font-size: 40px">the ammo</div>
+      <div id="s17-c" class="s17-h" style="left: 120px; top: 760px; font-size: 80px; color: #E8490F">read, add, read, add, read</div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const blurIn = (sel, t, d = 0.2) =>
+      tl.fromTo(sel, { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "power2.out" }, t);
+    const blurOut = (sel, t, d = 0.2) => tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d, ease: "power2.in" }, t);
+    const land = (sel, t, from = 1.3, d = 0.35) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
+    const each = (sel, t, gap = 0.12, from = 1.3) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out", stagger: gap }, t);
+    const wipe = (sel, t, d = 0.3) =>
+      tl.fromTo(sel, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: d, ease: "power2.out" }, t);
+    const dim = (sel, t, to = 0.3) => tl.to(sel, { opacity: to, duration: 0.3, ease: "power2.inOut" }, t);
+    blurIn("#s17-stage", 0, 0.25);
+
+    wipe("#s17-t", 0.3, 0.6);
+    land("#s17-c0", 1.0); blurIn("#s17-v0", 4.54);
+    wipe("#s17-b0", 4.54, 0.3); land("#s17-c1", 4.85);
+    blurIn("#s17-v1", 6.39); wipe("#s17-b1", 7.51, 0.3); land("#s17-c2", 7.85);
+    blurIn("#s17-v2", 9.68); wipe("#s17-b2", 10.4, 0.3);
+    land("#s17-c3", 13.21); blurIn("#s17-v3", 13.41);
+    wipe("#s17-c", 14.34, 1.0);
+
+    blurOut("#s17-stage", 16.3, 0.25);
+    window.__timelines["chain"] = tl;
+  </script>
+</template>

@@ -1,0 +1,70 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background-color: #E4F2EC;
+      background-image:
+        linear-gradient(#9CCFC0 3px, transparent 3px), linear-gradient(90deg, #9CCFC0 3px, transparent 3px),
+        linear-gradient(#C4E3D9 1px, transparent 1px), linear-gradient(90deg, #C4E3D9 1px, transparent 1px);
+      background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px; }
+
+    .s29-stage { position: absolute; inset: 0; }
+    .s29-h { position: absolute; font-family: 'Archivo Black', sans-serif; font-size: 96px; line-height: 1.05; letter-spacing: -0.01em; color: #0B2A30; }
+    .s29-m { position: absolute; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 54px; line-height: 1.15; color: #2E6B63; }
+    .s29-acc { color: #E8490F; }
+    .s29-dim { color: #6A9188; }
+    .s29-cell { position: absolute; background: #fff; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; color: #0B2A30; }
+    .s29-cell.on { background: #FF5A1F; color: #fff; }
+    .s29-tile { position: absolute; background: #FF5A1F; color: #fff; border: 12px solid #0B2A30; box-shadow: 16px 16px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s29-card { position: absolute; background: #fff; color: #0B2A30; border: 8px solid #0B2A30; box-shadow: 10px 10px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; text-align: center; }
+    .s29-card.on { background: #FF5A1F; color: #fff; }
+    .s29-card.soft { background: #CFE9DF; }
+    .s29-bar { position: absolute; background: #0B2A30; }
+    .s29-shot { position: absolute; overflow: hidden; background: #fff; border: 8px solid #0B2A30; box-shadow: 12px 12px 0 #0B2A30; }
+    .s29-shot img, .s29-shot video { position: absolute; display: block; max-width: none; }
+    .s29-mark { position: absolute; border: 8px solid #FF5A1F; border-radius: 12px; box-shadow: 0 0 0 6px rgba(255, 90, 31, 0.28); }
+    .s29-tag { position: absolute; background: #FF5A1F; color: #fff; border: 6px solid #0B2A30; box-shadow: 8px 8px 0 #0B2A30;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 700; padding: 6px 22px; white-space: nowrap; }
+    .s29-term { position: absolute; background: #0B2A30; border: 8px solid #0B2A30; box-shadow: 12px 12px 0 #2E6B63; padding: 26px 34px;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 500; color: #E4F2EC; white-space: pre; }
+    .s29-term .hi { color: #FF9A6B; font-weight: 700; }
+    .s29-term .dimc { color: #7FB5A8; }
+    .s29-media { position: absolute; inset: 0; }
+  </style>
+  <div id="root" data-composition-id="hotkey" data-width="1920" data-height="1080">
+    <div id="s29-stage" class="clip s29-stage" data-start="0" data-duration="21.2">
+      <div id="s29-t" class="s29-h" style="left: 120px; top: 80px; font-size: 80px">Set hotkeys</div>
+      <div id="s29-d" class="s29-shot" style="left: 120px; top: 200px; width: 1100px; height: 744px"><img src="assets/shots/b_hk1.png" style="left: 0.0px; top: 0.0px; width: 1175.4px; height: 791.3px"></div>
+      <div id="s29-m1" class="s29-mark" style="left: 144px; top: 605px; width: 551px; height: 49px"></div>
+      <div id="s29-m2" class="s29-mark" style="left: 144px; top: 651px; width: 402px; height: 49px"></div>
+      <div id="s29-m3" class="s29-mark" style="left: 144px; top: 738px; width: 551px; height: 49px"></div>
+      <div id="s29-g1" class="s29-tag" style="left: 1270px; top: 330px; font-size: 40px">the key</div>
+      <div id="s29-g2" class="s29-tag" style="left: 1270px; top: 480px; font-size: 40px">the action</div>
+      <div id="s29-g3" class="s29-tag" style="left: 1270px; top: 630px; font-size: 40px">the value: 20</div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const blurIn = (sel, t, d = 0.2) =>
+      tl.fromTo(sel, { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: d, ease: "power2.out" }, t);
+    const blurOut = (sel, t, d = 0.2) => tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: d, ease: "power2.in" }, t);
+    const land = (sel, t, from = 1.3, d = 0.35) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
+    const each = (sel, t, gap = 0.12, from = 1.3) =>
+      tl.fromTo(sel, { opacity: 0, scale: from }, { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out", stagger: gap }, t);
+    const wipe = (sel, t, d = 0.3) =>
+      tl.fromTo(sel, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: d, ease: "power2.out" }, t);
+    const dim = (sel, t, to = 0.3) => tl.to(sel, { opacity: to, duration: 0.3, ease: "power2.inOut" }, t);
+    blurIn("#s29-stage", 0, 0.25);
+
+    wipe("#s29-t", 0.3, 0.5);
+    land("#s29-d", 1.0, 1.03, 0.5);
+    land("#s29-m1", 7.41, 1.05); land("#s29-g1", 9.62);
+    land("#s29-m2", 11.74, 1.05); land("#s29-g2", 13.12);
+    land("#s29-m3", 17.63, 1.05); land("#s29-g3", 19.41);
+
+    blurOut("#s29-stage", 20.9, 0.25);
+    window.__timelines["hotkey"] = tl;
+  </script>
+</template>
