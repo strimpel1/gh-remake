@@ -33,10 +33,12 @@
     .s1-media { position: absolute; inset: 0; }
   </style>
   <div id="root" data-composition-id="cold" data-width="1920" data-height="1080">
+    <div id="s1-media" class="s1-media">
+      <div id="s1-g" class="s1-shot" style="left: 120px; top: 200px; width: 1100px; height: 652px"><video id="s1-g-v" class="clip" src="assets/clips/fire_game_fit60_109.mp4" muted playsinline data-start="0" data-duration="10.9" data-media-start="0" data-track-index="2" style="left: 0.0px; top: 0.0px; width: 1084.0px; height: 636.4px"></video></div>
+    </div>
     <div id="s1-stage" class="clip s1-stage" data-start="0" data-duration="10.9">
       <div id="s1-t" class="s1-h" style="left: 120px; top: 80px; font-size: 80px">one shot, one round less</div>
-      <div id="s1-g" class="s1-shot" style="left: 120px; top: 200px; width: 1100px; height: 653px"><img src="assets/shots/game.png" style="left: 0.0px; top: 0.0px; width: 1084.0px; height: 636.7px"></div>
-      <div id="s1-m" class="s1-mark" style="left: 447px; top: 785px; width: 150px; height: 58px"></div>
+      <div id="s1-m" class="s1-mark" style="left: 447px; top: 786px; width: 150px; height: 58px"></div>
       <div id="s1-a" class="s1-h" style="left: 1290px; top: 300px; font-size: 110px">who<br>does<br>that?</div>
       <div id="s1-k" class="s1-tile" style="left: 1290px; top: 700px; width: 500px; height: 150px; line-height: 126px; font-size: 50px">1 instruction</div>
     </div>
@@ -59,7 +61,7 @@
     blurIn("#s1-a", 3.71);
     land("#s1-k", 5.82);
 
-    blurOut("#s1-stage", 10.6, 0.25);
+    blurOut("#s1-stage, #s1-media", 10.6, 0.25);
     window.__timelines["cold"] = tl;
   </script>
 </template>

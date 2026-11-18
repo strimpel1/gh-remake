@@ -35,9 +35,9 @@ def dis(name, crop, y=230, w=1680, x=120, id="@p-mv"):
     return Shot(id, S(name), x, y, w, crop=crop)
 
 
-def brk(name, rows=14):
-    d = Shot("@p-mv", S(name), 120, 230, 1150, crop=(0, 128, 740, 44 + 22 * rows))
-    r = Shot("@p-rg", S(name), 1310, 230, 490, crop=B_REG)
+def brk(name, rows=14, y=190):
+    d = Shot("@p-mv", S(name), 120, y, 1150, crop=(0, 128, 740, 44 + 22 * rows))
+    r = Shot("@p-rg", S(name), 1310, y, 490, crop=B_REG)
     return d, r
 
 
@@ -126,7 +126,9 @@ X64 = [dimc("; Line 29"),
        a("call", "Player::hit")]
 
 GAME_SIZE, FOUND_SIZE = (1584, 930), (722, 690)
-CLIP_FROM = 0.7                      # seconds into the recording where the scene starts
+CLIP_FROM = 1.4                      # seconds into the recording where the scene starts
+COLD_FROM = 6.0                      # the cold open shows the last two shots of the same recording (20, 19, 18)
+FOUND_CROP = (0, 0, 556, 462)        # ends under the ESI line, not through the middle of EDI
 
 
 def live_game(still=False):
@@ -134,7 +136,7 @@ def live_game(still=False):
 
 
 def live_found(still=False):
-    return Shot("@p-c", S("found_12") if still else A / "clips/fire_found.mp4", 1050, 190, 760, crop=(0, 0, 556, 470), size=None if still else FOUND_SIZE)
+    return Shot("@p-c", S("found_12") if still else A / "clips/fire_found.mp4", 1050, 190, 760, crop=FOUND_CROP, size=None if still else FOUND_SIZE)
 
 
 def live_media(dur):
@@ -151,27 +153,37 @@ def stack_row(i, y, addr, val, label, on=False):
             + txt(f"@p-sl{i}", 1000, y + 30, label, "m", fs=40))
 
 
-cold_game = Shot("@p-g", S("game"), 120, 200, 1100)
+cold_game = Shot("@p-g", A / "clips/fire_game.mp4", 120, 200, 1100, size=GAME_SIZE)
+
+
+def cold_media(dur):
+    cold_game.path = fit_clip(A / "clips/fire_game.mp4", dur, COLD_FROM)
+    cold_game.src = f"assets/clips/{cold_game.path.name}"
+    return cold_game.video(0, dur)
+
+
 found_line = Shot("@p-f", S("found_16"), 120, 220, 1680, crop=F_LIST)
 found_pane = Shot("@p-f", S("found_16"), 120, 210, 760, crop=F_PANE)
 acc_list = Shot("@p-f", S("acc_health"), 120, 220, 1680, crop=ACC_LIST)
 acc_code = Shot("@p-f", S("acc_health"), 120, 220, 1300, crop=ACC_CODE)
-mv_dec = dis("mv_sel", (0, 88, 655, 24 + 22 * 9))
+mv_dec = dis("mv_sel", (0, 88, 655, 24 + 22 * 9), y=180)
 mv_this = dis("mv_dec", (0, ROW(7), 655, 22 * 11), y=200)
 mv_cdecl = dis("mv_cdecl", (0, 88, 760, 24 + 22 * 9))
-mv_top = dis("mv_start", (0, 88, 700, 24 + 22 * 7), y=190, w=1500)
-mv_end = dis("mv_start", (0, ROW(29), 700, 22 * 6), y=620, w=1500, id="@p-mv2")
+mv_top = dis("mv_start", (0, 88, 700, 24 + 22 * 7), y=150, w=1500)
+# the real last lines of the function (+C73FE to +C7406); +C7262 in mv_start is an early return
+mv_end = dis("mv_dec", (0, ROW(12), 700, 22 * 6), y=575, w=1500, id="@p-mv2")
 bA, rA = brk("brk_a")
 bB, rB = brk("brk_b")
 bC = Shot("@p-mv", S("brk_c"), 120, 220, 1100, crop=(0, 128, 740, 44 + 22 * 4))
 rC = Shot("@p-rg", S("brk_c"), 1290, 220, 510, crop=B_REG)
-retC = Shot("@p-rt", S("brk_c"), 120, 480, 760, crop=(752, 965, 210, 74))
+retC = Shot("@p-rt", S("brk_c"), 120, 470, 540, crop=(752, 965, 148, 74))   # the Return Address column only
 
 scenes = [
     # ------------------------------------------------------------------ cold open
     Scene("cold", "Every time I fire, this number drops by one. Somewhere in the game's code, one instruction does that. "
                   "Today we find that instruction, and we read it.",
-          body=txt("@p-t", 120, 80, "one shot, one round less", "h", fs=80) + cold_game.html()
+          media=cold_media, early=False,
+          body=txt("@p-t", 120, 80, "one shot, one round less", "h", fs=80)
           + cold_game.mark("@p-m", 478, 856, 196, 62)
           + txt("@p-a", 1290, 300, "who<br>does<br>that?", "h", fs=110)
           + tile("@p-k", 1290, 700, 500, 150, "1 instruction", 50),
@@ -248,13 +260,14 @@ scenes = [
           body=txt("@p-t", 120, 70, "the compiler's listing", "h", fs=80)
           + term("@p-c", 120, 210, 1100, ["&gt; cl /Od " + hi("/FA") + " calls.cpp"], fs=46)
           + tag("@p-g", 1270, 232, "32-bit build: calls32.asm", 36)
+          + tag("@p-g2", 1270, 316, "prompt: x86 Native Tools", 32)
           + card("@p-s", 120, 370, 1100, 110, "health = health - damage;", 50, "soft")
           + term("@p-o", 120, 530, 1100, L22, fs=44, lh=1.45)
           + txt("@p-a", 1290, 640, '1 line of C++<br><span class="@p-acc">5 instructions</span>', "h", fs=62),
           js="""
     wipe("#@p-t", 0.3, 0.5);
     land("#@p-c", <<compile-0.3>>, 1.04, 0.4);
-    land("#@p-g", <<thirty-two>>);
+    land("#@p-g", <<thirty-two>>); land("#@p-g2", <<thirty-two+0.5>>);
     land("#@p-s", <<line-0.3>>, 1.04, 0.4);
     land("#@p-o", <<compiler#2-0.4>>, 1.03, 0.5);
     blurIn("#@p-a", <<five-0.2>>);
@@ -307,8 +320,8 @@ scenes = [
           + card("@p-f2", 250, 800, 580, 110, "+8 &nbsp;ammo", 50)
           + bar("@p-b", 890, 708, 130, 14) + tile("@p-k", 1020, 640, 300, 150, "ecx", 80)
           + txt("@p-a", 1020, 450, "player + 4<br>= health", "m", fs=54)
-          + txt("@p-d", 1020, 860, "DWORD PTR = 4 bytes", "m", fs=48)
-          + tag("@p-g", 1020, 960, "offsets 4 and 8: printed by calls.exe", 30),
+          + txt("@p-d", 1020, 840, "DWORD PTR = 4 bytes", "m", fs=48)
+          + tag("@p-g", 1020, 918, "offsets 4 and 8: printed by calls.exe", 30),
           js="""
     wipe("#@p-t", 0.3, 0.5);
     land("#@p-o", <<memory-0.3>>, 1.04, 0.4);
@@ -339,27 +352,27 @@ scenes = [
 
     # ------------------------------------------------------------------ the real game
     Scene("live1", "Now the real game. I point Cheat Engine at the address of my magazine, and ask: find out what writes to this address. "
-                   "I had already fired twelve rounds when this recording starts, so the count says twelve.",
+                   "When this recording starts, Cheat Engine has counted twelve shots since I asked: the count says twelve.",
           body=txt("@p-t", 110, 60, "find out what writes to this address", "h", fs=64)
           + live_game(True).html() + live_found(True).html()
-          + tag("@p-t1", 110, 740, "AssaultCube, offline") + tag("@p-t2", 1050, 860, "Cheat Engine")
+          + tag("@p-t1", 110, 740, "AssaultCube, offline") + tag("@p-t2", 1050, 845, "Cheat Engine")
           + live_found(True).mark("@p-m", 4, 66, 50, 24, pad=4)
-          + txt("@p-n", 110, 960, "the count: how many times an instruction wrote there", "m", fs=44),
+          + txt("@p-n", 110, 935, "the count: how many times an instruction wrote there", "m", fs=44),
           js="""
     wipe("#@p-t", 0.3, 0.6);
     land("#@p-g", 0.2, 1.03, 0.5); land("#@p-t1", <<game>>);
     land("#@p-c", <<cheat-0.3>>, 1.03, 0.4); land("#@p-t2", <<cheat>>);
-    land("#@p-m", <<twelve-0.3>>, 1.4); blurIn("#@p-n", <<count-0.3>>);
+    land("#@p-m", <<twelve-0.3>>, 1.4); blurIn("#@p-n", <<counted-0.3>>);
 """, exit=False),
 
-    Scene("live2", "I fire two rounds. The count goes to fourteen, the magazine is empty, and the game reloads. Two more: sixteen. "
+    Scene("live2", "I fire my last two rounds. The count goes to fourteen, and the game reloads straight away. Two more: sixteen. "
                    "Every shot went through one single instruction. The second line is the reload.",
           media=live_media,
           body=txt("@p-t", 110, 60, "find out what writes to this address", "h", fs=64)
-          + tag("@p-t1", 110, 740, "AssaultCube, offline") + tag("@p-t2", 1050, 860, "Cheat Engine")
+          + tag("@p-t1", 110, 740, "AssaultCube, offline") + tag("@p-t2", 1050, 845, "Cheat Engine")
           + live_game().mark("@p-m1", 476, 856, 200, 62) + live_found().mark("@p-m", 4, 66, 50, 24, pad=4)
           + live_found().mark("@p-m2", 66, 90, 250, 24, pad=4)
-          + txt("@p-n", 110, 960, "the count: how many times an instruction wrote there", "m", fs=44),
+          + txt("@p-n", 110, 935, "the count: how many times an instruction wrote there", "m", fs=44),
           js="""
     land("#@p-m1", 0.4, 1.4);
     land("#@p-m2", <<second-0.3>>, 1.3);
@@ -406,9 +419,9 @@ scenes = [
                   "Now look one line above ours. Move E A X, brackets, E S I plus one four. That is where E A X came from.",
           body=txt("@p-t", 120, 80, "the game's code, in the Memory Viewer", "h", fs=72) + mv_dec.html()
           + mv_dec.mark("@p-m1", 2, ROW(6), 480, 22, pad=4) + mv_dec.mark("@p-m2", 328, ROW(5), 160, 22, pad=4)
-          + tag("@p-g1", 120, 835, "address", 36) + tag("@p-g2", 510, 835, "bytes", 36) + tag("@p-g3", 960, 835, "text", 36)
-          + txt("@p-n", 120, 915, "ac_client.exe+C73EF = 004C73EF (the module starts at 00400000)", "m", fs=40)
-          + txt("@p-d", 120, 975, 'eax = <span class="@p-acc">[esi+14]</span>', "h", fs=60),
+          + tag("@p-g1", 120, 782, "address", 36) + tag("@p-g2", 510, 782, "bytes", 36) + tag("@p-g3", 960, 782, "text", 36)
+          + txt("@p-n", 120, 866, "ac_client.exe+C73EF = 004C73EF (the module starts at 00400000)", "m", fs=40)
+          + txt("@p-d", 120, 924, 'eax = <span class="@p-acc">[esi+14]</span>', "h", fs=60),
           js="""
     wipe("#@p-t", 0.3, 0.6);
     land("#@p-mv", 0.2, 1.03, 0.5);
@@ -493,13 +506,14 @@ scenes = [
 
     Scene("payoff", "And the line from last time? Same parts, other direction. It writes E A X into the field at E B X plus E C.",
           body=txt("@p-t", 190, 100, "now read it", "h", fs=90)
+          + tag("@p-g", 860, 122, "episode 2's example line, not captured from the game", 30)
           + term("@p-o", 190, 260, 1200, ['mov  [ebx+<span class="hi">EC</span>], eax'], fs=88)
           + card("@p-a", 190, 540, 700, 130, "[ebx+EC]", 64, "on") + txt("@p-al", 940, 570, "destination: the field at +EC", "m", fs=48)
           + card("@p-b", 190, 710, 700, 130, "eax", 64) + txt("@p-bl", 940, 740, "source: the new value", "m", fs=48)
           + txt("@p-d", 190, 900, 'a <span class="@p-acc">write</span>: in our game, +EC is health', "h", fs=64),
           js="""
     wipe("#@p-t", 0.3, 0.5);
-    land("#@p-o", 0.5, 1.04, 0.4);
+    land("#@p-o", 0.5, 1.04, 0.4); land("#@p-g", <<last>>);
     land("#@p-b", <<parts>>); blurIn("#@p-bl", <<parts+0.2>>);
     land("#@p-a", <<direction-0.3>>); blurIn("#@p-al", <<direction>>);
     wipe("#@p-d", <<writes-0.2>>, 0.6);
@@ -529,9 +543,9 @@ scenes = [
                   "The game freezes on that line, and Cheat Engine shows every register. E S P is zero zero one A, F D three C.",
           body=txt("@p-t", 120, 80, "the game, stopped at a breakpoint", "h", fs=76) + bA.html() + rA.html()
           + bA.mark("@p-m1", 2, BROW(8), 716, 22, pad=3) + rA.mark("@p-m2", 754, REG_Y["esp"], 150, 19, pad=3)
-          + txt("@p-al", 120, 850, "esp, before the pushes", "m", fs=48)
-          + tile("@p-a", 120, 920, 700, 130, "001AFD3C", 80)
-          + tag("@p-g", 900, 870, "next: push eax, push ecx"),
+          + txt("@p-al", 880, 800, "esp, before the pushes", "m", fs=48)
+          + tile("@p-a", 120, 800, 700, 130, "001AFD3C", 80)
+          + tag("@p-g", 880, 876, "next: push eax, push ecx"),
           js="""
     wipe("#@p-t", 0.3, 0.6);
     land("#@p-mv", 0.2, 1.03, 0.5);
@@ -544,9 +558,9 @@ scenes = [
                   "The stack grows downward: each push subtracts four from E S P.",
           body=txt("@p-t", 120, 80, "two pushes later", "h", fs=76) + bB.html() + rB.html()
           + bB.mark("@p-m1", 2, BROW(8), 716, 44, pad=3) + rB.mark("@p-m2", 754, REG_Y["esp"], 150, 19, pad=3)
-          + card("@p-a", 120, 880, 420, 130, "001AFD3C", 60, "soft") + txt("@p-mi", 570, 895, "- 8 =", "h", fs=80)
-          + tile("@p-b", 800, 870, 480, 150, "001AFD34", 72)
-          + txt("@p-d", 1330, 860, 'push = <span class="@p-acc">esp - 4</span>,<br>then store', "h", fs=56),
+          + card("@p-a", 120, 815, 420, 130, "001AFD3C", 60, "soft") + txt("@p-mi", 570, 830, "- 8 =", "h", fs=80)
+          + tile("@p-b", 800, 805, 480, 150, "001AFD34", 72)
+          + txt("@p-d", 1330, 800, 'push = <span class="@p-acc">esp - 4</span>,<br>then store', "h", fs=56),
           js="""
     wipe("#@p-t", 0.3, 0.6);
     land("#@p-mv", 0.2, 1.03, 0.5); land("#@p-rg", 0.3, 1.03, 0.5);
@@ -561,10 +575,10 @@ scenes = [
                   "Call pushes it. Ret pops it, and jumps back.",
           body=txt("@p-t", 120, 70, "inside the called function", "h", fs=76) + bC.html() + rC.html() + retC.html()
           + rC.mark("@p-m2", 754, REG_Y["esp"], 150, 19, pad=3) + retC.mark("@p-m3", 756, 993, 140, 22, pad=3)
-          + txt("@p-al", 940, 770, "on top of the stack", "m", fs=44) + tile("@p-a", 940, 830, 560, 140, "004C73FE", 80)
-          + card("@p-c", 120, 790, 330, 110, "call", 60, "on") + txt("@p-cl", 480, 815, "push return address, jump", "m", fs=30)
-          + card("@p-r", 120, 930, 330, 110, "ret", 60, "on") + txt("@p-rl", 480, 955, "pop it, jump back", "m", fs=30)
-          + tag("@p-g", 1525, 870, "esp: 001AFD30", 34),
+          + txt("@p-al", 710, 500, "on top of the stack", "m", fs=44) + tile("@p-a", 710, 570, 540, 140, "004C73FE", 80)
+          + card("@p-c", 120, 820, 330, 110, "call", 60, "on") + txt("@p-cl", 480, 855, "push return address, jump", "m", fs=30)
+          + card("@p-r", 980, 820, 330, 110, "ret", 60, "on") + txt("@p-rl", 1340, 855, "pop it, jump back", "m", fs=30)
+          + tag("@p-g", 1310, 745, "esp: 001AFD30", 34),
           js="""
     wipe("#@p-t", 0.3, 0.6);
     land("#@p-mv", 0.2, 1.03, 0.5);
@@ -656,7 +670,7 @@ scenes = [
           body=txt("@p-t", 120, 70, "the same pattern in the game", "h", fs=76) + mv_this.html()
           + mv_this.mark("@p-m1", 2, ROW(8), 480, 44, pad=3) + mv_this.mark("@p-m2", 2, ROW(10), 480, 22, pad=3)
           + mv_this.mark("@p-m3", 2, ROW(11), 560, 22, pad=3) + mv_this.mark("@p-m4", 2, ROW(17), 480, 22, pad=3)
-          + tag("@p-g1", 1330, 265, "arguments") + tag("@p-g2", 1330, 375, "ecx = the weapon") + tag("@p-g4", 1340, 775, "this function: ret 4 too", 34)
+          + tag("@p-g1", 1400, 262, "arguments", 36) + tag("@p-g2", 1400, 347, "ecx = the weapon", 34) + tag("@p-g4", 1340, 775, "this function: ret 4 too", 34)
           + txt("@p-d", 120, 900, 'ecx loaded before a call = <span class="@p-acc">an object</span>', "h", fs=68),
           js="""
     wipe("#@p-t", 0.3, 0.6);
@@ -675,9 +689,9 @@ scenes = [
           + mv_top.mark("@p-m1", 328, ROW(1), 130, 22, pad=3) + mv_top.mark("@p-m1b", 328, ROW(3), 130, 22, pad=3)
           + mv_top.mark("@p-m1c", 328, ROW(6), 130, 22, pad=3)
           + mv_top.mark("@p-m3", 328, ROW(4), 150, 22, pad=3)
-          + mv_end.mark("@p-m2", 328, ROW(29), 130, 44, pad=3) + mv_end.mark("@p-m2b", 328, ROW(32), 130, 22, pad=3)
-          + tag("@p-g1", 1640, 250, "save", 44) + tag("@p-g2", 1640, 690, "restore", 44)
-          + txt("@p-d", 120, 960, 'esi = ecx = <span class="@p-acc">the weapon</span>', "h", fs=60),
+          + mv_end.mark("@p-m2", 328, ROW(12), 130, 44, pad=3) + mv_end.mark("@p-m2b", 328, ROW(15), 130, 22, pad=3)
+          + tag("@p-g1", 1640, 210, "save", 44) + tag("@p-g2", 1640, 645, "restore", 44)
+          + txt("@p-d", 120, 905, 'esi = ecx = <span class="@p-acc">the weapon</span>', "h", fs=60),
           js="""
     wipe("#@p-t", 0.3, 0.6);
     land("#@p-mv", 0.2, 1.03, 0.5); land("#@p-mv2", 0.4, 1.03, 0.5);
@@ -753,7 +767,8 @@ scenes = [
                   "Find the instruction that writes the health. Then add an int field above health, and predict the new offset. "
                   "The last line the program prints is your answer key.",
           body=txt("@p-t", 190, 80, "practice", "h", fs=110)
-          + tag("@p-g", 900, 110, "calls.cpp: link in the description", 36)
+          + tag("@p-g", 900, 92, "calls.cpp: link in the description", 36)
+          + tag("@p-g2", 900, 180, "32-bit listing: use the x86 Native Tools prompt", 30)
           + term("@p-o", 190, 270, 1300, ["&gt; cl /Od /FA calls.cpp", "&gt; calls.exe", "sum 6  health 70",
                                            "offset of health: " + hi("4") + "   offset of ammo: 8"], fs=46)
           + txt("@p-a", 190, 640, "1. in calls.asm: which line writes the health?", "m", fs=50)
@@ -762,7 +777,7 @@ scenes = [
           js="""
     wipe("#@p-t", <<practice-0.2>>, 0.5);
     land("#@p-g", <<description-0.4>>);
-    land("#@p-o", <<compile-0.3>>, 1.04, 0.4);
+    land("#@p-o", <<compile-0.3>>, 1.04, 0.4); land("#@p-g2", <<slash>>);
     blurIn("#@p-a", <<find>>);
     blurIn("#@p-b", <<add>>);
     blurIn("#@p-c", <<predict>>);

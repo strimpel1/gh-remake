@@ -37,6 +37,7 @@
       <div id="s6-t" class="s6-h" style="left: 120px; top: 70px; font-size: 80px">the compiler's listing</div>
       <div id="s6-c" class="s6-term" style="left: 120px; top: 210px; width: 1100px; font-size: 46px"><div id="s6-c-l0" style="height: 69px; line-height: 69px">&gt; cl /Od <span class="hi">/FA</span> calls.cpp</div></div>
       <div id="s6-g" class="s6-tag" style="left: 1270px; top: 232px; font-size: 36px">32-bit build: calls32.asm</div>
+      <div id="s6-g2" class="s6-tag" style="left: 1270px; top: 316px; font-size: 32px">prompt: x86 Native Tools</div>
       <div id="s6-s" class="s6-card soft" style="left: 120px; top: 370px; width: 1100px; height: 110px; line-height: 94px; font-size: 50px">health = health - damage;</div>
       <div id="s6-o" class="s6-term" style="left: 120px; top: 530px; width: 1100px; font-size: 44px"><div id="s6-o-l0" style="height: 64px; line-height: 64px"><span class="dimc">; Line 22</span></div><div id="s6-o-l1" style="height: 64px; line-height: 64px">    mov   eax, DWORD PTR _this$[ebp]</div><div id="s6-o-l2" style="height: 64px; line-height: 64px">    mov   ecx, DWORD PTR [eax+4]</div><div id="s6-o-l3" style="height: 64px; line-height: 64px">    sub   ecx, DWORD PTR _damage$[ebp]</div><div id="s6-o-l4" style="height: 64px; line-height: 64px">    mov   edx, DWORD PTR _this$[ebp]</div><div id="s6-o-l5" style="height: 64px; line-height: 64px">    mov   DWORD PTR [edx+4], ecx</div></div>
       <div id="s6-a" class="s6-h" style="left: 1290px; top: 640px; font-size: 62px">1 line of C++<br><span class="s6-acc">5 instructions</span></div>
@@ -58,7 +59,7 @@
 
     wipe("#s6-t", 0.3, 0.5);
     land("#s6-c", 0.33, 1.04, 0.4);
-    land("#s6-g", 2.83);
+    land("#s6-g", 2.83); land("#s6-g2", 3.33);
     land("#s6-s", 8.59, 1.04, 0.4);
     land("#s6-o", 11.35, 1.03, 0.5);
     blurIn("#s6-a", 12.41);

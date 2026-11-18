@@ -1,6 +1,6 @@
 {
- "key": "998b08896eda484ddcfb4aefbce8a9046e8e9318",
- "text": "Now the real game. I point Cheat Engine at the address of my magazine, and ask: find out what writes to this address. I had already fired twelve rounds when this recording starts, so the count says twelve.",
+ "key": "9b5c303274d4cbcd192e883b13aca43edafbe122",
+ "text": "Now the real game. I point Cheat Engine at the address of my magazine, and ask: find out what writes to this address. When this recording starts, Cheat Engine has counted twelve shots since I asked: the count says twelve.",
  "words": [
   [
    "Now",
@@ -8,7 +8,7 @@
   ],
   [
    "the",
-   0.391
+   0.404
   ],
   [
    "real",
@@ -16,143 +16,151 @@
   ],
   [
    "game",
-   0.794
+   0.859
   ],
   [
    "I",
-   1.628
+   1.706
   ],
   [
    "point",
-   1.745
+   1.849
   ],
   [
    "Cheat",
-   2.148
+   2.24
   ],
   [
    "Engine",
-   2.422
+   2.487
   ],
   [
    "at",
-   2.852
+   2.917
   ],
   [
    "the",
-   2.982
+   3.034
   ],
   [
    "address",
-   3.086
+   3.138
   ],
   [
    "of",
-   3.49
+   3.542
   ],
   [
    "my",
-   3.555
+   3.607
   ],
   [
    "magazine",
-   3.698
+   3.75
   ],
   [
    "and",
-   4.714
+   4.766
   ],
   [
    "ask",
-   4.896
+   4.961
   ],
   [
    "find",
-   5.651
+   5.69
   ],
   [
    "out",
-   5.964
+   5.99
   ],
   [
    "what",
-   6.094
+   6.107
   ],
   [
    "writes",
-   6.276
+   6.289
   ],
   [
    "to",
-   6.51
+   6.536
   ],
   [
    "this",
-   6.589
+   6.628
   ],
   [
    "address",
-   6.797
+   6.823
   ],
   [
-   "I",
-   7.839
-  ],
-  [
-   "had",
-   7.93
-  ],
-  [
-   "already",
-   8.151
-  ],
-  [
-   "fired",
-   8.477
-  ],
-  [
-   "twelve",
-   8.984
-  ],
-  [
-   "rounds",
-   9.323
-  ],
-  [
-   "when",
-   9.753
+   "When",
+   7.812
   ],
   [
    "this",
-   9.896
+   7.995
   ],
   [
    "recording",
-   10.078
+   8.216
   ],
   [
    "starts",
-   10.482
+   8.685
   ],
   [
-   "so",
-   11.198
+   "Cheat",
+   9.661
   ],
   [
-   "the",
-   11.432
+   "Engine",
+   10.013
   ],
   [
-   "count",
-   11.536
+   "has",
+   10.443
   ],
   [
-   "says",
-   11.901
+   "counted",
+   10.664
   ],
   [
    "twelve",
+   11.016
+  ],
+  [
+   "shots",
+   11.328
+  ],
+  [
+   "since",
+   11.797
+  ],
+  [
+   "I",
+   12.018
+  ],
+  [
+   "asked",
    12.188
+  ],
+  [
+   "the",
+   12.995
+  ],
+  [
+   "count",
+   13.099
+  ],
+  [
+   "says",
+   13.49
+  ],
+  [
+   "twelve",
+   13.802
   ]
  ]
 }

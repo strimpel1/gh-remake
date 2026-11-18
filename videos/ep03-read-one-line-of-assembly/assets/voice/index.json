@@ -54,13 +54,13 @@
   },
   {
    "id": "11",
-   "duration": 13.043,
-   "text": "Now the real game. I point Cheat Engine at the address of my magazine, and ask: find out what writes to this address. I had already fired twelve rounds when this recording starts, so the count says twelve."
+   "duration": 14.687,
+   "text": "Now the real game. I point Cheat Engine at the address of my magazine, and ask: find out what writes to this address. When this recording starts, Cheat Engine has counted twelve shots since I asked: the count says twelve."
   },
   {
    "id": "12",
-   "duration": 14.418,
-   "text": "I fire two rounds. The count goes to fourteen, the magazine is empty, and the game reloads. Two more: sixteen. Every shot went through one single instruction. The second line is the reload."
+   "duration": 13.808,
+   "text": "I fire my last two rounds. The count goes to fourteen, and the game reloads straight away. Two more: sixteen. Every shot went through one single instruction. The second line is the reload."
   },
   {
    "id": "13",

@@ -1,138 +1,138 @@
 {
- "key": "3a2747d0edf7532ea0c006ccc7f6e25e0a525748",
- "text": "I fire two rounds. The count goes to fourteen, the magazine is empty, and the game reloads. Two more: sixteen. Every shot went through one single instruction. The second line is the reload.",
+ "key": "37f1ce88c8a35440d8a34301971405fe1a6b844d",
+ "text": "I fire my last two rounds. The count goes to fourteen, and the game reloads straight away. Two more: sixteen. Every shot went through one single instruction. The second line is the reload.",
  "words": [
   [
    "I",
-   0.104
+   0.156
   ],
   [
    "fire",
-   0.326
+   0.273
+  ],
+  [
+   "my",
+   0.677
+  ],
+  [
+   "last",
+   0.833
   ],
   [
    "two",
-   0.794
+   1.224
   ],
   [
    "rounds",
-   1.055
+   1.393
   ],
   [
    "The",
-   2.07
+   2.422
   ],
   [
    "count",
-   2.148
+   2.5
   ],
   [
    "goes",
-   2.474
-  ],
-  [
-   "to",
    2.826
   ],
   [
+   "to",
+   3.086
+  ],
+  [
    "fourteen",
-   2.93
-  ],
-  [
-   "the",
-   4.01
-  ],
-  [
-   "magazine",
-   4.102
-  ],
-  [
-   "is",
-   4.701
-  ],
-  [
-   "empty",
-   4.857
+   3.177
   ],
   [
    "and",
-   5.365
+   4.193
   ],
   [
    "the",
-   5.573
+   4.297
   ],
   [
    "game",
-   5.677
+   4.401
   ],
   [
    "reloads",
-   5.99
+   4.896
+  ],
+  [
+   "straight",
+   5.391
+  ],
+  [
+   "away",
+   5.677
   ],
   [
    "Two",
-   7.148
+   6.51
   ],
   [
    "more",
-   7.396
+   6.797
   ],
   [
    "sixteen",
-   8.203
+   7.604
   ],
   [
    "Every",
-   9.219
+   8.646
   ],
   [
    "shot",
-   9.479
+   8.893
   ],
   [
    "went",
-   9.896
+   9.297
   ],
   [
    "through",
-   10.104
+   9.479
   ],
   [
    "one",
-   10.391
+   9.792
   ],
   [
    "single",
-   10.833
+   10.208
   ],
   [
    "instruction",
-   11.237
+   10.599
   ],
   [
    "The",
-   12.305
+   11.719
   ],
   [
    "second",
-   12.383
+   11.784
   ],
   [
    "line",
-   12.773
+   12.201
   ],
   [
    "is",
-   13.229
+   12.682
   ],
   [
    "the",
-   13.385
+   12.826
   ],
   [
    "reload",
-   13.49
+   12.917
   ]
  ]
 }

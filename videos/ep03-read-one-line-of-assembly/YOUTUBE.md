@@ -15,11 +15,11 @@ Game Hacking from Scratch, Episode 3. Every shot takes one round from your magaz
 ✅ Reading real game code in the disassembler: address, bytes, text
 ✅ cmp and conditional jumps: what an if looks like
 ✅ The stack: push, pop, esp, call, ret and the return address
-✅ Arguments in 32-bit code: cdecl and thiscall, in our own listing and in the game
+✅ Arguments in 32-bit code: cdecl in our own listing; thiscall in our listing and in the game
 ✅ 64-bit Windows: the first four arguments travel in rcx, rdx, r8, r9
 
 🧪 PRACTICE
-Compile calls.cpp with /FA, find the instruction that writes the health in calls.asm, then add a field and predict the new offset:
+Compile calls.cpp with /FA, find the instruction that writes the health in calls.asm, then add a field and predict the new offset. The video reads the 32-bit listing: run cl in the "x86 Native Tools Command Prompt for VS". In the 64-bit prompt the listing looks like the 64-bit part of the video instead.
 https://github.com/strimpel1/gh-remake/blob/main/videos/ep03-read-one-line-of-assembly/lab/calls.cpp
 
 🛠️ TOOLS IN THIS EPISODE (all free)
@@ -38,17 +38,17 @@ Everything in this series is practiced on open-source games, offline, against bo
 1:25 Instruction, destination, source
 1:38 Brackets mean memory
 2:07 Live: what writes to the ammo
-2:37 Reading dec [eax]
-3:14 The game's code in the disassembler
-3:47 What reads the health
-4:04 Compare and jump
-4:48 The stack
-5:04 A breakpoint in the game
-5:34 Call, ret and the return address
-6:06 Arguments on the stack: cdecl
-6:38 Methods: thiscall
-7:29 64-bit Windows
-8:02 Recap and practice
+2:38 Reading dec [eax]
+3:15 The game's code in the disassembler
+3:48 What reads the health
+4:05 Compare and jump
+4:49 The stack
+5:05 A breakpoint in the game
+5:36 Call, ret and the return address
+6:07 Arguments on the stack: cdecl
+6:39 Methods: thiscall
+7:30 64-bit Windows
+8:04 Recap and practice
 
 ▶️ New to C++? Start with the full C++ course on this channel.
 🤖 Created with AI assistance.

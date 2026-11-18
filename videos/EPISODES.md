@@ -92,6 +92,9 @@ example. If a lesson's source text goes beyond that, leave that part out.
   can return early.
 - **A count on screen ("N functions in all") is counted from the saved output with a script**, never by eye.
 - A tag or label never covers text inside a capture.
+- **"The same bytes read as another type" is read from the running program**, never computed from a rounded printed value.
+- **Say only what the capture shows.** Call a second address "a copy" only after a capture where it held a different value
+  and the game was seen to overwrite it.
 - Hex and addresses are spelled for the voice the way episodes 1 and 2 do it ("zero zero eight nine, seven eight six C").
 
 ## Before you call it done
