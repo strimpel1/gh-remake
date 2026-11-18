@@ -95,11 +95,11 @@ LOADED = ["&gt; loaded.exe",
 
 IMPORTS = ["&gt; dumpbin /imports savegame.exe",
            "    " + HI("KERNEL32.dll"),
-           "         E9 " + HI("CreateFileW"),
            "        663 " + HI("WriteFile"),
-           "        4AC " + HI("ReadFile"),
            "         A0 CloseHandle",
-           DIM("        ... 75 functions in all")]
+           "        4AC " + HI("ReadFile"),
+           "         E9 " + HI("CreateFileW"),
+           DIM("        ... 74 functions in all")]
 
 GAMEIMP = ["&gt; dumpbin /imports ac_client.exe",
            "    " + HI("OPENGL32.dll") + "      4A glDrawElements",
@@ -297,7 +297,7 @@ scenes = [
           + txt("@p-l2", 120, 560, "after", "m", fs=44) + hx("save_after", 620, id="@p-h2").html()
           + mb(hx("save_after", 620, id="@p-h2"), "@p-m2", 0, 8, 9)
           + tag("@p-g1", 1000, 100, "backup first: copy save.dat save.bak", 36)
-          + txt("@p-c", 120, 950, "E8 03 00 00 &nbsp;&rarr;&nbsp; 0F 27 00 00", "m", fs=56, color="#E8490F")
+          + txt("@p-c", 120, 930, "E8 03 00 00 &nbsp;&rarr;&nbsp; 0F 27 00 00", "m", fs=56, color="#E8490F")
           + txt("@p-n", 1180, 880, "red in ImHex = changed,<br>not saved yet", "m", fs=38, color="#6A9188"),
           js="""
     wipe("#@p-t", 0.3, 0.6);
@@ -346,7 +346,7 @@ scenes = [
           + card("@p-a", 190, 320, 520, 150, "checksum", 60, "on") + txt("@p-al", 770, 330, "a number calculated from the file:<br>edit a byte, and it no longer matches", "m", fs=44)
           + card("@p-b", 190, 540, 520, 150, "compression", 56, "on") + txt("@p-bl", 770, 580, "the bytes are packed", "m", fs=44)
           + card("@p-c", 190, 760, 520, 150, "encryption", 56, "on") + txt("@p-cl", 770, 800, "the bytes are scrambled", "m", fs=44)
-          + txt("@p-d", 190, 960, "no readable text, only noise? packed or scrambled", "m", fs=44, color="#E8490F"),
+          + txt("@p-d", 190, 940, "no readable text, only noise? packed or scrambled", "m", fs=44, color="#E8490F"),
           js="""
     wipe("#@p-t", <<real-0.2>>, 0.6);
     land("#@p-a", <<checksum-0.2>>); blurIn("#@p-al", <<calculated-0.2>>);
@@ -358,7 +358,7 @@ scenes = [
     # ------------------------------------------------------------------ part 2: the EXE
     Scene("mz", "The program is a file too. Here is savegame dot E X E, in the hex editor. "
                 "The first two bytes: four D, five A. The letters M Z. Every E X E and every D L L on Windows starts with them. "
-                "And just below, a message: this program cannot be run in DOS mode.",
+                "And just below, a message left over from DOS.",
           body=txt("@p-t", 120, 80, "savegame.exe is a file too", "h", fs=80) + hx("exe_head", 220, rows=8).html()
           + mb(hx("exe_head", 220, rows=8), "@p-m1", 0, 0, 1)
           + ma(hx("exe_head", 220, rows=8), "@p-m2", 0, 0, 1)
@@ -507,9 +507,9 @@ scenes = [
     blurIn("#@p-e", <<position>>);
 """),
 
-    Scene("aslr", "One more line. The game's header says: relocations stripped. It cannot be moved, so it loads "
-                  "at four hundred thousand every time. My own program says: dynamic base. Windows may move it. "
-                  "That is the A S L R from episode two, decided right here in the file.",
+    Scene("aslr", "One more line. The game's header says: relocations stripped. It cannot move: it always loads "
+                  "at four hundred thousand. My own program says: dynamic base. Windows may move it. "
+                  "That is the A S L R from episode two, decided in the file.",
           body=txt("@p-t", 120, 96, "can the module move? the file decides", "h", fs=72)
           + term("@p-o", 120, 260, 800, FIXED, fs=40, lh=1.6) + term("@p-q", 1000, 260, 800, MOVES, fs=40, lh=1.6)
           + tag("@p-g1", 120, 620, "always at 00400000") + tag("@p-g2", 1000, 620, "Windows may move it")
@@ -581,17 +581,18 @@ scenes = [
                      "from kernel thirty-two.",
           body=txt("@p-t", 120, 60, "the import table", "h", fs=80)
           + term("@p-o", 120, 190, 1050, IMPORTS, fs=44, lh=1.55)
+          + tag("@p-g1", 1260, 84, "real output, shortened", 36)
           + card("@p-a", 1260, 250, 520, 110, "fopen", 50, "soft") + card("@p-b", 1260, 400, 520, 110, "fwrite", 50, "soft")
           + card("@p-c", 1260, 550, 520, 110, "fread", 50, "soft")
           + txt("@p-al", 1260, 690, "what my code called", "m", fs=40)
           + txt("@p-d", 120, 850, "import table = the functions this file needs<br>from other files", "m", fs=52),
           js="""
     wipe("#@p-t", <<import-0.2>>, 0.6);
-    land("#@p-o", 0.8, 1.03, 0.5);
+    land("#@p-o", 0.8, 1.03, 0.5); land("#@p-g1", 1.2);
     blurIn("#@p-d", <<list>>);
     land("#@p-a", <<open>>); land("#@p-b", <<write>>); land("#@p-c", <<read>>); blurIn("#@p-al", <<read+0.2>>);
-    tl.fromTo("#@p-o-l2", { scale: 1 }, { scale: 1.05, transformOrigin: "left center", duration: 0.25, yoyo: true, repeat: 1 }, <<create>>);
-    tl.fromTo("#@p-o-l3", { scale: 1 }, { scale: 1.05, transformOrigin: "left center", duration: 0.25, yoyo: true, repeat: 1 }, <<write#2>>);
+    tl.fromTo("#@p-o-l5", { scale: 1 }, { scale: 1.05, transformOrigin: "left center", duration: 0.25, yoyo: true, repeat: 1 }, <<create>>);
+    tl.fromTo("#@p-o-l2", { scale: 1 }, { scale: 1.05, transformOrigin: "left center", duration: 0.25, yoyo: true, repeat: 1 }, <<write#2>>);
     tl.fromTo("#@p-o-l4", { scale: 1 }, { scale: 1.05, transformOrigin: "left center", duration: 0.25, yoyo: true, repeat: 1 }, <<read#2>>);
 """),
 
@@ -616,7 +617,7 @@ scenes = [
           + term("@p-o", 120, 190, 1200, GAMEIMP, fs=42, lh=1.55)
           + tag("@p-a", 1380, 262, "graphics") + tag("@p-b", 1380, 327, "sound") + tag("@p-c", 1380, 392, "the window") + tag("@p-d", 1380, 457, "network")
           + txt("@p-e", 120, 850, 'imports = <span class="@p-acc">a summary of what a program does</span>', "h", fs=60)
-          + txt("@p-n", 120, 950, "real output, shortened to one function per DLL", "m", fs=36, color="#6A9188"),
+          + txt("@p-n", 120, 950, "real output, rearranged: one function per DLL, on one line", "m", fs=36, color="#6A9188"),
           js="""
     wipe("#@p-t", 0.3, 0.6);
     land("#@p-o", 0.3, 1.03, 0.5); blurIn("#@p-n", 0.6);
@@ -664,9 +665,9 @@ scenes = [
           body=txt("@p-t", 190, 100, "practice", "h", fs=110)
           + tag("@p-g", 900, 130, "savegame.cpp: link in the description", 36)
           + term("@p-o", 190, 310, 1000, ["&gt; savegame new", "&gt; savegame", "loaded save.dat (28 bytes)", "health  " + HI("255"), "gold    1000", "name    " + HI("(your name)")], fs=40)
-          + txt("@p-a", 190, 800, "1. health = 255: which bytes, at which offset?", "m", fs=50)
-          + txt("@p-b", 190, 880, "2. your name: type over, up to 15 letters", "m", fs=50)
-          + txt("@p-c", 190, 960, "3. load it and check", "m", fs=50),
+          + txt("@p-a", 190, 790, "1. health = 255: which bytes, at which offset?", "m", fs=50)
+          + txt("@p-b", 190, 865, "2. your name: type over, up to 16 letters", "m", fs=50)
+          + txt("@p-c", 190, 940, "3. load it and check", "m", fs=50),
           js="""
     wipe("#@p-t", <<practice-0.2>>, 0.5);
     land("#@p-g", <<description-0.4>>);

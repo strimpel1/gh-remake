@@ -79,8 +79,8 @@
   },
   {
    "id": "16",
-   "duration": 21.8,
-   "text": "The program is a file too. Here is savegame dot E X E, in the hex editor. The first two bytes: four D, five A. The letters M Z. Every E X E and every D L L on Windows starts with them. And just below, a message: this program cannot be run in DOS mode."
+   "duration": 19.843,
+   "text": "The program is a file too. Here is savegame dot E X E, in the hex editor. The first two bytes: four D, five A. The letters M Z. Every E X E and every D L L on Windows starts with them. And just below, a message left over from DOS."
   },
   {
    "id": "17",
@@ -129,8 +129,8 @@
   },
   {
    "id": "26",
-   "duration": 19.382,
-   "text": "One more line. The game's header says: relocations stripped. It cannot be moved, so it loads at four hundred thousand every time. My own program says: dynamic base. Windows may move it. That is the A S L R from episode two, decided right here in the file."
+   "duration": 18.137,
+   "text": "One more line. The game's header says: relocations stripped. It cannot move: it always loads at four hundred thousand. My own program says: dynamic base. Windows may move it. That is the A S L R from episode two, decided in the file."
   },
   {
    "id": "27",

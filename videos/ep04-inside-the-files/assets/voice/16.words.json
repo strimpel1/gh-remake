@@ -1,10 +1,10 @@
 {
- "key": "ff046699d06a315b4d5aa232d76021ddaf875e01",
- "text": "The program is a file too. Here is savegame dot E X E, in the hex editor. The first two bytes: four D, five A. The letters M Z. Every E X E and every D L L on Windows starts with them. And just below, a message: this program cannot be run in DOS mode.",
+ "key": "d7a478e8c6d9a78f2289090a5cd4dd02b7545bfb",
+ "text": "The program is a file too. Here is savegame dot E X E, in the hex editor. The first two bytes: four D, five A. The letters M Z. Every E X E and every D L L on Windows starts with them. And just below, a message left over from DOS.",
  "words": [
   [
    "The",
-   0.078
+   0.091
   ],
   [
    "program",
@@ -12,219 +12,203 @@
   ],
   [
    "is",
-   0.807
+   0.729
   ],
   [
    "a",
-   0.99
+   0.846
   ],
   [
    "file",
-   1.068
+   0.924
   ],
   [
    "too",
-   1.497
+   1.341
   ],
   [
    "Here",
-   2.318
+   2.24
   ],
   [
    "is",
-   2.578
+   2.5
   ],
   [
    "savegame",
-   2.734
+   2.656
   ],
   [
    "dot",
-   3.464
+   3.359
   ],
   [
    "E",
-   3.867
+   3.659
   ],
   [
    "X",
-   3.958
+   3.75
   ],
   [
    "E",
-   4.427
+   4.154
   ],
   [
    "in",
-   4.987
+   4.883
   ],
   [
    "the",
-   5.091
+   5.0
   ],
   [
    "hex",
-   5.169
+   5.065
   ],
   [
    "editor",
-   5.495
+   5.43
   ],
   [
    "The",
-   6.302
+   6.237
   ],
   [
    "first",
-   6.393
+   6.328
   ],
   [
    "two",
-   6.836
+   6.823
   ],
   [
    "bytes",
-   7.031
+   7.044
   ],
   [
    "four",
-   7.904
+   7.839
   ],
   [
    "D",
-   8.164
+   8.125
   ],
   [
    "five",
-   8.828
+   8.802
   ],
   [
    "A",
-   9.258
+   9.297
   ],
   [
    "The",
-   10.078
+   9.987
   ],
   [
    "letters",
-   10.195
+   10.117
   ],
   [
    "M",
-   10.768
+   10.677
   ],
   [
    "Z",
-   11.042
+   10.924
   ],
   [
    "Every",
-   11.875
+   11.771
   ],
   [
    "E",
-   12.214
+   12.122
   ],
   [
    "X",
-   12.318
+   12.227
   ],
   [
    "E",
-   12.786
+   12.682
   ],
   [
    "and",
-   13.151
+   13.021
   ],
   [
    "every",
-   13.529
+   13.398
   ],
   [
    "D",
-   13.841
+   13.711
   ],
   [
    "L",
-   14.076
+   13.971
   ],
   [
    "L",
-   14.505
+   14.31
   ],
   [
    "on",
-   14.688
+   14.505
   ],
   [
    "Windows",
-   14.844
+   14.661
   ],
   [
    "starts",
-   15.273
+   15.078
   ],
   [
    "with",
-   15.586
+   15.378
   ],
   [
    "them",
-   15.716
+   15.495
   ],
   [
    "And",
-   16.471
+   16.237
   ],
   [
    "just",
-   16.732
+   16.51
   ],
   [
    "below",
-   17.005
+   16.771
   ],
   [
    "a",
-   17.93
+   17.669
   ],
   [
    "message",
-   17.969
+   17.708
   ],
   [
-   "this",
-   19.049
+   "left",
+   18.229
   ],
   [
-   "program",
-   19.245
+   "over",
+   18.503
   ],
   [
-   "cannot",
-   19.805
-  ],
-  [
-   "be",
-   20.182
-  ],
-  [
-   "run",
-   20.312
-  ],
-  [
-   "in",
-   20.625
+   "from",
+   18.75
   ],
   [
    "DOS",
-   20.742
-  ],
-  [
-   "mode",
-   21.042
+   18.945
   ]
  ]
 }

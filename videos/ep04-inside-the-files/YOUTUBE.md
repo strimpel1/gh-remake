@@ -40,13 +40,13 @@ Everything in this series is practiced on open-source games, offline, against bo
 2:47 Type over, never insert
 3:07 Checksums, compression, encryption
 3:23 An EXE is a file too: MZ and PE
-4:13 Reading the headers with dumpbin
-4:52 Sections and the memory map
-5:40 File offset is not memory address
-5:53 Where ASLR is decided
-6:14 From file to process
-7:02 The import table and the Windows API
-8:09 Recap and practice
+4:11 Reading the headers with dumpbin
+4:50 Sections and the memory map
+5:38 File offset is not memory address
+5:51 Where ASLR is decided
+6:10 From file to process
+6:59 The import table and the Windows API
+8:06 Recap and practice
 
 ▶️ New to C++? Start with the full C++ course on this channel.
 🤖 Created with AI assistance.

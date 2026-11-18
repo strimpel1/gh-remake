@@ -35,7 +35,8 @@
   <div id="root" data-composition-id="imports" data-width="1920" data-height="1080">
     <div id="s30-stage" class="clip s30-stage" data-start="0" data-duration="19.3">
       <div id="s30-t" class="s30-h" style="left: 120px; top: 60px; font-size: 80px">the import table</div>
-      <div id="s30-o" class="s30-term" style="left: 120px; top: 190px; width: 1050px; font-size: 44px"><div id="s30-o-l0" style="height: 68px; line-height: 68px">&gt; dumpbin /imports savegame.exe</div><div id="s30-o-l1" style="height: 68px; line-height: 68px">    <span class="hi">KERNEL32.dll</span></div><div id="s30-o-l2" style="height: 68px; line-height: 68px">         E9 <span class="hi">CreateFileW</span></div><div id="s30-o-l3" style="height: 68px; line-height: 68px">        663 <span class="hi">WriteFile</span></div><div id="s30-o-l4" style="height: 68px; line-height: 68px">        4AC <span class="hi">ReadFile</span></div><div id="s30-o-l5" style="height: 68px; line-height: 68px">         A0 CloseHandle</div><div id="s30-o-l6" style="height: 68px; line-height: 68px"><span class="dimc">        ... 75 functions in all</span></div></div>
+      <div id="s30-o" class="s30-term" style="left: 120px; top: 190px; width: 1050px; font-size: 44px"><div id="s30-o-l0" style="height: 68px; line-height: 68px">&gt; dumpbin /imports savegame.exe</div><div id="s30-o-l1" style="height: 68px; line-height: 68px">    <span class="hi">KERNEL32.dll</span></div><div id="s30-o-l2" style="height: 68px; line-height: 68px">        663 <span class="hi">WriteFile</span></div><div id="s30-o-l3" style="height: 68px; line-height: 68px">         A0 CloseHandle</div><div id="s30-o-l4" style="height: 68px; line-height: 68px">        4AC <span class="hi">ReadFile</span></div><div id="s30-o-l5" style="height: 68px; line-height: 68px">         E9 <span class="hi">CreateFileW</span></div><div id="s30-o-l6" style="height: 68px; line-height: 68px"><span class="dimc">        ... 74 functions in all</span></div></div>
+      <div id="s30-g1" class="s30-tag" style="left: 1260px; top: 84px; font-size: 36px">real output, shortened</div>
       <div id="s30-a" class="s30-card soft" style="left: 1260px; top: 250px; width: 520px; height: 110px; line-height: 94px; font-size: 50px">fopen</div>
       <div id="s30-b" class="s30-card soft" style="left: 1260px; top: 400px; width: 520px; height: 110px; line-height: 94px; font-size: 50px">fwrite</div>
       <div id="s30-c" class="s30-card soft" style="left: 1260px; top: 550px; width: 520px; height: 110px; line-height: 94px; font-size: 50px">fread</div>
@@ -58,11 +59,11 @@
     blurIn("#s30-stage", 0, 0.25);
 
     wipe("#s30-t", 1.03, 0.6);
-    land("#s30-o", 0.3, 1.03, 0.5);
+    land("#s30-o", 0.3, 1.03, 0.5); land("#s30-g1", 1.2);
     blurIn("#s30-d", 2.52);
     land("#s30-a", 9.32); land("#s30-b", 10.45); land("#s30-c", 11.51); blurIn("#s30-al", 11.71);
-    tl.fromTo("#s30-o-l2", { scale: 1 }, { scale: 1.05, transformOrigin: "left center", duration: 0.25, yoyo: true, repeat: 1 }, 13.9);
-    tl.fromTo("#s30-o-l3", { scale: 1 }, { scale: 1.05, transformOrigin: "left center", duration: 0.25, yoyo: true, repeat: 1 }, 15.02);
+    tl.fromTo("#s30-o-l5", { scale: 1 }, { scale: 1.05, transformOrigin: "left center", duration: 0.25, yoyo: true, repeat: 1 }, 13.9);
+    tl.fromTo("#s30-o-l2", { scale: 1 }, { scale: 1.05, transformOrigin: "left center", duration: 0.25, yoyo: true, repeat: 1 }, 15.02);
     tl.fromTo("#s30-o-l4", { scale: 1 }, { scale: 1.05, transformOrigin: "left center", duration: 0.25, yoyo: true, repeat: 1 }, 16.08);
 
     blurOut("#s30-stage", 19.0, 0.25);
